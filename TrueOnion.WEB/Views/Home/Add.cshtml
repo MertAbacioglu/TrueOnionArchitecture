@@ -1,0 +1,52 @@
+﻿@model ProductSaveVM
+
+<h1>Add Product</h1>
+
+<div class="row">
+
+    <div class=col-md-6>
+
+        <form asp-action="Add" method="post" asp-controller="Home">
+
+            <div class="form-group">
+                <label asp-for="@Model.Name"></label>
+                <input asp-for="@Model.Name" class="form-control" />
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            </div>
+
+            <br/>
+            <div class="form-group">
+                <label asp-for="@Model.Stock"></label>
+                <input asp-for="@Model.Stock" class="form-control" />
+                <span asp-validation-for="@Model.Stock" class="text-danger"></span>
+            </div>
+            <br/>
+
+            <div class="form-group">
+                <label asp-for="@Model.Price"></label>
+                <input asp-for="@Model.Price" class="form-control" />
+                <span asp-validation-for="@Model.Price" class="text-danger"></span>
+            </div>
+            <br/>
+
+            <div class="form-group">
+                <label asp-for="@Model.CategoryID"></label>
+
+                <select asp-for="@Model.CategoryID" asp-items="@(new SelectList(Model.CategoryVMs, nameof(CategoryVM.ID), nameof(CategoryVM.CategoryName)))" class="form-control"></select>
+
+            </div>
+            <br />
+
+            <div class="form-group">
+
+                <input type="submit" value="Add Product" class="btn-primary" />
+
+            </div>
+        </form>
+
+
+
+    </div>
+
+
+</div>

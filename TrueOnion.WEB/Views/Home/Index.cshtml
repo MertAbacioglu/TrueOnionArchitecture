@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model ProductListVM
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<table class="table table-striped" id="productsTable">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Category</td>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ProductVM item in Model.Response.Data)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.CategoryVM.CategoryName</td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
