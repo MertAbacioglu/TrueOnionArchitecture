@@ -6,6 +6,7 @@ namespace TrueOnion.APPLICATION.ViewModels.Product
 {
     public class ProductVM : IBaseVM
     {
+        public int ID { get; set; }
         public string Name { get; set; }
         public int Stock { get; set; }
         public decimal Price { get; set; }

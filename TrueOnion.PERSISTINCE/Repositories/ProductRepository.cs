@@ -14,7 +14,7 @@ namespace TrueOnion.PERSISTINCE.Repositories
 
         public async Task<IEnumerable<Product>> GetProductsWithCategory()
         {
-            List<Product> productsWithCategory = await GetAllAsIQueryable()
+            List<Product> productsWithCategory = await GetActivesAsIQueryable()
                 .Include(x=>x.Category)
                 .AsNoTracking()
                 .ToListAsync();

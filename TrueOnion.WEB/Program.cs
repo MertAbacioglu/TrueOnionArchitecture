@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using TrueOnion.APPLICATION.Validators;
 using TrueOnion.APPLICATION.ViewModels.Product;
 using TrueOnion.WEB.Filters;
+using Autofac.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 

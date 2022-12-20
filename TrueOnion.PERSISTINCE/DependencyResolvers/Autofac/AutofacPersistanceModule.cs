@@ -50,6 +50,7 @@ namespace TrueOnion.PERSISTINCE.DependencyResolvers.Autofac
                 opt.UseSqlServer(config.GetSection("ConnectionStrings:SqlConnection").Value);
                 return new AppDbContext(opt.Options);
             }).AsSelf().InstancePerLifetimeScope();
+
         }
         }
 }

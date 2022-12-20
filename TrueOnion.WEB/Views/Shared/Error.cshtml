@@ -2,15 +2,18 @@
 @{
     ViewData["Title"] = "Error";
 }
-
 <h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+
+<img src="~/images/lemmykilmistererror.jpg" />
+ <br />
+ <br />
+
 @if(Model.Errors.Any())
 {
     <div class="alert alert-danger">
         @foreach (string error in Model.Errors)
         {
-            <p>@error</p>
+            <h1>@error</h1>
         }
     </div>
 }

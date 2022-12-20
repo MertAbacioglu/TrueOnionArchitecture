@@ -19,11 +19,11 @@ namespace TrueOnion.PERSISTINCE.Services
         public ProductService(IGenericRepository<Product> repository, IMapper mapper, IProductRepository productRepository) : base(repository, mapper)
         {
             _productRepository = productRepository;
-
         }
 
         public async Task<Result<List<ProductVM>>> GetProductsWithCategory()
         {
+
             List<Product> products = (await _productRepository.GetProductsWithCategory()).ToList();
             List<ProductVM> productVMs = _mapper.Map<List<ProductVM>>(products);
             return Result<List<ProductVM>>.Success(StatusCodes.Status200OK, productVMs);

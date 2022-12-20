@@ -14,6 +14,7 @@
         <tr>
             <td>Name</td>
             <td>Category</td>
+            <td>Options</td>
 
         </tr>
     </thead>
@@ -23,6 +24,10 @@
             <tr>
                 <td>@item.Name</td>
                 <td>@item.CategoryVM.CategoryName</td>
+                <td>
+                    <a class="btn btn-warning" asp-controller="Home" asp-action="Update" asp-route-id="@item.ID">Update</a>
+                    <a class="btn btn-danger" asp-controller="Home" asp-action="Remove" asp-route-id="@item.ID">Delete</a>
+                </td>
             </tr>
         }
 

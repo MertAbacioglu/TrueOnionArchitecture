@@ -20,16 +20,17 @@ namespace TrueOnion.APPLICATION.Repositories
 
         //Query and List Commands
         IQueryable<T> GetAllAsIQueryable();
+        IQueryable<T> GetActivesAsIQueryable();
         Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> expression);
         Task<object> Select(Expression<Func<T, object>> expression);
 
         //Modify Commands
         Task AddAsync(T entity);
         Task AddRangeAsync(IEnumerable<T> entities);
-        void Update(T entity);
-        void UpdateRange(IEnumerable<T> entities);
-        void Remove(T entity);
-        void RemoveRange(IEnumerable<T> entities);
+        Task UpdateAsync(T entity);
+        Task UpdateRangeAsync(IEnumerable<T> entities);
+        Task DeleteAsync(T entity);
+        Task DeleteRangeAsync(IEnumerable<T> entities);
         void Destroy(T entity);
         void DestroyRange(IEnumerable<T> entities);
 

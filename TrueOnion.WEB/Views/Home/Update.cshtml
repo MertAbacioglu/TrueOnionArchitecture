@@ -8,39 +8,81 @@
 
         <form asp-action="Update" method="post" asp-controller="Home">
 
-            <input type="hidden" asp-for="ID" value="@Model.ID"/>
+            <input type="hidden" asp-for="@Model.ID" value="@Model.ID" />
 
             <div class="form-group">
                 <label asp-for="@Model.Name"></label>
-                <input asp-for="@Model.Name" value="@Model.Name" class="form-control"/>
+                <input asp-for="@Model.Name" value="@Model.Name" class="form-control" />
                 <span asp-validation-for="@Model.Name" class="text-danger"></span>
             </div>
 
-            <br/>
+            <br />
             <div class="form-group">
                 <label asp-for="@Model.Stock"></label>
-                <input asp-for="@Model.Stock" class="form-control"/>
+                <input asp-for="@Model.Stock" class="form-control" />
                 <span asp-validation-for="@Model.Stock" class="text-danger"></span>
             </div>
-            <br/>
+            <br />
 
             <div class="form-group">
                 <label asp-for="@Model.Price"></label>
-                <input asp-for="@Model.Price" class="form-control"/>
+                <input asp-for="@Model.Price" class="form-control" />
                 <span asp-validation-for="@Model.Price" class="text-danger"></span>
             </div>
-            <br/>
-
-            <br/>
-
+            <br />
             <div class="form-group">
+                <label asp-for="@Model.CategoryID"></label>
 
-                <input type="submit" value="Update Product" class="btn-primary"/>
+                <select asp-for="@Model.CategoryID" asp-items="@(new SelectList(Model.CategoryVMs, nameof(CategoryVM.ID), nameof(CategoryVM.CategoryName)))" class="form-control"></select>
 
+                <br />
+
+                <div class="form-group">
+
+                    <input type="submit" value="Update Product" class="btn-primary" />
+
+                </div>
             </div>
         </form>
 
+        @*<form asp-action="Update" method="post" asp-controller="Home">
 
+            <input type="hidden" asp-for="@Model.ID" value="@Model.ID" />
+
+            <div class="form-group">
+                <label asp-for="@Model.Name"></label>
+                <input asp-for="@Model.Name" value="@Model.Name" class="form-control" />
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            </div>
+
+            <br />
+            <div class="form-group">
+                <label asp-for="@Model.Stock"></label>
+                <input asp-for="@Model.Stock" class="form-control" />
+                <span asp-validation-for="@Model.Stock" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-group">
+                <label asp-for="@Model.Price"></label>
+                <input asp-for="@Model.Price" class="form-control" />
+                <span asp-validation-for="@Model.Price" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="@Model.CategoryID"></label>
+
+                <select asp-for="CategoryID" asp-items="ViewBag.categories" class="form-control"></select>
+
+                <br />
+
+                <div class="form-group">
+
+                    <input type="submit" value="Update Product" class="btn-primary" />
+
+                </div>
+            </div>
+        </form>*@
 
     </div>
 

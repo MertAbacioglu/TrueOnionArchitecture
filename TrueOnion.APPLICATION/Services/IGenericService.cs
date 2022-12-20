@@ -32,9 +32,9 @@ namespace TrueOnion.APPLICATION.Services
         //Modify Commands
         Task AddAsync(SaveViewModel viewModel);
         Task AddRangeAsync(IEnumerable<ViewModel> viewModels);
-        Task UpdateAsync(ViewModel viewModel);
-        Task RemoveAsync(ViewModel viewModel);
-        Task RemoveRangeAsync(IEnumerable<ViewModel> viewModels);
+        Task UpdateAsync(SaveViewModel viewModel);
+        Task DeleteAsync(int id);
+        Task DeleteRangeAsync(IEnumerable<int> ids);
         Task DestroyAsync(ViewModel viewModel);
         Task DestroyRangeAsync(IEnumerable<ViewModel> viewModels);
     }

@@ -11,7 +11,7 @@ using TrueOnion.DOMAIN.Enums;
 
 namespace TrueOnion.PERSISTINCE.Services
 {
-    public class GenericService<SaveViewModel, ViewModel, Entity> : IGenericService<SaveViewModel, ViewModel, Entity>
+    public  class GenericService<SaveViewModel, ViewModel, Entity> : IGenericService<SaveViewModel, ViewModel, Entity>
         where SaveViewModel : ISaveVM
         where ViewModel : IBaseVM
         where Entity : BaseEntity
@@ -27,6 +27,7 @@ namespace TrueOnion.PERSISTINCE.Services
 
         public async Task AddAsync(SaveViewModel viewModel)
         {
+            
             await _repository.AddAsync(_mapper.Map<Entity>(viewModel));
         }
 
@@ -94,25 +95,28 @@ namespace TrueOnion.PERSISTINCE.Services
             return Result<List<ViewModel>>.Success(StatusCodes.Status200OK, viewModels);
         }
 
-        public Task RemoveAsync(ViewModel viewModel)
+        public async Task DeleteAsync(int id)
+        {
+            Entity entity = await _repository.FindAsync(id);
+            await _repository.DeleteAsync(entity);
+            
+        }
+
+        public Task DeleteRangeAsync(IEnumerable<int> ids)
         {
             throw new NotImplementedException();
         }
 
-        public Task RemoveRangeAsync(IEnumerable<ViewModel> viewModels)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async     Task<Result<object>> Select(Expression<Func<Entity, object>> expression)
+        public async Task<Result<object>> Select(Expression<Func<Entity, object>> expression)
         {
             object result = await _repository.Select(expression);
             return Result<object>.Success(StatusCodes.Status200OK,result);
         }
 
-        public Task UpdateAsync(ViewModel viewModel)
+        public async Task UpdateAsync(SaveViewModel viewModel)
         {
-            throw new NotImplementedException();
+            Entity entity = _mapper.Map<Entity>(viewModel);
+            await _repository.UpdateAsync(entity);
         }
     }
 }

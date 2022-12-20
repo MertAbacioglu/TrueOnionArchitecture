@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Bogus;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,12 @@ namespace TrueOnion.PERSISTINCE.Repositories
     {
         protected readonly AppDbContext _appDbContext;
         protected readonly DbSet<T> _dbSet;
+
         public GenericRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
             _dbSet = _appDbContext.Set<T>();
-            
+
         }
 
 
@@ -46,9 +48,9 @@ namespace TrueOnion.PERSISTINCE.Repositories
             return await GetAllAsIQueryable().Where(expression).ToListAsync();
         }
 
-        public  IQueryable<T> GetAllAsIQueryable()
+        public IQueryable<T> GetAllAsIQueryable()
         {
-            return  _dbSet.AsNoTracking();
+            return _dbSet.AsNoTracking();
         }
 
         public async Task<object> Select(Expression<Func<T, object>> expression)
@@ -60,128 +62,66 @@ namespace TrueOnion.PERSISTINCE.Repositories
         //Modify Commands
         public async Task AddAsync(T entity)
         {
-           await _dbSet.AddAsync(entity);
-            _appDbContext.SaveChanges();
+            entity.Status = DataStatus.Inserted;
+            entity.InsertedDate = DateTime.Now;
+            await _appDbContext.AddAsync(entity);
+            await _appDbContext.SaveChangesAsync();
         }
 
-        public Task AddRangeAsync(IEnumerable<T> entities)
+        public async Task AddRangeAsync(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            foreach (T entity in entities)
+                await AddAsync(entity);
         }
-        public void Remove(T entity)
+
+
+        public async Task UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            entity.ModifiedDate = DateTime.Now;
+            entity.Status = DataStatus.Modified;
+            //T toBeUpdated = await FindAsync(entity.ID);
+            //_appDbContext.Entry(toBeUpdated).CurrentValues.SetValues(entity);
+            _appDbContext.Update(entity);
+            await _appDbContext.SaveChangesAsync();
         }
 
-        public void RemoveRange(IEnumerable<T> entities)
+        public async Task UpdateRangeAsync(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            foreach (T entity in entities)
+                await UpdateAsync(entity);
         }
 
-        public void Update(T entity)
+        public async Task Destroy(T entity)
         {
-            throw new NotImplementedException();
+            _appDbContext.Remove(entity);
+            await _appDbContext.SaveChangesAsync();
+
         }
 
-        public void UpdateRange(IEnumerable<T> entities)
+        public async Task  DestroyRange(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+           _appDbContext.RemoveRange(entities);
+            await _appDbContext.SaveChangesAsync();
+
         }
 
-        public void Destroy(T entity)
+        public IQueryable<T> GetActivesAsIQueryable()
         {
-            throw new NotImplementedException();
+            return _dbSet.AsNoTracking().Where(x => x.Status != DataStatus.Deleted);
         }
 
-        public void DestroyRange(IEnumerable<T> entities)
+        public async Task DeleteAsync(T entity)
         {
-            throw new NotImplementedException();
+            entity.DeletedDate = DateTime.Now;
+            entity.Status = DataStatus.Deleted;
+            _appDbContext.Update(entity);
+            await _appDbContext.SaveChangesAsync();
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //public Task AddAsync(T entity)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public async Task<bool> AnyAsync(Expression<Func<T, bool>> expression)
-        //{
-        //    return await _dbSet.AnyAsync(expression);
-        //}
-
-        //public async Task<T> FindAsync(params object[] values)
-        //{
-        //    return await _dbSet.FindAsync(values);
-        //}
-
-        //public async Task<T> FirstOrDefault(Expression<Func<T, bool>> expression, params Expression<Func<T, object>>[] includeProperties)
-        //{
-        //    IQueryable<T> query = GetAllAsIQueryable(x => x.Status != DOMAIN.Enums.DataStatus.Deleted);
-
-        //    if (includeProperties.Any())
-        //        foreach (Expression<Func<T, object>> include in includeProperties)
-        //            query = query.Include(include);
-
-        //    return await query.FirstOrDefaultAsync(expression);
-
-        //}
-
-        //public IQueryable<T> GetAllAsIQueryable(Expression<Func<T, bool>> expression)
-        //{
-        //    IQueryable<T> query = _dbSet.AsQueryable();
-        //    if (expression != null)
-        //        query = query.Where(expression);
-        //    return query;
-        //}
-
-        //public void Remove(T entity)
-        //{
-        //    entity.Status = DataStatus.Deleted;
-        //    _dbSet.Update(entity);
-        //}
-
-        //public async void Update(T entity)
-        //{
-        //    entity.Status = DataStatus.Modified;
-        //    entity.ModifiedDate = DateTime.Now;
-        //    T toBeUpdated = await FindAsync(entity.ID);
-        //    _dbSet.Entry(toBeUpdated).CurrentValues.SetValues(entity);
-        //    Save();
-        //}
-
-        //public IQueryable<T> Where(Expression<Func<T, bool>> expression, params Expression<Func<T, object>>[] includeProperties)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public async Task DeleteRangeAsync(IEnumerable<T> entities)
+        {
+            foreach (var entity in entities)
+                await DeleteAsync(entity);
+        }
     }
 }
