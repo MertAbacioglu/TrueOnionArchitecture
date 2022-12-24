@@ -11,6 +11,6 @@ namespace TrueOnion.APPLICATION.ViewModels.Response
 {
     public abstract class ResultVM<T> where T : IBaseVM
     {
-        public Result<List<T>> Response { get; set; }
+        public Result<List<T>> Result { get; set; }
     }
 }

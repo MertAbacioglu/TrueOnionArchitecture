@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrueOnion.APPLICATION.Repositories;
-using TrueOnion.DOMAIN.Entities;
+using TrueOnion.DOMAIN.Entities.Concrates;
 using TrueOnion.PERSISTINCE.Context;
 
 namespace TrueOnion.PERSISTINCE.Repositories

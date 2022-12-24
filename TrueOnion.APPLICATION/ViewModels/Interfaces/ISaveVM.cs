@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace TrueOnion.APPLICATION.ViewModels.Abstracts
 {
-    public interface ISaveVM
+    public abstract class SaveVM
     {
+        public int ID { get; set; }
+        public DateTime InsertedDate { get; set; }
     }
 }

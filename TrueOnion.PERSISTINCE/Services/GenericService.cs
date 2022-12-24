@@ -12,7 +12,7 @@ using TrueOnion.DOMAIN.Enums;
 namespace TrueOnion.PERSISTINCE.Services
 {
     public  class GenericService<SaveViewModel, ViewModel, Entity> : IGenericService<SaveViewModel, ViewModel, Entity>
-        where SaveViewModel : ISaveVM
+        where SaveViewModel : SaveVM
         where ViewModel : IBaseVM
         where Entity : BaseEntity
     {
@@ -39,17 +39,19 @@ namespace TrueOnion.PERSISTINCE.Services
         public async  Task<Result<bool>> AnyAsync(Expression<Func<Entity, bool>> expression)
         {
             bool isExist = await _repository.AnyAsync(expression);
-            return Result<bool>.Success(StatusCodes.Status200OK, isExist);
+            return Result<bool>.Success(isExist);
         }
 
-        public Task DestroyAsync(ViewModel viewModel)
+        public async Task DestroyAsync(int id)
         {
-            throw new NotImplementedException();
+            Entity entity = await _repository.FindAsync(id);
+            await _repository.DeleteAsync(entity);
         }
 
-        public Task DestroyRangeAsync(IEnumerable<ViewModel> viewModels)
+        public async Task DestroyRangeAsync(IEnumerable<int> ids)
         {
-            throw new NotImplementedException();
+            foreach (int id in ids)
+                await DestroyAsync(id);
         }
 
         public async Task<Result<SaveViewModel>> FindAsync(params object[] values)
@@ -57,42 +59,42 @@ namespace TrueOnion.PERSISTINCE.Services
             Entity entity = await _repository.FindAsync(values);
             //ViewModel viewModel = _mapper.Map<ViewModel>(entity);
             SaveViewModel saveViewModel = _mapper.Map<SaveViewModel>(entity);
-            return Result<SaveViewModel>.Success(StatusCodes.Status200OK, saveViewModel);
+            return Result<SaveViewModel>.Success(saveViewModel);
         }
 
         public async Task<Result<ViewModel>> FirstOrDefault(Expression<Func<Entity, bool>> expression)
         {
             Entity entity = await _repository.FirstOrDefaultAsync(expression);
             ViewModel viewModel = _mapper.Map<ViewModel>(entity);
-            return Result<ViewModel>.Success(StatusCodes.Status200OK, viewModel);
+            return Result<ViewModel>.Success(viewModel);
         }
 
         public async Task<Result<List<ViewModel>>> GetActives()
         {
             IEnumerable<Entity> entities = (await _repository.GetAll(x => x.Status != DataStatus.Deleted));
             List<ViewModel> viewModels = _mapper.Map<List<ViewModel>>(entities);
-            return Result<List<ViewModel>>.Success(StatusCodes.Status200OK, viewModels);
+            return Result<List<ViewModel>>.Success(viewModels);
         }
 
         public async Task<Result<List<ViewModel>>> GetAll()
         {
             IEnumerable<Entity> entities = await _repository.GetAllAsIQueryable().ToListAsync();
             List<ViewModel> viewModels = _mapper.Map<List<ViewModel>>(entities);
-            return Result<List<ViewModel>>.Success(StatusCodes.Status200OK, viewModels);
+            return Result<List<ViewModel>>.Success(viewModels);
         }
 
         public async Task<Result<List<ViewModel>>> GetModifieds()
         {
             IEnumerable<Entity> entities = await _repository.GetAll(x => x.Status == DataStatus.Modified);
             List<ViewModel> viewModels = _mapper.Map<List<ViewModel>>(entities);
-            return Result<List<ViewModel>>.Success(StatusCodes.Status200OK, viewModels);
+            return Result<List<ViewModel>>.Success(viewModels);
         }
 
         public async Task<Result<List<ViewModel>>> GetPassives()
         {
             IEnumerable<Entity> entities = await _repository.GetAll(x => x.Status == DataStatus.Deleted);
             List<ViewModel> viewModels = _mapper.Map<List<ViewModel>>(entities);
-            return Result<List<ViewModel>>.Success(StatusCodes.Status200OK, viewModels);
+            return Result<List<ViewModel>>.Success(viewModels);
         }
 
         public async Task DeleteAsync(int id)
@@ -102,15 +104,16 @@ namespace TrueOnion.PERSISTINCE.Services
             
         }
 
-        public Task DeleteRangeAsync(IEnumerable<int> ids)
+        public async Task DeleteRangeAsync(IEnumerable<int> ids)
         {
-            throw new NotImplementedException();
+            foreach (int id in ids)
+                await DeleteAsync(id);
         }
 
         public async Task<Result<object>> Select(Expression<Func<Entity, object>> expression)
         {
             object result = await _repository.Select(expression);
-            return Result<object>.Success(StatusCodes.Status200OK,result);
+            return Result<object>.Success(result);
         }
 
         public async Task UpdateAsync(SaveViewModel viewModel)

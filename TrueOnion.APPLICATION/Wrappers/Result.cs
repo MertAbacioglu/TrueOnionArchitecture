@@ -12,7 +12,11 @@ namespace TrueOnion.APPLICATION.Wrappers
         public int StatusCode { get; set; }
         public List<string>? Errors { get; set; }
 
-
+        public static Result<T> Success( T data)
+        {
+            return new Result<T> { Data = data };
+        }
+        
         public static Result<T> Success(int statusCode, T data)
         {
             return new Result<T> { Data = data, StatusCode = statusCode };

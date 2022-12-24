@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TrueOnion.DOMAIN.Entities;
+using TrueOnion.DOMAIN.Entities.Concrates;
 
 namespace TrueOnion.PERSISTINCE.Seeds
 {
@@ -14,6 +9,9 @@ namespace TrueOnion.PERSISTINCE.Seeds
         {
             modelBuilder.Entity<Category>().HasData(FakeDataGenerator.Categories);
             modelBuilder.Entity<Product>().HasData(FakeDataGenerator.Products);
+            modelBuilder.Entity<ProductFeature>().HasData(FakeDataGenerator.ProductFeatures);
+            modelBuilder.Entity<Supplier>().HasData(FakeDataGenerator.Suppliers);
+            modelBuilder.Entity<ProductSupplier>().HasData(FakeDataGenerator.ProductSuppliers);
         }
     }
 }

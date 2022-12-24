@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TrueOnion.APPLICATION.Repositories;
 using TrueOnion.APPLICATION.Services;
 using TrueOnion.APPLICATION.ViewModels.Category;
-using TrueOnion.DOMAIN.Entities;
+using TrueOnion.DOMAIN.Entities.Concrates;
 
 namespace TrueOnion.PERSISTINCE.Services
 {

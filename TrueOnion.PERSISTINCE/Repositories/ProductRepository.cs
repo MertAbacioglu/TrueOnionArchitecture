@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 using TrueOnion.APPLICATION.Repositories;
-using TrueOnion.DOMAIN.Entities;
+using TrueOnion.DOMAIN.Entities.Concrates;
 using TrueOnion.PERSISTINCE.Context;
 
 namespace TrueOnion.PERSISTINCE.Repositories
@@ -16,10 +15,21 @@ namespace TrueOnion.PERSISTINCE.Repositories
         {
             List<Product> productsWithCategory = await GetActivesAsIQueryable()
                 .Include(x=>x.Category)
-                .AsNoTracking()
+                .Include(x=>x.ProductFeature)
+                .Include(x=>x.ProductSuppliers)
+                    .ThenInclude(x => x.Supplier)
                 .ToListAsync();
 
             return productsWithCategory;
+        }
+
+        public async Task<IEnumerable<Product>> GetProductsByPriceRange(decimal min, decimal max)
+        {
+            List<Product> productsByPriceRange = GetActivesAsIQueryable()
+                .Where(x => x.Price >= min && x.Price <= max)
+                .Include(x => x.Category)
+                .ToList();
+            return productsByPriceRange;
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TrueOnion.DOMAIN.Entities.Common;
 
-namespace TrueOnion.DOMAIN.Entities
+namespace TrueOnion.DOMAIN.Entities.Concrates
 {
     public class Product : BaseEntity
     {
@@ -16,5 +16,7 @@ namespace TrueOnion.DOMAIN.Entities
 
         //Relational Properties
         public Category Category { get; set; }
+        public ProductFeature ProductFeature { get; set; }
+        public ICollection<ProductSupplier> ProductSuppliers { get; set; }
     }
 }

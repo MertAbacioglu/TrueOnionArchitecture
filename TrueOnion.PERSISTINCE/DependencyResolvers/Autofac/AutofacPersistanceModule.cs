@@ -30,8 +30,6 @@ namespace TrueOnion.PERSISTINCE.DependencyResolvers.Autofac
 
             Assembly repoServiceAssembly = Assembly.GetAssembly(typeof(AppDbContext));
             
-            //Assembly repoServiceAssembly2 = AppDomain.CurrentDomain.GetAssemblies().FromAssemblyNamed("TrueOnion.PERSISTINCE");
-
 
             builder.RegisterAssemblyTypes(executingAssembly, repoServiceAssembly)
                 .Where(x => x.Name.EndsWith("Repository")).AsImplementedInterfaces()

@@ -31,8 +31,8 @@ namespace TrueOnion.APPLICATION.Repositories
         Task UpdateRangeAsync(IEnumerable<T> entities);
         Task DeleteAsync(T entity);
         Task DeleteRangeAsync(IEnumerable<T> entities);
-        void Destroy(T entity);
-        void DestroyRange(IEnumerable<T> entities);
+        Task Destroy(T entity);
+        Task DestroyRange(IEnumerable<T> entities);
 
     }
 }

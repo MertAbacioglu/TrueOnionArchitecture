@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TrueOnion.DOMAIN.Entities;
+using TrueOnion.DOMAIN.Entities.Concrates;
 
 namespace TrueOnion.PERSISTINCE.Configurations
 {
@@ -13,7 +8,8 @@ namespace TrueOnion.PERSISTINCE.Configurations
         public override void Configure(EntityTypeBuilder<Product> builder)
         {
             base.Configure(builder);
-
+            builder.HasOne(p => p.Category).WithMany(c => c.Products).HasForeignKey(p => p.CategoryID);
+            builder.HasOne(x => x.ProductFeature).WithOne(x => x.Product).HasForeignKey<ProductFeature>(x => x.ID);
         }
     }
 }

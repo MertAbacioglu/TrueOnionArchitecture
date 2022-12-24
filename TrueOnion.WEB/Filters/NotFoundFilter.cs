@@ -10,7 +10,7 @@ using TrueOnion.DOMAIN.Entities.Common;
 namespace TrueOnion.WEB.Filters
 {
     public class NotFoundFilter<SaveViewModel, ViewModel, Entity> : IAsyncActionFilter
-        where SaveViewModel : ISaveVM
+        where SaveViewModel : SaveVM
         where ViewModel : IBaseVM
         where Entity : BaseEntity
 
@@ -25,13 +25,13 @@ namespace TrueOnion.WEB.Filters
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             object? idValue = context.ActionArguments.Values.FirstOrDefault();
-            if (idValue == null)
+            if (idValue == null) 
             {
                 await next.Invoke();
                 return;
             }
 
-            int id = (int)idValue;
+            int id = (int)idValue; //int'e cast edilemezse ?
             SaveViewModel result = (await _genericService.FindAsync(id)).Data;
             if (result != null)
             {

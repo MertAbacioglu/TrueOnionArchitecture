@@ -9,7 +9,7 @@ using TrueOnion.APPLICATION.Repositories;
 using TrueOnion.APPLICATION.Services;
 using TrueOnion.APPLICATION.ViewModels.Product;
 using TrueOnion.APPLICATION.Wrappers;
-using TrueOnion.DOMAIN.Entities;
+using TrueOnion.DOMAIN.Entities.Concrates;
 
 namespace TrueOnion.PERSISTINCE.Services
 {
@@ -25,8 +25,18 @@ namespace TrueOnion.PERSISTINCE.Services
         {
 
             List<Product> products = (await _productRepository.GetProductsWithCategory()).ToList();
+            List<ICollection<ProductSupplier>> a = products.Select(x => x.ProductSuppliers).ToList();
             List<ProductVM> productVMs = _mapper.Map<List<ProductVM>>(products);
-            return Result<List<ProductVM>>.Success(StatusCodes.Status200OK, productVMs);
+            return Result<List<ProductVM>>.Success(productVMs);
         }
+
+        public async Task<Result<List<ProductVM>>> GetProductsByPriceRange(decimal min, decimal max)
+        {
+            List<Product> products = (await _productRepository.GetProductsByPriceRange(min, max)).ToList();
+            List<ProductVM> productVMs = _mapper.Map<List<ProductVM>>(products);
+            return Result<List<ProductVM>>.Success(productVMs);
+
+        }
+        
     }
 }

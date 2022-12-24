@@ -11,7 +11,7 @@ using TrueOnion.DOMAIN.Entities.Common;
 namespace TrueOnion.APPLICATION.Services
 {
     public interface IGenericService<SaveViewModel, ViewModel, Entity>
-        where SaveViewModel : ISaveVM
+        where SaveViewModel : SaveVM
         where ViewModel : IBaseVM
         where Entity : BaseEntity
     {
@@ -35,7 +35,7 @@ namespace TrueOnion.APPLICATION.Services
         Task UpdateAsync(SaveViewModel viewModel);
         Task DeleteAsync(int id);
         Task DeleteRangeAsync(IEnumerable<int> ids);
-        Task DestroyAsync(ViewModel viewModel);
-        Task DestroyRangeAsync(IEnumerable<ViewModel> viewModels);
+        Task DestroyAsync(int id);
+        Task DestroyRangeAsync(IEnumerable<int> ids);
     }
 }

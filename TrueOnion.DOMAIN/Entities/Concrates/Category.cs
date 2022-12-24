@@ -1,7 +1,7 @@
 ﻿using System;
 using TrueOnion.DOMAIN.Entities.Common;
 
-namespace TrueOnion.DOMAIN.Entities
+namespace TrueOnion.DOMAIN.Entities.Concrates
 {
     public class Category : BaseEntity
     {

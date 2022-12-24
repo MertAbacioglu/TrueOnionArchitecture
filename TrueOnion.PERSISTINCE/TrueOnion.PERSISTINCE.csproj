@@ -24,4 +24,8 @@
     <ProjectReference Include="..\TrueOnion.DOMAIN\TrueOnion.DOMAIN.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+
 </Project>
