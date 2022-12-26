@@ -20,7 +20,7 @@ namespace TrueOnion.APPLICATION.Services
 
         //Linq 
         Task<Result<bool>> AnyAsync(Expression<Func<Entity, bool>> expression);
-        Task<Result<ViewModel>> FirstOrDefault(Expression<Func<Entity, bool>> expression);
+        Task<Result<ViewModel>> FirstOrDefaultAsync(Expression<Func<Entity, bool>> expression);
         //Task<Response<object>> Select(Expression<Func<Entity, object>> expression); //toDo : usage ?
 
         //List Commands
@@ -28,14 +28,15 @@ namespace TrueOnion.APPLICATION.Services
         Task<Result<List<ViewModel>>> GetActives();
         Task<Result<List<ViewModel>>> GetPassives();
         Task<Result<List<ViewModel>>> GetModifieds();
+        Task<Result<List<ViewModel>>> Where(Expression<Func<Entity, bool>> expression);
 
         //Modify Commands
         Task AddAsync(SaveViewModel viewModel);
-        Task AddRangeAsync(IEnumerable<ViewModel> viewModels);
+        Task AddRangeAsync(IEnumerable<SaveViewModel> viewModels);
         Task UpdateAsync(SaveViewModel viewModel);
         Task DeleteAsync(int id);
         Task DeleteRangeAsync(IEnumerable<int> ids);
-        Task DestroyAsync(int id);
-        Task DestroyRangeAsync(IEnumerable<int> ids);
+        Task DestroyAsync(ViewModel viewModel);
+        Task DestroyRangeAsync(IEnumerable<ViewModel> viewModels);
     }
 }

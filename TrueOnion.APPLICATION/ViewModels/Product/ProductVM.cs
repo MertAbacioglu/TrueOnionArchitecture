@@ -1,5 +1,6 @@
 ﻿using TrueOnion.APPLICATION.ViewModels.Abstracts;
 using TrueOnion.APPLICATION.ViewModels.Category;
+using TrueOnion.APPLICATION.ViewModels.ProductFeature;
 using TrueOnion.APPLICATION.ViewModels.ProductSupplier;
 using TrueOnion.APPLICATION.ViewModels.Supplier;
 using TrueOnion.DOMAIN.Enums;

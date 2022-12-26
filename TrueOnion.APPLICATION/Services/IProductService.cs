@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,9 @@ namespace TrueOnion.APPLICATION.Services
 {
     public interface IProductService : IGenericService<ProductSaveVM, ProductVM, Product>
     {
-        public Task<Result<List<ProductVM>>> GetProductsWithCategory();
+        public Task<Result<List<ProductVM>>> GetProducts();
         public Task<Result<List<ProductVM>>> GetProductsByPriceRange(decimal min,decimal max);
+        public Task<Result<ProductSaveVM>> GetProduct(int id);
+
     }
 }

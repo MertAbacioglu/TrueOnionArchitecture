@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 using TrueOnion.APPLICATION.Repositories;
 using TrueOnion.DOMAIN.Entities.Concrates;
+using TrueOnion.DOMAIN.Enums;
 using TrueOnion.PERSISTINCE.Context;
 
 namespace TrueOnion.PERSISTINCE.Repositories
@@ -11,16 +13,29 @@ namespace TrueOnion.PERSISTINCE.Repositories
         {
         }
 
-        public async Task<IEnumerable<Product>> GetProductsWithCategory()
+        public async Task<Product> GetProduct(int id)
         {
-            List<Product> productsWithCategory = await GetActivesAsIQueryable()
+            Product? product = await GetActivesAsIQueryable()
+                .Include(x => x.Category)
+                .Include(x => x.ProductFeature)
+                .Include(x => x.ProductSuppliers)
+                    .ThenInclude(x => x.Supplier)
+                .FirstOrDefaultAsync(x=>x.ID==id);
+
+            return product;
+        }
+
+        public async Task<IEnumerable<Product>> GetProducts()
+        {
+            List<Product> products = await GetActivesAsIQueryable()
                 .Include(x=>x.Category)
+                .Where(x => x.Category.Status != DataStatus.Deleted)
                 .Include(x=>x.ProductFeature)
                 .Include(x=>x.ProductSuppliers)
                     .ThenInclude(x => x.Supplier)
                 .ToListAsync();
 
-            return productsWithCategory;
+            return products;
         }
 
         public async Task<IEnumerable<Product>> GetProductsByPriceRange(decimal min, decimal max)
@@ -31,5 +46,7 @@ namespace TrueOnion.PERSISTINCE.Repositories
                 .ToList();
             return productsByPriceRange;
         }
+
+        
     }
 }

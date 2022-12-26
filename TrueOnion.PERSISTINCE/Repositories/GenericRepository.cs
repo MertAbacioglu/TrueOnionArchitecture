@@ -43,9 +43,9 @@ namespace TrueOnion.PERSISTINCE.Repositories
             return await GetAllAsIQueryable().FirstOrDefaultAsync(exp);
         }
 
-        public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> expression)
+        public async Task<IEnumerable<T>> Where(Expression<Func<T, bool>> expression)
         {
-            return await GetAllAsIQueryable().Where(expression).ToListAsync();
+            return await GetActivesAsIQueryable().Where(expression).ToListAsync();
         }
 
         public IQueryable<T> GetAllAsIQueryable()
@@ -60,12 +60,14 @@ namespace TrueOnion.PERSISTINCE.Repositories
 
 
         //Modify Commands
-        public async Task AddAsync(T entity)
+        public async Task<T>  AddAsync(T entity)
         {
             entity.Status = DataStatus.Inserted;
             entity.InsertedDate = DateTime.Now;
             await _appDbContext.AddAsync(entity);
             await _appDbContext.SaveChangesAsync();
+            return entity;
+            
         }
 
         public async Task AddRangeAsync(IEnumerable<T> entities)

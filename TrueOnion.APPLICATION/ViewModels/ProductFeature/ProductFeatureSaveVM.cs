@@ -5,13 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TrueOnion.APPLICATION.ViewModels.Abstracts;
 
-namespace TrueOnion.APPLICATION.ViewModels.Supplier
+namespace TrueOnion.APPLICATION.ViewModels.ProductFeature
 {
     public class ProductFeatureSaveVM : SaveVM,IBaseVM
     {
         public int ID { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
+        public DateTime RealeseDate { get; set; }
+        public string MadeIn { get; set; }
     }
 }

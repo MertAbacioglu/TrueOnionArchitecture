@@ -21,11 +21,11 @@ namespace TrueOnion.APPLICATION.Repositories
         //Query and List Commands
         IQueryable<T> GetAllAsIQueryable();
         IQueryable<T> GetActivesAsIQueryable();
-        Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> expression);
+        Task<IEnumerable<T>> Where(Expression<Func<T, bool>> expression);
         Task<object> Select(Expression<Func<T, object>> expression);
 
         //Modify Commands
-        Task AddAsync(T entity);
+        Task<T> AddAsync(T entity);
         Task AddRangeAsync(IEnumerable<T> entities);
         Task UpdateAsync(T entity);
         Task UpdateRangeAsync(IEnumerable<T> entities);

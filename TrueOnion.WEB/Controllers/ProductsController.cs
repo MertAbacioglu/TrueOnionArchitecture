@@ -8,6 +8,7 @@ using TrueOnion.APPLICATION.ViewModels.ResultTypeViewModels;
 using TrueOnion.APPLICATION.ViewModels.Supplier;
 using TrueOnion.APPLICATION.Wrappers;
 using TrueOnion.DOMAIN.Entities.Concrates;
+using TrueOnion.PERSISTINCE.Repositories;
 using TrueOnion.WEB.Filters;
 
 namespace TrueOnion.WEB.Controllers
@@ -19,9 +20,11 @@ namespace TrueOnion.WEB.Controllers
         private readonly ISupplierService _supplierService;
         private readonly IProductSupplierService _productSupplierService;
         private readonly IProductRepository _productRepository;
+        private readonly ISupplierRepository _supplierRepository;
+        private readonly IProductSupplierRepository _productSupplierRepository;
 
 
-        public ProductsController(IProductService productService, ICategoryService categoryService, IProductSupplierService productSupplierService, IProductRepository productRepository, ISupplierService supplierService)
+        public ProductsController(IProductService productService, ICategoryService categoryService, IProductSupplierService productSupplierService, IProductRepository productRepository, ISupplierService supplierService, ISupplierRepository supplierRepository, IProductSupplierRepository productSupplierRepository)
 
         {
             _productService = productService;
@@ -29,30 +32,27 @@ namespace TrueOnion.WEB.Controllers
             _productSupplierService = productSupplierService;
             _productRepository = productRepository;
             _supplierService = supplierService;
+            _supplierRepository = supplierRepository;
+            _productSupplierRepository = productSupplierRepository;
         }
-
 
         public async Task<IActionResult> Index()
         {
-            //List<ProductSupplierVM>? a = (await _productSupplierService.GetProductSupplierWithProductAndSupplier()).Data;
-            //IEnumerable<Product> aa = await _productRepository.GetProductsWithCategory();
-            //List<SupplierVM>? ab = (await _supplierService.GetActives()).Data;
 
 
 
-
-
-            Result<List<ProductVM>> productVMs = await _productService.GetProductsWithCategory();
+            Result<List<ProductVM>> productVMs = await _productService.GetProducts();
             ProductListVM productListVM = new() { Result = productVMs };
             return View(productListVM);
         }
 
-        
+
         public async Task<IActionResult> Add()
         {
 
             List<CategoryVM>? categoryVMs = (await _categoryService.GetActives()).Data;
-            return View(new ProductSaveVM() { CategoryVMs = categoryVMs });
+            List<SupplierVM>? supplierVMs = (await _supplierService.GetActives()).Data;
+            return View(new ProductSaveVM() { CategoryVMs = categoryVMs,SupplierVMs= supplierVMs });
         }
 
         [HttpPost]
@@ -68,14 +68,16 @@ namespace TrueOnion.WEB.Controllers
             return View(errorVM);
         }
 
-        
+
         [ServiceFilter(typeof(NotFoundFilter<ProductSaveVM, ProductVM, Product>))]
         public async Task<IActionResult> Update(int id)
         {
 
-            ProductSaveVM productSaveVM = (await _productService.FindAsync(id)).Data;
+            ProductSaveVM productSaveVM = (await _productService.GetProduct(id)).Data;
             List<CategoryVM>? categoryVMs = (await _categoryService.GetActives()).Data;
+            List<SupplierVM>? supplierVMs = (await _supplierService.GetActives()).Data;
             productSaveVM.CategoryVMs = categoryVMs;
+            productSaveVM.SupplierVMs = supplierVMs;
 
 
 

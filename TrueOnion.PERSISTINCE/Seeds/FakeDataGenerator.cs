@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using Bogus.Bson;
 using Bogus.DataSets;
 using TrueOnion.DOMAIN.Entities.Concrates;
 using TrueOnion.DOMAIN.Enums;
@@ -13,19 +14,21 @@ namespace TrueOnion.PERSISTINCE.Seeds
         }
         public static void Init()
         {
+
             #region Fake Category Datas
             int categoryId = 1;
+            int categoryCount = 10;
             Faker<Category> categoryFaker = new Faker<Category>()
-            .RuleFor(x => x.CategoryName, x => x.Commerce.Categories(1).First())
-            .StrictMode(true)
-            .RuleFor(x => x.ID, x => categoryId++)
+            .RuleFor(x => x.CategoryName, x => categoryId == 1 ? "All" : x.Commerce.Categories(1).First())
+            .StrictMode(false)
             .RuleFor(x => x.InsertedDate, x => x.Date.Between(new DateTime(2021, 3, 14), DateTime.Now))
             .RuleFor(x => x.DeletedDate, x => null)
             .RuleFor(x => x.ModifiedDate, x => null)
             .RuleFor(x => x.Products, x => null)
+            .RuleFor(x => x.ParentID, x => categoryId == 1 ? null : new Random().Next(1, categoryId))
+            .RuleFor(x => x.ID, x => categoryId++)
             .RuleFor(x => x.Status, x => DataStatus.Inserted);
-
-            Categories = categoryFaker.Generate(10);
+            Categories = categoryFaker.Generate(categoryCount);
             #endregion
 
             #region Fake Product Datas
@@ -38,7 +41,7 @@ namespace TrueOnion.PERSISTINCE.Seeds
             .RuleFor(x => x.Name, x => x.Commerce.ProductName())
             .RuleFor(x => x.Price, x => x.Commerce.Price(1).First())
             .RuleFor(x => x.ModifiedDate, x => null)
-            .RuleFor(x => x.Status, x => DOMAIN.Enums.DataStatus.Inserted)
+            .RuleFor(x => x.Status, x => DataStatus.Inserted)
             .RuleFor(x => x.Stock, x => x.Random.Int(1, 200))
             .RuleFor(x => x.CategoryID, x => x.PickRandom(Categories).ID);
 
@@ -78,24 +81,6 @@ namespace TrueOnion.PERSISTINCE.Seeds
             #endregion
 
             #region Fake ProductSupplier Datas
-            //for (int i = 1; i <= Products.Count(); i++)
-            //{
-            //    for (int j = 1; j <= Suppliers.Count()/2; j++)
-            //    {
-            //        ProductSupplier productSupplier = new()
-            //        {
-            //            ProductID = i,
-            //            SupplierID=j,
-            //            InsertedDate = DateTime.Now,
-            //            DeletedDate =null,
-            //            ModifiedDate = null,
-            //            Status = DataStatus.Inserted,
-            //            MaxCountPerShipping=i*j,
-            //        };
-
-            //        ProductSuppliers.Add(productSupplier);
-            //    }
-            //}
             Faker<ProductSupplier> productSupplierFaker = new();
             productSupplierFaker
                 .StrictMode(false)

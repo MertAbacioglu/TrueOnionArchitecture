@@ -7,7 +7,7 @@ namespace TrueOnion.APPLICATION.Validators
     {
         public CategorySaveVMValidator()
         {
-            RuleFor(x => x.Name)
+            RuleFor(x => x.CategoryName)
                 .NotNull()
                 .WithMessage("{PropertyName} is required")
                 .NotEmpty()

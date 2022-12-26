@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System.Linq.Expressions;
 using TrueOnion.APPLICATION.Repositories;
 using TrueOnion.APPLICATION.Services;
@@ -16,7 +17,7 @@ namespace TrueOnion.PERSISTINCE.Services
         where ViewModel : IBaseVM
         where Entity : BaseEntity
     {
-        private readonly IGenericRepository<Entity> _repository;
+        protected readonly IGenericRepository<Entity> _repository;
         protected readonly IMapper _mapper;
 
         public GenericService(IGenericRepository<Entity> repository, IMapper mapper)
@@ -25,13 +26,13 @@ namespace TrueOnion.PERSISTINCE.Services
             _mapper = mapper;
         }
 
-        public async Task AddAsync(SaveViewModel viewModel)
+        public async virtual Task AddAsync(SaveViewModel viewModel)
         {
             
             await _repository.AddAsync(_mapper.Map<Entity>(viewModel));
         }
 
-        public async Task AddRangeAsync(IEnumerable<ViewModel> viewModels)
+        public async virtual Task AddRangeAsync(IEnumerable<SaveViewModel> viewModels)
         { 
            await  _repository.AddRangeAsync(_mapper.Map<IEnumerable<Entity>>(viewModels));
         }
@@ -42,16 +43,17 @@ namespace TrueOnion.PERSISTINCE.Services
             return Result<bool>.Success(isExist);
         }
 
-        public async Task DestroyAsync(int id)
+        public async Task DestroyAsync(ViewModel viewModel)
         {
-            Entity entity = await _repository.FindAsync(id);
-            await _repository.DeleteAsync(entity);
+            Entity entity = _mapper.Map<Entity>(viewModel);
+            //Entity entity = await _repository.FindAsync(id);
+            await _repository.Destroy(entity);
         }
 
-        public async Task DestroyRangeAsync(IEnumerable<int> ids)
+        public async Task DestroyRangeAsync(IEnumerable<ViewModel> viewModels)
         {
-            foreach (int id in ids)
-                await DestroyAsync(id);
+            foreach (ViewModel vm in viewModels)
+                await DestroyAsync(vm);
         }
 
         public async Task<Result<SaveViewModel>> FindAsync(params object[] values)
@@ -62,7 +64,7 @@ namespace TrueOnion.PERSISTINCE.Services
             return Result<SaveViewModel>.Success(saveViewModel);
         }
 
-        public async Task<Result<ViewModel>> FirstOrDefault(Expression<Func<Entity, bool>> expression)
+        public async Task<Result<ViewModel>> FirstOrDefaultAsync(Expression<Func<Entity, bool>> expression)
         {
             Entity entity = await _repository.FirstOrDefaultAsync(expression);
             ViewModel viewModel = _mapper.Map<ViewModel>(entity);
@@ -71,7 +73,7 @@ namespace TrueOnion.PERSISTINCE.Services
 
         public async Task<Result<List<ViewModel>>> GetActives()
         {
-            IEnumerable<Entity> entities = (await _repository.GetAll(x => x.Status != DataStatus.Deleted));
+            IEnumerable<Entity> entities = (await _repository.Where(x => x.Status != DataStatus.Deleted));
             List<ViewModel> viewModels = _mapper.Map<List<ViewModel>>(entities);
             return Result<List<ViewModel>>.Success(viewModels);
         }
@@ -85,19 +87,19 @@ namespace TrueOnion.PERSISTINCE.Services
 
         public async Task<Result<List<ViewModel>>> GetModifieds()
         {
-            IEnumerable<Entity> entities = await _repository.GetAll(x => x.Status == DataStatus.Modified);
+            IEnumerable<Entity> entities = await _repository.Where(x => x.Status == DataStatus.Modified);
             List<ViewModel> viewModels = _mapper.Map<List<ViewModel>>(entities);
             return Result<List<ViewModel>>.Success(viewModels);
         }
 
         public async Task<Result<List<ViewModel>>> GetPassives()
         {
-            IEnumerable<Entity> entities = await _repository.GetAll(x => x.Status == DataStatus.Deleted);
+            IEnumerable<Entity> entities = await _repository.Where(x => x.Status == DataStatus.Deleted);
             List<ViewModel> viewModels = _mapper.Map<List<ViewModel>>(entities);
             return Result<List<ViewModel>>.Success(viewModels);
         }
 
-        public async Task DeleteAsync(int id)
+        public async virtual Task DeleteAsync(int id)
         {
             Entity entity = await _repository.FindAsync(id);
             await _repository.DeleteAsync(entity);
@@ -116,10 +118,18 @@ namespace TrueOnion.PERSISTINCE.Services
             return Result<object>.Success(result);
         }
 
-        public async Task UpdateAsync(SaveViewModel viewModel)
+        public async virtual Task UpdateAsync(SaveViewModel viewModel)
         {
             Entity entity = _mapper.Map<Entity>(viewModel);
             await _repository.UpdateAsync(entity);
+        }
+
+        public async virtual Task<Result<List<ViewModel>>> Where(Expression<Func<Entity, bool>> expression)
+        {
+            List<Entity> entities = (await _repository.Where(expression)).ToList();
+            List<ViewModel> viewModels = _mapper.Map<List<ViewModel>>(entities);
+
+            return Result<List<ViewModel>>.Success(viewModels);
         }
     }
 }

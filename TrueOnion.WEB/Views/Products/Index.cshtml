@@ -31,16 +31,31 @@
                 <td>@item.Name</td>
                 <td>
                     <ul>
-                        <li>Made In : @item.ProductFeatureVM.MadeIn</li>
-                        <li> Release Date : @item.ProductFeatureVM.RealeseDate</li>
+                        @if (item.ProductFeatureVM != null)
+                        {
+                            <li>Made In : @item.ProductFeatureVM.MadeIn</li>
+                            <li> Release Date : @item.ProductFeatureVM.RealeseDate</li>
+                        }
+                        else
+                        {
+                            <li>No Product Feature</li>
+                        }
                     </ul>
                 </td>
                 <td>
                     <ul>
-                        @foreach (ProductSupplierVM productSupplier in item.ProductSupplierVMs)
+                        @if (item.ProductSupplierVMs != null)
                         {
-                            <li>@productSupplier.SupplierVM.CompanyName</li>
+                            @foreach (ProductSupplierVM productSupplier in item.ProductSupplierVMs)
+                            {
+                                <li>@productSupplier.SupplierVM.CompanyName</li>
+                            }
                         }
+                        else
+                        {
+                            <li>No Supplier for this product</li>
+                        }
+
                     </ul>
                 <td>@item.CategoryVM.CategoryName</td>
                 <td>
@@ -49,7 +64,7 @@
                 </td>
             </tr>
         }
-        
+
     </tbody>
 
 </table>

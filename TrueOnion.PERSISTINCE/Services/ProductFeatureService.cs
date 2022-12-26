@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TrueOnion.APPLICATION.Repositories;
 using TrueOnion.APPLICATION.Services;
+using TrueOnion.APPLICATION.ViewModels.ProductFeature;
 using TrueOnion.APPLICATION.ViewModels.Supplier;
 using TrueOnion.DOMAIN.Entities.Concrates;
 

@@ -11,7 +11,10 @@ namespace TrueOnion.APPLICATION.ViewModels.Supplier
     public class SupplierVM : IBaseVM
     {
         public int ID { get; set; }
+        public int ProductID { get; set; }
+        public int SupplierID { get; set; }
         public string CompanyName { get; set; }
+        public bool isSelected { get; set; }
 
     }
 }

@@ -7,7 +7,7 @@ namespace TrueOnion.APPLICATION.ViewModels.Category
     public class CategorySaveVM : SaveVM
     {
         [DisplayName("Category Name")]
-        public string Name { get; set; }
+        public string CategoryName { get; set; }
 
     }
 }
