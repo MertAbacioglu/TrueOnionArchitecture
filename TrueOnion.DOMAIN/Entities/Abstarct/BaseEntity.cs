@@ -12,8 +12,7 @@ namespace TrueOnion.DOMAIN.Entities.Common
         }
         public int ID { get; set; }
         public DateTime? InsertedDate { get; set; }
-        public DateTime? ModifiedDate { get; set; }
-        public DateTime? DeletedDate { get; set; }
+        public DateTime? LastModifiedDate { get; set; }
         public DataStatus Status { get; set; }
 
     }

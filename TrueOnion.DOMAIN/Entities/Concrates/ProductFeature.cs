@@ -10,7 +10,7 @@ namespace TrueOnion.DOMAIN.Entities.Concrates
     public class ProductFeature : BaseEntity
     {
         public string MadeIn { get; set; }
-        public DateTime RealeseDate { get; set; }
+        public DateTime RelaseDate { get; set; }
 
         //Relational Properties
         public Product Product { get; set; }

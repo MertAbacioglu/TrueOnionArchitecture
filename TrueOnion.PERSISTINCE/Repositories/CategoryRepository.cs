@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,50 @@ namespace TrueOnion.PERSISTINCE.Repositories
     {
         public CategoryRepository(AppDbContext appDbContext) : base(appDbContext)
         {
+
         }
+
+        public async Task<Category> GetMainCategoryWithAllChildren()
+        {
+            Category? category = await GetActivesAsIQueryable()
+                                       .Include(x => x.Children)
+                                       .FirstOrDefaultAsync(x => x.ParentID == null);
+
+            //foreach (Category child in category.Children)
+            //    await LoadChildren(child);
+
+            return category;
+        }
+
+        public async Task<Category> GetSpesificCategoryWithChildren(int id)
+        {
+            Category? category = await GetActivesAsIQueryable()
+                                      .Include(x => x.Children)
+                                      .FirstOrDefaultAsync(x => x.ID == id);
+
+            //foreach (Category child in category.Children)
+            //    await LoadChildren(child);
+
+            return category;
+
+        }
+
+        public async Task<List<Category>> GetChildrensChildren(Category category)
+        {
+            return await GetActivesAsIQueryable()
+                         .Include(x => x.Children)
+                         .Where(x => x.ParentID == category.ID)
+                         .ToListAsync();
+        }
+
+        //private async Task LoadChildren(Category category)
+        //{
+        //    category.Children = await GetActivesAsIQueryable()
+        //                             .Include(x => x.Children)
+        //                             .Where(x => x.ParentID == category.ID)
+        //                             .ToListAsync();
+        //    foreach (Category child in category.Children)
+        //        await LoadChildren(child);
+        //}
     }
 }

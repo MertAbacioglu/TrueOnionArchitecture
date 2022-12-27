@@ -10,5 +10,9 @@ namespace TrueOnion.APPLICATION.Repositories
 {
     public interface ICategoryRepository : IGenericRepository<Category>
     {
+        public Task<Category> GetMainCategoryWithAllChildren();        
+        public Task<Category> GetSpesificCategoryWithChildren(int id);
+        public Task<List<Category>> GetChildrensChildren(Category category);
+
     }
 }

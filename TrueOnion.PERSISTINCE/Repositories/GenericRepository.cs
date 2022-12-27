@@ -79,7 +79,7 @@ namespace TrueOnion.PERSISTINCE.Repositories
 
         public async Task UpdateAsync(T entity)
         {
-            entity.ModifiedDate = DateTime.Now;
+            entity.LastModifiedDate = DateTime.Now;
             entity.Status = DataStatus.Modified;
             //T toBeUpdated = await FindAsync(entity.ID);
             //_appDbContext.Entry(toBeUpdated).CurrentValues.SetValues(entity);
@@ -114,7 +114,7 @@ namespace TrueOnion.PERSISTINCE.Repositories
 
         public async Task DeleteAsync(T entity)
         {
-            entity.DeletedDate = DateTime.Now;
+            entity.LastModifiedDate = DateTime.Now;
             entity.Status = DataStatus.Deleted;
             _appDbContext.Update(entity);
             await _appDbContext.SaveChangesAsync();

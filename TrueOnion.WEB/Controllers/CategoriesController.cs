@@ -19,12 +19,9 @@ namespace TrueOnion.WEB.Controllers
 
         public async Task<IActionResult> Index()
         {
-            Result<List<CategoryVM>> categorVMs = (await _categoryService.GetActives());
-            CategoryListVM categoryListVM = new() { Result = categorVMs };
-
-            return View(categoryListVM);
-            
+            return View(await _categoryService.GetCategories());           
         }
+        
         public async Task<IActionResult> Add()
         {
             return View();
@@ -40,8 +37,7 @@ namespace TrueOnion.WEB.Controllers
         [ServiceFilter(typeof(NotFoundFilter<ProductSaveVM, ProductVM, Product>))]
         public async Task<IActionResult> Update(int id)
         {
-            CategorySaveVM? categorySaveVM = (await _categoryService.FindAsync(id)).Data;
-            return View(categorySaveVM);
+            return View((await _categoryService.FindAsync(id)).Data);
         }
 
         [HttpPost]
@@ -50,6 +46,7 @@ namespace TrueOnion.WEB.Controllers
             await _categoryService.UpdateAsync(viewModel);
             return RedirectToAction("Index");
         }
+        
         [ServiceFilter(typeof(NotFoundFilter<ProductSaveVM, ProductVM, Product>))]
         public async Task<IActionResult> Remove(int id)
         {

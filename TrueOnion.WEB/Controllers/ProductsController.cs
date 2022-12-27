@@ -38,12 +38,9 @@ namespace TrueOnion.WEB.Controllers
 
         public async Task<IActionResult> Index()
         {
-
-
-
-            Result<List<ProductVM>> productVMs = await _productService.GetProducts();
-            ProductListVM productListVM = new() { Result = productVMs };
-            return View(productListVM);
+            await _categoryService.GetCategoryWithChildren(83);
+            //await _categoryService.GetCategoriesWithChildren();
+            return View(await _productService.GetProducts());
         }
 
 
@@ -52,7 +49,7 @@ namespace TrueOnion.WEB.Controllers
 
             List<CategoryVM>? categoryVMs = (await _categoryService.GetActives()).Data;
             List<SupplierVM>? supplierVMs = (await _supplierService.GetActives()).Data;
-            return View(new ProductSaveVM() { CategoryVMs = categoryVMs,SupplierVMs= supplierVMs });
+            return View(new ProductSaveVM() { CategoryVMs = categoryVMs, SupplierVMs = supplierVMs });
         }
 
         [HttpPost]
@@ -78,8 +75,6 @@ namespace TrueOnion.WEB.Controllers
             List<SupplierVM>? supplierVMs = (await _supplierService.GetActives()).Data;
             productSaveVM.CategoryVMs = categoryVMs;
             productSaveVM.SupplierVMs = supplierVMs;
-
-
 
             return View(productSaveVM);
         }

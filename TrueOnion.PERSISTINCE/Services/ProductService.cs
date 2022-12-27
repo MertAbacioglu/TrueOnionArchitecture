@@ -23,12 +23,12 @@ namespace TrueOnion.PERSISTINCE.Services
             _productFeatureService = productFeatureService;
         }
 
-        public async Task<Result<List<ProductVM>>> GetProducts()
+        public async Task<ProductListVM> GetProducts()
         {
             List<Product> products = (await _productRepository.GetProducts()).ToList();
-            List<ICollection<ProductSupplier>> a = products.Select(x => x.ProductSuppliers).ToList();
             List<ProductVM> productVMs = _mapper.Map<List<ProductVM>>(products);
-            return Result<List<ProductVM>>.Success(productVMs);
+            Result<List<ProductVM>> result = Result<List<ProductVM>>.Success(productVMs);
+            return new ProductListVM { Result = result };
         }
 
         public async Task<Result<List<ProductVM>>> GetProductsByPriceRange(decimal min, decimal max)
@@ -103,5 +103,6 @@ namespace TrueOnion.PERSISTINCE.Services
                 await _productSupplierService.DestroyRangeAsync(psToBeDeleted);//destroy cross table datas related this product
 
         }
+
     }
 }
