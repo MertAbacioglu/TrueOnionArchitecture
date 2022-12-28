@@ -13,8 +13,9 @@ namespace TrueOnion.APPLICATION.Services
     public interface IProductService : IGenericService<ProductSaveVM, ProductVM, Product>
     {
         public Task<ProductListVM> GetProducts();
-        public Task<Result<List<ProductVM>>> GetProductsByPriceRange(decimal min,decimal max);
         public Task<Result<ProductSaveVM>> GetProduct(int id);
+        public Task<ProductListVM> GetProductsByCount(int count);
+
 
     }
 }

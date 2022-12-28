@@ -1,0 +1,101 @@
+﻿@model Category
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        ul, #myUL {
+            list-style-type: none;
+        }
+
+        #myUL {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            cursor: pointer;
+            -webkit-user-select: none; /* Safari 3.1+ */
+            -moz-user-select: none; /* Firefox 2+ */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none;
+        }
+
+            .box::before {
+                content: "\2610";
+                color: black;
+                display: inline-block;
+                margin-right: 6px;
+            }
+
+        .check-box::before {
+            content: "\2611";
+            color: dodgerblue;
+        }
+
+        .nested {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Tree View</h2>
+    <p>A tree view represents a hierarchical view of information, where each item can have a number of subitems.</p>
+    <p>Click on the box(es) to open or close the tree branches.</p>
+    @{
+        List<string> subNames = new();
+        Dictionary<int, string> catDic = new();
+        int GetSubCount(Category category)
+        {
+            List<Category> categories = new();
+            if (category.Children.Count() > 0)
+            {
+
+            }
+            return 5;
+        }
+    }
+    @{
+        GetSubCount(@Model);
+    }
+    <ul id="myUL">
+        <li>
+            <span class="box">@Model.CategoryName</span>
+            @if (Model.Children.Count() > 0)
+            {
+                <ul class="nested">
+                    @foreach (Category item in Model.Children)
+                    {
+                        @if (item.Children.Count() > 0)
+                        {
+                            <li>
+                                <span class="box">@item.CategoryName</span>
+                                <ul class="nested">
+                                </ul>
+                            </li>
+                        }
+                    }
+                </ul>
+            }
+        </li>
+    </ul>
+    <script>
+        var deger;
+        var toggler = document.getElementsByClassName("box");
+        var i;
+
+        for (i = 0; i < toggler.length; i++) {
+            toggler[i].addEventListener("click", function () {
+                this.parentElement.querySelector(".nested").classList.toggle("active");
+                this.classList.toggle("check-box");
+            });
+        }
+
+    </script>
+
+</body>

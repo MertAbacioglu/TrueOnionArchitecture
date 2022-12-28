@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EasyTree" Version="1.1.0" />
+    <PackageReference Include="jsTree" Version="3.1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.1">
       <PrivateAssets>all</PrivateAssets>
@@ -17,10 +19,6 @@
   <ItemGroup>
     <ProjectReference Include="..\TrueOnion.APPLICATION\TrueOnion.APPLICATION.csproj" />
     <ProjectReference Include="..\TrueOnion.PERSISTINCE\TrueOnion.PERSISTINCE.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

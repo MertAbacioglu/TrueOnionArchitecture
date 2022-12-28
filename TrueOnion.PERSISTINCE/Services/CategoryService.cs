@@ -22,24 +22,34 @@ namespace TrueOnion.PERSISTINCE.Services
 
         public async Task<CategoryListVM> GetCategories()//redundant
         {
-            Result<List<CategoryVM>> categorVMs = (await GetActives());
+            Result<List<CategoryVM>> categorVMs = await GetActives();
             CategoryListVM categoryListVM = new() { Result = categorVMs };
             return categoryListVM;
         }
 
-        public async Task<Category> GetCategoriesWithChildren()
+        public async Task<CategoryVM> GetCategoriesWithChildren()
         {
             Category category = (await _categoryRepository.GetMainCategoryWithAllChildren());
             foreach (Category child in category.Children)
                 await GetChildrensChildren(child);
-            return category;
+
+            CategoryVM categoryVM = _mapper.Map<CategoryVM>(category);
+
+            return categoryVM;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">PARENT ID</param>
+        /// <returns></returns>
         public async Task<Category> GetCategoryWithChildren(int id)
         {
             Category category = (await _categoryRepository.GetSpesificCategoryWithChildren(id));
             foreach (Category child in category.Children)
                 await GetChildrensChildren(child);
+
+
             return category;
         }
         public async Task GetChildrensChildren(Category category)

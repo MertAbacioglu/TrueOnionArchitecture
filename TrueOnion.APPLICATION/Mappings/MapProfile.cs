@@ -30,6 +30,7 @@ namespace TrueOnion.APPLICATION.Mapping
                      .ReverseMap();
             CreateMap<Category, CategoryVM>()
                       .ForMember(dest => dest.ProductVMs, act => act.MapFrom(src => src.Products))
+                      .ForMember(dest => dest.Childreen, act => act.MapFrom(src => src.Children))
                       .ReverseMap();
             #endregion
 

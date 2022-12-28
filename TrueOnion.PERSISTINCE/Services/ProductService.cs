@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using TrueOnion.APPLICATION.Repositories;
 using TrueOnion.APPLICATION.Services;
+using TrueOnion.APPLICATION.ViewModels.Category;
 using TrueOnion.APPLICATION.ViewModels.Product;
 using TrueOnion.APPLICATION.ViewModels.ProductFeature;
 using TrueOnion.APPLICATION.ViewModels.ProductSupplier;
@@ -15,12 +16,14 @@ namespace TrueOnion.PERSISTINCE.Services
         private readonly IProductRepository _productRepository;
         private readonly IProductSupplierService _productSupplierService;
         private readonly IProductFeatureService _productFeatureService;
+        private readonly ICategoryService _categoryService;
 
-        public ProductService(IGenericRepository<Product> repository, IMapper mapper, IProductRepository productRepository, IProductSupplierService productSupplierService, IProductFeatureService productFeatureService, ISupplierService supplierService) : base(repository, mapper)
+        public ProductService(IGenericRepository<Product> repository, IMapper mapper, IProductRepository productRepository, IProductSupplierService productSupplierService, IProductFeatureService productFeatureService, ISupplierService supplierService, ICategoryService categoryService) : base(repository, mapper)
         {
             _productRepository = productRepository;
             _productSupplierService = productSupplierService;
             _productFeatureService = productFeatureService;
+            _categoryService = categoryService;
         }
 
         public async Task<ProductListVM> GetProducts()
@@ -31,24 +34,15 @@ namespace TrueOnion.PERSISTINCE.Services
             return new ProductListVM { Result = result };
         }
 
-        public async Task<Result<List<ProductVM>>> GetProductsByPriceRange(decimal min, decimal max)
-        {
-            List<Product> products = (await _productRepository.GetProductsByPriceRange(min, max)).ToList();
-            List<ProductVM> productVMs = _mapper.Map<List<ProductVM>>(products);
-            return Result<List<ProductVM>>.Success(productVMs);
-
-        }
 
         public override async Task<Result<ProductVM>> AddAsync(ProductSaveVM viewModel)
         {
-            Product productToBeAdded = new();//product to be added
-
-            ProductFeature productFeature = _mapper.Map<ProductFeature>(viewModel.ProductFeatureSaveVM);//product feature to be added
-
+            Product productToBeAdded = _mapper.Map<Product>(viewModel);
 
             Product added = await _repository.AddAsync(productToBeAdded);
 
-            List<SupplierVM> suppliersToBeAdded = viewModel.SupplierVMs.Where(x => x.isSelected == true).ToList(); // supplierId's to be added
+
+            List< SupplierVM> suppliersToBeAdded = viewModel.SupplierVMs.Where(x => x.isSelected == true).ToList(); // supplierId's to be added
 
             
             List<ProductSupplierSaveVM> psToBeAdded = new(); //suppliers to be added to Product
@@ -71,7 +65,9 @@ namespace TrueOnion.PERSISTINCE.Services
         public override async Task UpdateAsync(ProductSaveVM viewModel)
         {
             Product toBeUpdated = _productRepository.FindAsync(viewModel.ID).Result; //güncellenecek product
-
+            viewModel.ProductFeatureSaveVM.ID = viewModel.ID;
+            await _productFeatureService.UpdateAsync(viewModel.ProductFeatureSaveVM); //product feature güncellendi
+            await _productRepository.UpdateAsync(toBeUpdated);
             List<ProductSupplierVM>? toBeDeleted = (await _productSupplierService.Where(x=>x.ProductID==viewModel.ID)).Data.ToList();//silinecek cross table kayitlari
             if(toBeDeleted!=null)
                 await _productSupplierService.DestroyRangeAsync(toBeDeleted);//cross table kayitlari silindi
@@ -104,5 +100,14 @@ namespace TrueOnion.PERSISTINCE.Services
 
         }
 
+        public async Task<ProductListVM> GetProductsByCount(int count)
+        {
+            List<Product> products = (await _productRepository.GetProductsByCount(count)).ToList();
+            List<ProductVM> productVMs = _mapper.Map<List<ProductVM>>(products);
+            Result<List<ProductVM>> result = Result<List<ProductVM>>.Success(productVMs);
+            return new ProductListVM { Result = result };
+
+
+        }
     }
 }

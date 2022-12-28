@@ -1,0 +1,13 @@
+﻿@model ProductListVM
+
+<div>
+<h5 style="color:red">Recently Added Product</h5>
+
+    @foreach (ProductVM item in Model.Result.Data)
+    {
+        <p>@item.Name</p>
+    }
+</div>
+
+
+

@@ -12,7 +12,6 @@ namespace TrueOnion.APPLICATION.ViewModels.Product
         {
             SupplierVMs = new List<SupplierVM>();
         }
-
         [DisplayName("Product Name")]
         public string Name { get; set; }
         public int Stock { get; set; }
@@ -22,7 +21,7 @@ namespace TrueOnion.APPLICATION.ViewModels.Product
         public List<int> SupplierIDs { get; set; }
         public List<CategoryVM>? CategoryVMs { get; set; }
         public List<SupplierVM>? SupplierVMs { get; set; }
-        public ProductFeatureSaveVM ProductFeatureSaveVM { get; set; }
+        public ProductFeatureSaveVM? ProductFeatureSaveVM { get; set; }
 
     }
 }

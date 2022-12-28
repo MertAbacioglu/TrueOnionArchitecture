@@ -19,9 +19,13 @@ namespace TrueOnion.WEB.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var a = await _categoryService.GetCategoriesWithChildren();
             return View(await _categoryService.GetCategories());           
         }
-        
+        public async Task<IActionResult> TreeView()
+        {
+            return View(await _categoryService.GetCategoriesWithChildren());
+        }
         public async Task<IActionResult> Add()
         {
             return View();

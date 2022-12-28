@@ -17,23 +17,26 @@
     <thead style="font-weight:bold;font-size:larger">
         <tr>
             <td>Category Name</td>
+            <td>Options</td>
 
         </tr>
     </thead>
     <tbody>
         @foreach (CategoryVM item in Model.Result.Data)
         {
+
             <tr>
                 <td>@item.CategoryName</td>
 
                 <td>
                     <a class="btn btn-warning" asp-controller="Categories" asp-action="Update" asp-route-id="@item.ID">Update</a>
-                    <a class="btn btn-danger" asp-controller="Categories" asp-action="Remove" asp-route-id="@item.ID">Delete</a>
+                    <a class="btn btn-danger" asp-controller="Categories" asp-action="Remove" asp-route-id="@item.ID">Delete</a>                    
+
                 </td>
+
             </tr>
         }
-
+        
     </tbody>
 
 </table>
-

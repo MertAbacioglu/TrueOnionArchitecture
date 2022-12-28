@@ -38,7 +38,7 @@ namespace TrueOnion.WEB.Controllers
 
         public async Task<IActionResult> Index()
         {
-            await _categoryService.GetCategoryWithChildren(83);
+            await _categoryService.GetCategoryWithChildren(3);
             //await _categoryService.GetCategoriesWithChildren();
             return View(await _productService.GetProducts());
         }

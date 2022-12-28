@@ -38,13 +38,19 @@ namespace TrueOnion.PERSISTINCE.Repositories
             return products;
         }
 
-        public async Task<IEnumerable<Product>> GetProductsByPriceRange(decimal min, decimal max)
+        public async Task<IEnumerable<Product>> GetProductsByCount(int count)
         {
-            List<Product> productsByPriceRange = GetActivesAsIQueryable()
-                .Where(x => x.Price >= min && x.Price <= max)
+            List<Product> products = await GetActivesAsIQueryable()
                 .Include(x => x.Category)
-                .ToList();
-            return productsByPriceRange;
+                .Where(x => x.Category.Status != DataStatus.Deleted)
+                .Include(x => x.ProductFeature)
+                .Include(x => x.ProductSuppliers)
+                    .ThenInclude(x => x.Supplier)
+                .OrderByDescending(x=>x.InsertedDate)
+                .Take(count)
+                .ToListAsync();
+
+            return products;
         }
 
         
