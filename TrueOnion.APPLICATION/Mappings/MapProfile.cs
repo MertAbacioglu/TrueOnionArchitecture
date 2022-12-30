@@ -43,6 +43,7 @@ namespace TrueOnion.APPLICATION.Mapping
 
             #region Supplier Mapping
             CreateMap<Supplier, SupplierVM>()
+                     .ForMember(dest => dest.ProductSupplierVMs, act => act.MapFrom(src => src.ProductSuppliers))
                      .ReverseMap();
             CreateMap<Supplier, SupplierSaveVM>()
                     .ReverseMap(); ;
@@ -58,10 +59,6 @@ namespace TrueOnion.APPLICATION.Mapping
             CreateMap<ProductSupplierVM, ProductSupplierSaveVM>()
                 .ReverseMap();
             #endregion
-
-            
-            
-
 
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,16 @@ namespace TrueOnion.PERSISTINCE.Repositories
     {
         public SupplierRepository(AppDbContext appDbContext) : base(appDbContext)
         {
+        }
+
+        public async Task<IEnumerable<Supplier>> GetSuppliersWithProducts()
+        {
+            List<Supplier> suppliers = await GetActivesAsIQueryable()
+                .Include(x => x.ProductSuppliers)
+                    .ThenInclude(x => x.Product)
+                .ToListAsync();
+            return suppliers;
+
         }
     }
 }

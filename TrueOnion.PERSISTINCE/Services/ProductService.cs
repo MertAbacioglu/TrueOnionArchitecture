@@ -34,7 +34,6 @@ namespace TrueOnion.PERSISTINCE.Services
             return new ProductListVM { Result = result };
         }
 
-
         public override async Task<Result<ProductVM>> AddAsync(ProductSaveVM viewModel)
         {
             Product productToBeAdded = _mapper.Map<Product>(viewModel);

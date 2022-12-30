@@ -1,0 +1,19 @@
+﻿@model ErrorVM
+@{
+    ViewData["Title"] = "Error";
+}
+<h1 class="text-danger">Error.</h1>
+
+<img src="~/images/lemmykilmistererror.jpg" />
+ <br />
+ <br />
+
+@if(Model.Errors.Any())
+{
+    <div class="alert alert-danger">
+        @foreach (string error in Model.Errors)
+        {
+            <h1>@error</h1>
+        }
+    </div>
+}

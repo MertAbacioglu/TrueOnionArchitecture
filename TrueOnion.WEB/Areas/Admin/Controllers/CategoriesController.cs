@@ -6,8 +6,9 @@ using TrueOnion.APPLICATION.Wrappers;
 using TrueOnion.DOMAIN.Entities.Concrates;
 using TrueOnion.WEB.Filters;
 
-namespace TrueOnion.WEB.Controllers
+namespace TrueOnion.WEB.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoriesController : Controller
     {
         private readonly ICategoryService _categoryService;

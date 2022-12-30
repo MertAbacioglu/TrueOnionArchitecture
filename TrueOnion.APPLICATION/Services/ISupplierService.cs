@@ -10,5 +10,7 @@ namespace TrueOnion.APPLICATION.Services
 {
     public interface ISupplierService : IGenericService<SupplierSaveVM, SupplierVM,Supplier>
     {
+        public Task<SupplierListVM> GetSuppliersWithProducts();
+
     }
 }

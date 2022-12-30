@@ -1,15 +1,15 @@
 ﻿@model ProductListVM
 
-
 <div class="text-center">
-@*    <h1 class="display-4">Product List</h1>
-*@    @await Component.InvokeAsync("LastProduct",new{ count=1})
+    @*    <h1 class="display-4">Product List</h1>
+    *@    @await Component.InvokeAsync("LastProduct",new{ count=1})
 </div>
 <div>
     <a class="btn btn-primary" asp-controller="Products" asp-action="Add">Add Product</a>
+    <a class="btn btn-primary"  asp-controller="Suppliers" asp-action="Index">Supplier List</a>
+    <a class="btn btn-primary"  asp-controller="Categories" asp-action="Index">Category List</a>
 
 </div>
-<br />
 <div class="row">
 
     <div class="col-12">
@@ -72,5 +72,3 @@
         </table>
     </div>
 </div>
-
-

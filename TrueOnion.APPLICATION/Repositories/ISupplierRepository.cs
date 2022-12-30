@@ -9,5 +9,6 @@ namespace TrueOnion.APPLICATION.Repositories
 {
     public interface ISupplierRepository : IGenericRepository<Supplier>
     {
+        public Task<IEnumerable<Supplier>> GetSuppliersWithProducts();
     }
 }

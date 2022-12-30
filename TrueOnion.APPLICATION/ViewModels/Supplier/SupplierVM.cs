@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrueOnion.APPLICATION.ViewModels.Abstracts;
+using TrueOnion.APPLICATION.ViewModels.Product;
 using TrueOnion.APPLICATION.ViewModels.ProductSupplier;
 
 namespace TrueOnion.APPLICATION.ViewModels.Supplier
@@ -15,6 +16,7 @@ namespace TrueOnion.APPLICATION.ViewModels.Supplier
         public int SupplierID { get; set; }
         public string CompanyName { get; set; }
         public bool isSelected { get; set; }
+        public List<ProductSupplierVM> ProductSupplierVMs { get; set; }
 
     }
 }

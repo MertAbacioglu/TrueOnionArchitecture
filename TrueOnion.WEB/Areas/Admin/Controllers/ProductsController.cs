@@ -11,8 +11,9 @@ using TrueOnion.DOMAIN.Entities.Concrates;
 using TrueOnion.PERSISTINCE.Repositories;
 using TrueOnion.WEB.Filters;
 
-namespace TrueOnion.WEB.Controllers
+namespace TrueOnion.WEB.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class ProductsController : Controller
     {
         private readonly IProductService _productService;
@@ -56,7 +57,7 @@ namespace TrueOnion.WEB.Controllers
         public async Task<IActionResult> Add(ProductSaveVM viewModel)
         {
             await _productService.AddAsync(viewModel);
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -83,15 +84,18 @@ namespace TrueOnion.WEB.Controllers
         public async Task<IActionResult> Update(ProductSaveVM viewModel)
         {
             await _productService.UpdateAsync(viewModel);
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         [ServiceFilter(typeof(NotFoundFilter<ProductSaveVM, ProductVM, Product>))]
         public async Task<IActionResult> Remove(int id)
         {
             await _productService.DeleteAsync(id);
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
-
+        public async Task<IActionResult> SayHi(int id)
+        {
+            return View();
+        }
     }
 }
