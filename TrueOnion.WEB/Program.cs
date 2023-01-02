@@ -3,11 +3,8 @@ using Autofac;
 using TrueOnion.PERSISTINCE.DependencyResolvers.Autofac;
 using TrueOnion.APPLICATION.DependencyResolvers;
 using TrueOnion.WEB.DependencyResolvers;
-using Microsoft.AspNetCore.Mvc;
-using Autofac.Core;
-using FluentValidation.AspNetCore;
-using TrueOnion.APPLICATION.Validators;
-using TrueOnion.WEB.Filters;
+using TrueOnion.PERSISTINCE.DependencyResolvers;
+using TrueOnion.INFRASTRUCTURE.DependencyResolvers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,15 +12,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddWebLayerInjections();
 
-builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-
+builder.Services.AddIdentityService();
 builder.Services.AddApplicationLayerInjections();
-
+builder.Services.AddInfrastructureLayerInjections(builder.Configuration);
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureServices(x => x.AddAutofac()).UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(builder =>
 {
     builder.RegisterModule(new AutofacPersistanceModule());
 });
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -55,6 +51,10 @@ app.MapControllerRoute(
       name: "area",
       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Register}/{id?}");
+
 app.MapAreaControllerRoute(
       name: "default",
       areaName: "Admin",
@@ -62,7 +62,5 @@ app.MapAreaControllerRoute(
 
 
 
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Products}/{action=Index}/{id?}");
+
 app.Run();

@@ -7,6 +7,8 @@ namespace TrueOnion.PERSISTINCE.Seeds
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AppUser>().HasData(FakeDataGenerator.AppUsers);
+            modelBuilder.Entity<AppRole>().HasData(FakeDataGenerator.AppRoles);
             modelBuilder.Entity<Category>().HasData(FakeDataGenerator.Categories);
             modelBuilder.Entity<Product>().HasData(FakeDataGenerator.Products);
             modelBuilder.Entity<ProductFeature>().HasData(FakeDataGenerator.ProductFeatures);

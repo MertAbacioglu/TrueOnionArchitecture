@@ -10,7 +10,7 @@ namespace TrueOnion.DOMAIN.Entities.Common
             InsertedDate = DateTime.Now;
             Status = DataStatus.Inserted;
         }
-        public int ID { get; set; }
+        public int Id { get; set; }
         public DateTime? InsertedDate { get; set; }
         public DateTime? LastModifiedDate { get; set; }
         public DataStatus Status { get; set; }

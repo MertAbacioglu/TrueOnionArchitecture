@@ -47,7 +47,7 @@ namespace TrueOnion.PERSISTINCE.Services
             List<ProductSupplierSaveVM> psToBeAdded = new(); //suppliers to be added to Product
             
             foreach (var item in suppliersToBeAdded)
-                psToBeAdded.Add(new ProductSupplierSaveVM { SupplierID = item.ID, ProductID = added.ID });
+                psToBeAdded.Add(new ProductSupplierSaveVM { SupplierId = item.Id, ProductId = added.Id });
 
             await _productSupplierService.AddRangeAsync(psToBeAdded);
             return Result<ProductVM>.Success(_mapper.Map<ProductVM>(added));
@@ -63,19 +63,19 @@ namespace TrueOnion.PERSISTINCE.Services
         
         public override async Task UpdateAsync(ProductSaveVM viewModel)
         {
-            Product toBeUpdated = _productRepository.FindAsync(viewModel.ID).Result; //güncellenecek product
-            viewModel.ProductFeatureSaveVM.ID = viewModel.ID;
+            Product toBeUpdated = _productRepository.FindAsync(viewModel.Id).Result; //güncellenecek product
+            viewModel.ProductFeatureSaveVM.Id = viewModel.Id;
             await _productFeatureService.UpdateAsync(viewModel.ProductFeatureSaveVM); //product feature güncellendi
             await _productRepository.UpdateAsync(toBeUpdated);
-            List<ProductSupplierVM>? toBeDeleted = (await _productSupplierService.Where(x=>x.ProductID==viewModel.ID)).Data.ToList();//silinecek cross table kayitlari
+            List<ProductSupplierVM>? toBeDeleted = (await _productSupplierService.Where(x=>x.ProductID==viewModel.Id)).Data.ToList();//silinecek cross table kayitlari
             if(toBeDeleted!=null)
                 await _productSupplierService.DestroyRangeAsync(toBeDeleted);//cross table kayitlari silindi
 
             if (viewModel.SupplierVMs!=null)
             {
-                List<int> newSupplierIDs = viewModel.SupplierVMs.Where(x => x.isSelected == true).Select(x => x.ID).ToList();//eklenecek yeni supplier'larin ID listesi
+                List<int> newSupplierIDs = viewModel.SupplierVMs.Where(x => x.isSelected == true).Select(x => x.Id).ToList();//eklenecek yeni supplier'larin ID listesi
                 List<ProductSupplierSaveVM> psToBeAdded = new();
-                List<ProductSupplierSaveVM> productsSuppliersToBeAdded = newSupplierIDs.Select(x => new ProductSupplierSaveVM { ProductID = viewModel.ID, SupplierID = x }).ToList();//eklenecek yeni supplier'larin ProductSupplierSaveVM listesi
+                List<ProductSupplierSaveVM> productsSuppliersToBeAdded = newSupplierIDs.Select(x => new ProductSupplierSaveVM { ProductId = viewModel.Id, SupplierId = x }).ToList();//eklenecek yeni supplier'larin ProductSupplierSaveVM listesi
                 await _productSupplierService.AddRangeAsync(productsSuppliersToBeAdded);
             }
 
@@ -88,9 +88,9 @@ namespace TrueOnion.PERSISTINCE.Services
             
             await _repository.DeleteAsync(entityToBeDeleted);//make product deleted
             
-            ProductFeatureSaveVM? pfToBeDeleted = (await _productFeatureService.FindAsync(entityToBeDeleted.ID)).Data;
+            ProductFeatureSaveVM? pfToBeDeleted = (await _productFeatureService.FindAsync(entityToBeDeleted.Id)).Data;
             if (pfToBeDeleted != null)
-                await _productFeatureService.DeleteAsync(pfToBeDeleted.ID);//make product feature deleted
+                await _productFeatureService.DeleteAsync(pfToBeDeleted.Id);//make product feature deleted
             
             List<ProductSupplierVM>? psToBeDeleted = (await _productSupplierService.Where(x => x.ProductID == id)).Data;
             

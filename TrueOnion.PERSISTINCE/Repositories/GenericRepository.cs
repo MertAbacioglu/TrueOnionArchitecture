@@ -8,13 +8,14 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TrueOnion.APPLICATION.Repositories;
+using TrueOnion.DOMAIN.Entities.Abstarct;
 using TrueOnion.DOMAIN.Entities.Common;
 using TrueOnion.DOMAIN.Enums;
 using TrueOnion.PERSISTINCE.Context;
 
 namespace TrueOnion.PERSISTINCE.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
+    public class GenericRepository<T> : IGenericRepository<T> where T : class,IEntity
     {
         protected readonly AppDbContext _appDbContext;
         protected readonly DbSet<T> _dbSet;

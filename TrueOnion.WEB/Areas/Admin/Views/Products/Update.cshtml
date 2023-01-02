@@ -8,7 +8,7 @@
     <form asp-action="Update" method="post" asp-controller="Products">
         <div class="row">
             <div class="col-md-6">
-                <input type="hidden" asp-for="@Model.ID" value="@Model.ID" />
+                <input type="hidden" asp-for="@Model.Id" value="@Model.Id" /> @*todo*@
 
                 <div class="form-group">
                     <label asp-for="@Model.Name"></label>
@@ -31,9 +31,9 @@
                 </div>
                 <br />
                 <div class="form-group">
-                    <label asp-for="@Model.CategoryID"></label>
+                    <label asp-for="@Model.CategoryId"></label>
 
-                    <select asp-for="@Model.CategoryID" asp-items="@(new SelectList(Model.CategoryVMs, nameof(CategoryVM.ID), nameof(CategoryVM.CategoryName)))" class="form-control"></select>
+                    <select asp-for="@Model.CategoryId" asp-items="@(new SelectList(Model.CategoryVMs, nameof(CategoryVM.Id), nameof(CategoryVM.CategoryName)))" class="form-control"></select>
 
                 </div>
                 <br />
@@ -41,7 +41,7 @@
                     <h4>Supplier(s) For This Product</h4>
                     @for (int i = 0; i < Model.SupplierVMs.Count(); i++)
                     {
-                        if (Model.SupplierIDs.Contains(Model.SupplierVMs[i].ID))
+                        if (Model.SupplierIDs.Contains(Model.SupplierVMs[i].Id))
                         {
                             <input type="checkbox" asp-for="@Model.SupplierVMs[i].isSelected" checked />
                         }
@@ -51,7 +51,7 @@
 
                         }
                         <label asp-for="@Model.SupplierVMs[i].isSelected">@Model.SupplierVMs[i].CompanyName</label>
-                        <input type="hidden" asp-for="@Model.SupplierVMs[i].ID" />
+                        <input type="hidden" asp-for="@Model.SupplierVMs[i].Id" />
                         <br />
                     }
 

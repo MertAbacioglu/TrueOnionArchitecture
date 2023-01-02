@@ -31,9 +31,9 @@
                     <br />
 
                     <div class="form-group">
-                        <label asp-for="@Model.CategoryID"></label>
+                        <label asp-for="@Model.CategoryId"></label>
 
-                        <select asp-for="@Model.CategoryID" asp-items="@(new SelectList(Model.CategoryVMs, nameof(CategoryVM.ID), nameof(CategoryVM.CategoryName)))" class="form-control"></select>
+                        <select asp-for="@Model.CategoryId" asp-items="@(new SelectList(Model.CategoryVMs, nameof(CategoryVM.Id), nameof(CategoryVM.CategoryName)))" class="form-control"></select>
 
                     </div>
                     <br />
@@ -43,7 +43,7 @@
                         {
                             <input type="checkbox" asp-for="@Model.SupplierVMs[i].isSelected" />
                             <label asp-for="@Model.SupplierVMs[i].isSelected">@Model.SupplierVMs[i].CompanyName</label>
-                            <input type="hidden" asp-for="@Model.SupplierVMs[i].ID" />
+                            <input type="hidden" asp-for="@Model.SupplierVMs[i].Id" />
                             <br />
                         }
 

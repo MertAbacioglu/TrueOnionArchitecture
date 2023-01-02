@@ -7,6 +7,7 @@ using TrueOnion.APPLICATION.Repositories;
 using TrueOnion.APPLICATION.Services;
 using TrueOnion.APPLICATION.ViewModels.Abstracts;
 using TrueOnion.APPLICATION.Wrappers;
+using TrueOnion.DOMAIN.Entities.Abstarct;
 using TrueOnion.DOMAIN.Entities.Common;
 using TrueOnion.DOMAIN.Enums;
 
@@ -15,7 +16,7 @@ namespace TrueOnion.PERSISTINCE.Services
     public  class GenericService<SaveViewModel, ViewModel, Entity> : IGenericService<SaveViewModel, ViewModel, Entity>
         where SaveViewModel : SaveVM
         where ViewModel : IBaseVM
-        where Entity : BaseEntity
+        where Entity : class,IEntity
     {
         protected readonly IGenericRepository<Entity> _repository;
         protected readonly IMapper _mapper;

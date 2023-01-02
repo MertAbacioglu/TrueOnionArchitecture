@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using TrueOnion.APPLICATION.ViewModels.Account;
+using TrueOnion.APPLICATION.ViewModels.AppUser;
 using TrueOnion.APPLICATION.ViewModels.Category;
 using TrueOnion.APPLICATION.ViewModels.Product;
 using TrueOnion.APPLICATION.ViewModels.ProductFeature;
@@ -19,7 +21,7 @@ namespace TrueOnion.APPLICATION.Mapping
                     .ForMember(dest => dest.ProductSupplierVMs, act => act.MapFrom(src => src.ProductSuppliers))
                     .ReverseMap();
             CreateMap<Product, ProductSaveVM>()
-                .ForMember(dest => dest.SupplierIDs, act => act.MapFrom(src => src.ProductSuppliers.Select(x => x.Supplier).Select(x => x.ID)))
+                .ForMember(dest => dest.SupplierIDs, act => act.MapFrom(src => src.ProductSuppliers.Select(x => x.Supplier).Select(x => x.Id)))
                 .ForMember(dest => dest.ProductFeatureSaveVM, act => act.MapFrom(src => src.ProductFeature))
                 .ReverseMap();
             CreateMap<ProductVM, ProductSaveVM>().ReverseMap();
@@ -57,6 +59,15 @@ namespace TrueOnion.APPLICATION.Mapping
             CreateMap<ProductSupplier, ProductSupplierSaveVM>()
                 .ReverseMap();
             CreateMap<ProductSupplierVM, ProductSupplierSaveVM>()
+                .ReverseMap();
+            #endregion
+
+            #region AppUser Mapping
+            CreateMap<AppUser, AppUserVM>()
+                .ReverseMap();
+            CreateMap<AppUser, AppUserSaveVM>()
+                .ReverseMap();
+            CreateMap<AppUser,LoginVM>()
                 .ReverseMap();
             #endregion
 

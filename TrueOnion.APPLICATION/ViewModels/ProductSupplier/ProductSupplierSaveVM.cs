@@ -9,8 +9,8 @@ namespace TrueOnion.APPLICATION.ViewModels.ProductSupplier
 {
     public class ProductSupplierSaveVM : SaveVM
     {
-        public int ProductID { get; set; }
-        public int SupplierID { get; set; }
+        public int ProductId { get; set; }
+        public int SupplierId { get; set; }
         public int MaxCountPerShipping { get; set; }
     }
 }

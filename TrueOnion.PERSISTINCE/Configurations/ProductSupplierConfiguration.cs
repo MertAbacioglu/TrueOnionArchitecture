@@ -8,7 +8,7 @@ namespace TrueOnion.PERSISTINCE.Configurations
         public override void Configure(EntityTypeBuilder<ProductSupplier> builder)
         {
             base.Configure(builder);
-            builder.Ignore(x => x.ID);
+            builder.Ignore(x => x.Id);
             builder.HasKey(x =>new
             {
                 x.ProductID,

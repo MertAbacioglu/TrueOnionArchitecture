@@ -2,17 +2,15 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using TrueOnion.APPLICATION.Services;
 using TrueOnion.APPLICATION.ViewModels.Abstracts;
-using TrueOnion.APPLICATION.ViewModels.ResponseViewModels;
 using TrueOnion.APPLICATION.ViewModels.ResultTypeViewModels;
-using TrueOnion.APPLICATION.Wrappers;
-using TrueOnion.DOMAIN.Entities.Common;
+using TrueOnion.DOMAIN.Entities.Abstarct;
 
 namespace TrueOnion.WEB.Filters
 {
     public class NotFoundFilter<SaveViewModel, ViewModel, Entity> : IAsyncActionFilter
         where SaveViewModel : SaveVM
         where ViewModel : IBaseVM
-        where Entity : BaseEntity
+        where Entity : class, IEntity
 
     {
         private readonly IGenericService<SaveViewModel, ViewModel, Entity> _genericService;

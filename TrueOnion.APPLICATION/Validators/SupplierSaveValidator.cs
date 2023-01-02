@@ -16,6 +16,10 @@ namespace TrueOnion.APPLICATION.Validators
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("{PropertyName} is required");
+            RuleFor(x=>x.Address)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("{PropertyName} is required");
         }
     }
 }

@@ -1,0 +1,66 @@
+﻿@model AppUserSaveVM
+
+<h1>Register</h1>
+
+<div class="row">
+
+
+    <form asp-action="Register" method="post" asp-controller="Home">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="@Model.UserName"></label>
+                    <input asp-for="@Model.UserName" class="form-control" />
+                    <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+                </div>
+                <br />
+            </div>
+
+        </div>
+                <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="@Model.Email"></label>
+                    <input asp-for="@Model.Email" class="form-control" />
+                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                </div>
+                <br />
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="@Model.Password"></label>
+                    <input asp-for="@Model.Password" class="form-control" />
+                    <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                </div>
+                <br />
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="@Model.ConfirmPassword"></label>
+                    <input asp-for="@Model.ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
+                </div>
+                <br />
+            </div>
+
+        </div>
+
+        <div class="form-group">
+
+            <input type="submit" value="Register" class="btn-primary" />
+
+        </div>
+    </form>
+
+
+
+
+
+</div>

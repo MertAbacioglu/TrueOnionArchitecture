@@ -18,12 +18,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TrueOnion.APPLICATION\TrueOnion.APPLICATION.csproj" />
+    <ProjectReference Include="..\TrueOnion.INFRASTRUCTURE\TrueOnion.INFRASTRUCTURE.csproj" />
     <ProjectReference Include="..\TrueOnion.PERSISTINCE\TrueOnion.PERSISTINCE.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

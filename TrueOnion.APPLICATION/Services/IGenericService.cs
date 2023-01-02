@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TrueOnion.APPLICATION.ViewModels.Abstracts;
 using TrueOnion.APPLICATION.Wrappers;
+using TrueOnion.DOMAIN.Entities.Abstarct;
 using TrueOnion.DOMAIN.Entities.Common;
 
 namespace TrueOnion.APPLICATION.Services
@@ -13,7 +14,7 @@ namespace TrueOnion.APPLICATION.Services
     public interface IGenericService<SaveViewModel, ViewModel, Entity>
         where SaveViewModel : SaveVM
         where ViewModel : IBaseVM
-        where Entity : BaseEntity
+        where Entity : class, IEntity
     {
         //Find Command
         Task<Result<SaveViewModel>> FindAsync(params object[] values);

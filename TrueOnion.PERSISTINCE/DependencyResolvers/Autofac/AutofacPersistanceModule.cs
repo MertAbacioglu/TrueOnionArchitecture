@@ -29,7 +29,7 @@ namespace TrueOnion.PERSISTINCE.DependencyResolvers.Autofac
             Assembly executingAssembly = Assembly.GetExecutingAssembly();
 
             Assembly repoServiceAssembly = Assembly.GetAssembly(typeof(AppDbContext));
-            
+
 
             builder.RegisterAssemblyTypes(executingAssembly, repoServiceAssembly)
                 .Where(x => x.Name.EndsWith("Repository")).AsImplementedInterfaces()
@@ -49,6 +49,7 @@ namespace TrueOnion.PERSISTINCE.DependencyResolvers.Autofac
                 return new AppDbContext(opt.Options);
             }).AsSelf().InstancePerLifetimeScope();
 
+
         }
-        }
+    }
 }

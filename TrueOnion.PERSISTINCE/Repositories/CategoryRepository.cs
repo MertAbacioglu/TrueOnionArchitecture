@@ -33,7 +33,7 @@ namespace TrueOnion.PERSISTINCE.Repositories
         {
             Category? category = await GetActivesAsIQueryable()
                                       .Include(x => x.Children)
-                                      .FirstOrDefaultAsync(x => x.ID == id);
+                                      .FirstOrDefaultAsync(x => x.Id == id);
 
             //foreach (Category child in category.Children)
             //    await LoadChildren(child);
@@ -46,7 +46,7 @@ namespace TrueOnion.PERSISTINCE.Repositories
         {
             return await GetActivesAsIQueryable()
                          .Include(x => x.Children)
-                         .Where(x => x.ParentID == category.ID)
+                         .Where(x => x.ParentID == category.Id)
                          .ToListAsync();
         }
 

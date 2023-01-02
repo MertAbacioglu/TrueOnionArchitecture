@@ -18,7 +18,7 @@ namespace TrueOnion.PERSISTINCE.Configurations
             builder
                 .HasOne(x => x.ProductFeature)
                 .WithOne(x => x.Product)
-                .HasForeignKey<ProductFeature>(x => x.ID)
+                .HasForeignKey<ProductFeature>(x => x.Id)
                 .OnDelete(DeleteBehavior.Cascade);
             ;
         }

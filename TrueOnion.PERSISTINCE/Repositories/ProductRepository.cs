@@ -20,7 +20,7 @@ namespace TrueOnion.PERSISTINCE.Repositories
                 .Include(x => x.ProductFeature)
                 .Include(x => x.ProductSuppliers)
                     .ThenInclude(x => x.Supplier)
-                .FirstOrDefaultAsync(x=>x.ID==id);
+                .FirstOrDefaultAsync(x=>x.Id==id);
 
             return product;
         }

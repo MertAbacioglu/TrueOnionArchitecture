@@ -1,6 +1,4 @@
 ﻿using Bogus;
-using Bogus.Bson;
-using Bogus.DataSets;
 using TrueOnion.DOMAIN.Entities.Concrates;
 using TrueOnion.DOMAIN.Enums;
 
@@ -25,7 +23,7 @@ namespace TrueOnion.PERSISTINCE.Seeds
             .RuleFor(x => x.LastModifiedDate, x => null)
             .RuleFor(x => x.Products, x => null)
             .RuleFor(x => x.ParentID, x => categoryId == 1 ? null : categoryId == 2 ? 1 : new Random().Next(1, categoryId))
-            .RuleFor(x => x.ID, x => categoryId++)
+            .RuleFor(x => x.Id, x => categoryId++)
             .RuleFor(x => x.Status, x => DataStatus.Inserted);
             Categories = categoryFaker.Generate(categoryCount);
             #endregion
@@ -34,14 +32,14 @@ namespace TrueOnion.PERSISTINCE.Seeds
             int productId = 1;
             Faker<Product> productFaker = new();
             productFaker.StrictMode(false)
-            .RuleFor(x => x.ID, x => productId++)
+            .RuleFor(x => x.Id, x => productId++)
             .RuleFor(x => x.InsertedDate, x => x.Date.Between(new DateTime(2020, 3, 14), DateTime.Now))
             .RuleFor(x => x.Name, x => x.Commerce.ProductName())
             .RuleFor(x => x.Price, x => x.Commerce.Price(1).First())
             .RuleFor(x => x.LastModifiedDate, x => null)
             .RuleFor(x => x.Status, x => DataStatus.Inserted)
             .RuleFor(x => x.Stock, x => x.Random.Int(1, 200))
-            .RuleFor(x => x.CategoryID, x => x.PickRandom(Categories).ID);
+            .RuleFor(x => x.CategoryID, x => x.PickRandom(Categories).Id);
 
             Products = productFaker.Generate(30);
             #endregion
@@ -50,7 +48,7 @@ namespace TrueOnion.PERSISTINCE.Seeds
             int productFeatureId = 1;
             Faker<ProductFeature> productFeatureFaker = new();
             productFeatureFaker.StrictMode(false)
-            .RuleFor(x => x.ID, x => productFeatureId++)
+            .RuleFor(x => x.Id, x => productFeatureId++)
             .RuleFor(x => x.InsertedDate, x => x.Date.Between(new DateTime(2020, 3, 14), DateTime.Now))
             .RuleFor(x => x.LastModifiedDate, x => null)
             .RuleFor(x => x.Status, x => DataStatus.Inserted)
@@ -63,13 +61,14 @@ namespace TrueOnion.PERSISTINCE.Seeds
 
             #region Fake Supplier Datas
             int supplierId = 1;
-             Faker<Supplier> supplierFaker = new();
+            Faker<Supplier> supplierFaker = new();
 
             supplierFaker.StrictMode(false)
-            .RuleFor(x => x.ID, x => supplierId++)
+            .RuleFor(x => x.Id, x => supplierId++)
             .RuleFor(x => x.InsertedDate, x => x.Date.Between(new DateTime(2020, 3, 14), DateTime.Now))
             .RuleFor(x => x.LastModifiedDate, x => null)
             .RuleFor(x => x.Status, x => DataStatus.Inserted)
+            .RuleFor(x => x.Address, x => x.Address.FullAddress())
             .RuleFor(x => x.CompanyName, x => x.Company.CompanyName());
 
             Suppliers = supplierFaker.Generate(10);
@@ -79,8 +78,8 @@ namespace TrueOnion.PERSISTINCE.Seeds
             #region Fake ProductSupplier Datas
             Faker<ProductSupplier> productSupplierFaker = new();
             productSupplierFaker.StrictMode(false)
-            .RuleFor(x => x.ProductID, x => x.PickRandom(Products).ID)
-            .RuleFor(x => x.SupplierID, x => x.PickRandom(Suppliers).ID)
+            .RuleFor(x => x.ProductID, x => x.PickRandom(Products).Id)
+            .RuleFor(x => x.SupplierID, x => x.PickRandom(Suppliers).Id)
             .RuleFor(x => x.InsertedDate, x => x.Date.Between(new DateTime(2020, 3, 14), DateTime.Now))
             .RuleFor(x => x.LastModifiedDate, x => null)
             .RuleFor(x => x.Status, x => DataStatus.Inserted)
@@ -92,8 +91,42 @@ namespace TrueOnion.PERSISTINCE.Seeds
                 .ToList();
             #endregion
 
+            #region Fake User Datas
+            int userId = 1;
+            Faker<AppUser> appUserFaker = new();
+            appUserFaker.StrictMode(false)
+                .RuleFor(x => x.Id, x => userId++)
+                .RuleFor(x => x.InsertedDate, x => x.Date.Between(new DateTime(2020, 3, 14), DateTime.Now))
+                .RuleFor(x => x.LastModifiedDate, x => null)
+                .RuleFor(x => x.Status, x => DataStatus.Inserted)
+                .RuleFor(x => x.UserName, x => x.Internet.UserName())
+                .RuleFor(x => x.NormalizedUserName, (f, usr) => usr.UserName.ToUpper())
+                .RuleFor(x => x.Email, x => x.Internet.Email())
+                .RuleFor(x => x.NormalizedEmail, (f, usr) => usr.Email.ToUpper())
+                .RuleFor(x => x.PasswordHash, x => x.Internet.Password())
+                .RuleFor(x => x.PhoneNumber, x => x.Phone.PhoneNumber());
+            AppUsers = appUserFaker.Generate(10);
+            #endregion
+
+            #region Fake Role Datas
+            int roleId = 1;
+            foreach (Role item in (Role[])Enum.GetValues(typeof(Role)))
+                AppRoles.Add(new AppRole
+                {
+                    Id = roleId++,
+                    Name = item.ToString(),
+                    InsertedDate = DateTime.Now,
+                    Status = DataStatus.Inserted,
+                    NormalizedName = item.ToString().ToUpper(),
+                });
+
+            #endregion
+
         }
 
+
+        public static List<AppUser> AppUsers { get; set; }
+        public static List<AppRole> AppRoles { get; set; } = new List<AppRole>();
 
         public static List<Product> Products { get; set; }
         public static List<Category> Categories { get; set; }

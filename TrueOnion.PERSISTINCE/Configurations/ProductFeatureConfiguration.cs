@@ -13,7 +13,7 @@ namespace TrueOnion.PERSISTINCE.Configurations
         public override void Configure(EntityTypeBuilder<ProductFeature> builder)
         {
             base.Configure(builder);
-            builder.HasKey(x => x.ID);
+            builder.HasKey(x => x.Id);
         }
 
     }

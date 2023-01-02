@@ -22,13 +22,450 @@ namespace TrueOnion.PERSISTINCE.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TrueOnion.DOMAIN.Entities.Concrates.Category", b =>
+            modelBuilder.Entity("TrueOnion.DOMAIN.Entities.Concrates.AppRole", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("InsertedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            InsertedDate = new DateTime(2023, 1, 2, 16, 19, 33, 615, DateTimeKind.Local).AddTicks(7096),
+                            Name = "Admin",
+                            NormalizedName = "ADMIN",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            InsertedDate = new DateTime(2023, 1, 2, 16, 19, 33, 615, DateTimeKind.Local).AddTicks(7340),
+                            Name = "Member",
+                            NormalizedName = "MEMBER",
+                            Status = 1
+                        });
+                });
+
+            modelBuilder.Entity("TrueOnion.DOMAIN.Entities.Concrates.AppRoleClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("TrueOnion.DOMAIN.Entities.Concrates.AppUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("InsertedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "dd1d7b22-7c5e-446b-a976-3d12d7cacea4",
+                            Email = "Shana.Ferry43@gmail.com",
+                            EmailConfirmed = false,
+                            InsertedDate = new DateTime(2022, 12, 22, 10, 55, 6, 950, DateTimeKind.Unspecified).AddTicks(9221),
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SHANA.FERRY43@GMAIL.COM",
+                            NormalizedUserName = "KAILEY14",
+                            PasswordHash = "9mlbBWzLct",
+                            PhoneNumber = "335-721-8641",
+                            PhoneNumberConfirmed = false,
+                            Status = 1,
+                            TwoFactorEnabled = false,
+                            UserName = "Kailey14"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "cf329f3e-7819-4afb-b682-c1fb928cdfff",
+                            Email = "Dewitt_Spinka5@yahoo.com",
+                            EmailConfirmed = false,
+                            InsertedDate = new DateTime(2021, 9, 14, 20, 38, 11, 844, DateTimeKind.Unspecified).AddTicks(1733),
+                            LockoutEnabled = false,
+                            NormalizedEmail = "DEWITT_SPINKA5@YAHOO.COM",
+                            NormalizedUserName = "THEO98",
+                            PasswordHash = "QqZoEE1Nes",
+                            PhoneNumber = "686.976.3792",
+                            PhoneNumberConfirmed = false,
+                            Status = 1,
+                            TwoFactorEnabled = false,
+                            UserName = "Theo98"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "372ea579-aa03-4439-932f-5ac89d135b36",
+                            Email = "Sarah50@gmail.com",
+                            EmailConfirmed = false,
+                            InsertedDate = new DateTime(2022, 9, 8, 5, 59, 26, 29, DateTimeKind.Unspecified).AddTicks(4732),
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SARAH50@GMAIL.COM",
+                            NormalizedUserName = "STANFORD.HOWE75",
+                            PasswordHash = "gHxx_4vOhG",
+                            PhoneNumber = "282-854-6760",
+                            PhoneNumberConfirmed = false,
+                            Status = 1,
+                            TwoFactorEnabled = false,
+                            UserName = "Stanford.Howe75"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "76330b5c-f722-4c1b-832e-b9f7d1b45c3f",
+                            Email = "Ottilie_Davis71@hotmail.com",
+                            EmailConfirmed = false,
+                            InsertedDate = new DateTime(2021, 2, 10, 15, 41, 42, 426, DateTimeKind.Unspecified).AddTicks(5076),
+                            LockoutEnabled = false,
+                            NormalizedEmail = "OTTILIE_DAVIS71@HOTMAIL.COM",
+                            NormalizedUserName = "LENNA.KSHLERIN32",
+                            PasswordHash = "tBCSOXZiIw",
+                            PhoneNumber = "(842) 212-9082 x79900",
+                            PhoneNumberConfirmed = false,
+                            Status = 1,
+                            TwoFactorEnabled = false,
+                            UserName = "Lenna.Kshlerin32"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "a307bf15-3199-47ab-bc17-afc35b0f1464",
+                            Email = "Clair_Nikolaus62@hotmail.com",
+                            EmailConfirmed = false,
+                            InsertedDate = new DateTime(2022, 1, 4, 23, 15, 33, 389, DateTimeKind.Unspecified).AddTicks(7015),
+                            LockoutEnabled = false,
+                            NormalizedEmail = "CLAIR_NIKOLAUS62@HOTMAIL.COM",
+                            NormalizedUserName = "EMMITT_GERHOLD",
+                            PasswordHash = "vJInsGMlRr",
+                            PhoneNumber = "(304) 736-5296",
+                            PhoneNumberConfirmed = false,
+                            Status = 1,
+                            TwoFactorEnabled = false,
+                            UserName = "Emmitt_Gerhold"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "56647723-9008-452e-8b8b-6b688e2f4f60",
+                            Email = "Sandy_Luettgen20@yahoo.com",
+                            EmailConfirmed = false,
+                            InsertedDate = new DateTime(2021, 5, 19, 2, 22, 15, 752, DateTimeKind.Unspecified).AddTicks(8830),
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SANDY_LUETTGEN20@YAHOO.COM",
+                            NormalizedUserName = "YVETTE.RODRIGUEZ",
+                            PasswordHash = "bUDuNuWtCr",
+                            PhoneNumber = "840-799-7770",
+                            PhoneNumberConfirmed = false,
+                            Status = 1,
+                            TwoFactorEnabled = false,
+                            UserName = "Yvette.Rodriguez"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "cab903cc-b873-47d3-b7d2-884be2d9e438",
+                            Email = "Margarita21@gmail.com",
+                            EmailConfirmed = false,
+                            InsertedDate = new DateTime(2021, 3, 2, 10, 54, 2, 63, DateTimeKind.Unspecified).AddTicks(4479),
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MARGARITA21@GMAIL.COM",
+                            NormalizedUserName = "ASHLYNN_ROMAGUERA",
+                            PasswordHash = "VPGmsook3D",
+                            PhoneNumber = "1-963-931-3099 x218",
+                            PhoneNumberConfirmed = false,
+                            Status = 1,
+                            TwoFactorEnabled = false,
+                            UserName = "Ashlynn_Romaguera"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "102e31d0-bb5b-4144-b225-3a721cbd14db",
+                            Email = "Rickey.McGlynn@gmail.com",
+                            EmailConfirmed = false,
+                            InsertedDate = new DateTime(2020, 7, 14, 6, 9, 52, 973, DateTimeKind.Unspecified).AddTicks(8298),
+                            LockoutEnabled = false,
+                            NormalizedEmail = "RICKEY.MCGLYNN@GMAIL.COM",
+                            NormalizedUserName = "ADRIEL.LEHNER",
+                            PasswordHash = "hydM66XiIH",
+                            PhoneNumber = "1-983-951-7654 x299",
+                            PhoneNumberConfirmed = false,
+                            Status = 1,
+                            TwoFactorEnabled = false,
+                            UserName = "Adriel.Lehner"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "110e830e-b1dc-4672-bda6-09e65a53ca0a",
+                            Email = "Hazle_Runolfsson41@hotmail.com",
+                            EmailConfirmed = false,
+                            InsertedDate = new DateTime(2022, 12, 24, 21, 23, 14, 698, DateTimeKind.Unspecified).AddTicks(2767),
+                            LockoutEnabled = false,
+                            NormalizedEmail = "HAZLE_RUNOLFSSON41@HOTMAIL.COM",
+                            NormalizedUserName = "VALENTINA_LEHNER",
+                            PasswordHash = "2qs8OIy6Qd",
+                            PhoneNumber = "1-350-732-6503 x464",
+                            PhoneNumberConfirmed = false,
+                            Status = 1,
+                            TwoFactorEnabled = false,
+                            UserName = "Valentina_Lehner"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ff6f22a4-6338-4481-ab97-d2620b1bc44e",
+                            Email = "Irwin.Franecki@gmail.com",
+                            EmailConfirmed = false,
+                            InsertedDate = new DateTime(2021, 5, 13, 10, 42, 14, 91, DateTimeKind.Unspecified).AddTicks(7668),
+                            LockoutEnabled = false,
+                            NormalizedEmail = "IRWIN.FRANECKI@GMAIL.COM",
+                            NormalizedUserName = "SERENA_STROSIN41",
+                            PasswordHash = "M4fAGE7nPN",
+                            PhoneNumber = "772.286.7984 x83045",
+                            PhoneNumberConfirmed = false,
+                            Status = 1,
+                            TwoFactorEnabled = false,
+                            UserName = "Serena_Strosin41"
+                        });
+                });
+
+            modelBuilder.Entity("TrueOnion.DOMAIN.Entities.Concrates.AppUserClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("InsertedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("TrueOnion.DOMAIN.Entities.Concrates.AppUserLogin", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("TrueOnion.DOMAIN.Entities.Concrates.AppUserRole", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("InsertedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("TrueOnion.DOMAIN.Entities.Concrates.AppUserToken", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("TrueOnion.DOMAIN.Entities.Concrates.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
@@ -46,7 +483,7 @@ namespace TrueOnion.PERSISTINCE.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("ParentID");
 
@@ -55,92 +492,92 @@ namespace TrueOnion.PERSISTINCE.Migrations
                     b.HasData(
                         new
                         {
-                            ID = 1,
+                            Id = 1,
                             CategoryName = "All",
-                            InsertedDate = new DateTime(2021, 12, 15, 10, 39, 27, 595, DateTimeKind.Unspecified).AddTicks(3566),
+                            InsertedDate = new DateTime(2021, 9, 24, 1, 15, 15, 843, DateTimeKind.Unspecified).AddTicks(2825),
                             Status = 1
                         },
                         new
                         {
-                            ID = 2,
-                            CategoryName = "Jewelery",
-                            InsertedDate = new DateTime(2021, 5, 16, 9, 57, 16, 522, DateTimeKind.Unspecified).AddTicks(3575),
+                            Id = 2,
+                            CategoryName = "Home",
+                            InsertedDate = new DateTime(2020, 10, 14, 21, 10, 8, 486, DateTimeKind.Unspecified).AddTicks(1703),
                             ParentID = 1,
                             Status = 1
                         },
                         new
                         {
-                            ID = 3,
-                            CategoryName = "Music",
-                            InsertedDate = new DateTime(2020, 10, 14, 7, 22, 38, 334, DateTimeKind.Unspecified).AddTicks(1724),
-                            ParentID = 1,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 4,
-                            CategoryName = "Health",
-                            InsertedDate = new DateTime(2021, 11, 16, 8, 17, 23, 26, DateTimeKind.Unspecified).AddTicks(1312),
+                            Id = 3,
+                            CategoryName = "Electronics",
+                            InsertedDate = new DateTime(2022, 3, 31, 18, 11, 41, 847, DateTimeKind.Unspecified).AddTicks(9764),
                             ParentID = 2,
                             Status = 1
                         },
                         new
                         {
-                            ID = 5,
-                            CategoryName = "Jewelery",
-                            InsertedDate = new DateTime(2022, 10, 21, 9, 0, 20, 237, DateTimeKind.Unspecified).AddTicks(7910),
-                            ParentID = 1,
+                            Id = 4,
+                            CategoryName = "Clothing",
+                            InsertedDate = new DateTime(2021, 3, 11, 8, 58, 50, 856, DateTimeKind.Unspecified).AddTicks(5120),
+                            ParentID = 3,
                             Status = 1
                         },
                         new
                         {
-                            ID = 6,
-                            CategoryName = "Home",
-                            InsertedDate = new DateTime(2020, 10, 17, 2, 7, 29, 599, DateTimeKind.Unspecified).AddTicks(113),
+                            Id = 5,
+                            CategoryName = "Books",
+                            InsertedDate = new DateTime(2020, 7, 22, 17, 30, 50, 743, DateTimeKind.Unspecified).AddTicks(1958),
                             ParentID = 4,
                             Status = 1
                         },
                         new
                         {
-                            ID = 7,
-                            CategoryName = "Kids",
-                            InsertedDate = new DateTime(2021, 1, 3, 12, 57, 18, 637, DateTimeKind.Unspecified).AddTicks(4534),
-                            ParentID = 1,
+                            Id = 6,
+                            CategoryName = "Baby",
+                            InsertedDate = new DateTime(2021, 5, 14, 21, 12, 32, 689, DateTimeKind.Unspecified).AddTicks(3795),
+                            ParentID = 2,
                             Status = 1
                         },
                         new
                         {
-                            ID = 8,
+                            Id = 7,
                             CategoryName = "Automotive",
-                            InsertedDate = new DateTime(2020, 6, 21, 17, 49, 56, 278, DateTimeKind.Unspecified).AddTicks(2337),
-                            ParentID = 7,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 9,
-                            CategoryName = "Beauty",
-                            InsertedDate = new DateTime(2020, 7, 15, 11, 42, 38, 736, DateTimeKind.Unspecified).AddTicks(6861),
+                            InsertedDate = new DateTime(2021, 10, 10, 8, 9, 46, 98, DateTimeKind.Unspecified).AddTicks(9409),
                             ParentID = 1,
                             Status = 1
                         },
                         new
                         {
-                            ID = 10,
-                            CategoryName = "Books",
-                            InsertedDate = new DateTime(2022, 12, 6, 5, 8, 15, 119, DateTimeKind.Unspecified).AddTicks(1152),
-                            ParentID = 9,
+                            Id = 8,
+                            CategoryName = "Clothing",
+                            InsertedDate = new DateTime(2021, 12, 23, 23, 24, 38, 863, DateTimeKind.Unspecified).AddTicks(5719),
+                            ParentID = 3,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CategoryName = "Movies",
+                            InsertedDate = new DateTime(2021, 11, 27, 17, 26, 28, 610, DateTimeKind.Unspecified).AddTicks(751),
+                            ParentID = 1,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CategoryName = "Jewelery",
+                            InsertedDate = new DateTime(2021, 3, 16, 21, 6, 48, 263, DateTimeKind.Unspecified).AddTicks(4687),
+                            ParentID = 3,
                             Status = 1
                         });
                 });
 
             modelBuilder.Entity("TrueOnion.DOMAIN.Entities.Concrates.Product", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryID")
                         .HasColumnType("int");
@@ -164,7 +601,7 @@ namespace TrueOnion.PERSISTINCE.Migrations
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("CategoryID");
 
@@ -173,309 +610,309 @@ namespace TrueOnion.PERSISTINCE.Migrations
                     b.HasData(
                         new
                         {
-                            ID = 1,
-                            CategoryID = 8,
-                            InsertedDate = new DateTime(2020, 3, 23, 6, 8, 48, 876, DateTimeKind.Unspecified).AddTicks(6389),
-                            Name = "Generic Rubber Fish",
-                            Price = 56m,
+                            Id = 1,
+                            CategoryID = 10,
+                            InsertedDate = new DateTime(2021, 6, 1, 22, 43, 56, 674, DateTimeKind.Unspecified).AddTicks(44),
+                            Name = "Handmade Soft Sausages",
+                            Price = 54m,
                             Status = 1,
-                            Stock = 101
+                            Stock = 88
                         },
                         new
                         {
-                            ID = 2,
-                            CategoryID = 3,
-                            InsertedDate = new DateTime(2022, 3, 21, 23, 38, 58, 265, DateTimeKind.Unspecified).AddTicks(2181),
-                            Name = "Incredible Metal Bike",
-                            Price = 55m,
-                            Status = 1,
-                            Stock = 172
-                        },
-                        new
-                        {
-                            ID = 3,
-                            CategoryID = 3,
-                            InsertedDate = new DateTime(2022, 5, 15, 14, 3, 32, 259, DateTimeKind.Unspecified).AddTicks(4080),
-                            Name = "Handcrafted Frozen Ball",
+                            Id = 2,
+                            CategoryID = 1,
+                            InsertedDate = new DateTime(2021, 4, 21, 22, 15, 10, 79, DateTimeKind.Unspecified).AddTicks(4403),
+                            Name = "Tasty Steel Mouse",
                             Price = 52m,
                             Status = 1,
-                            Stock = 149
+                            Stock = 4
                         },
                         new
                         {
-                            ID = 4,
-                            CategoryID = 7,
-                            InsertedDate = new DateTime(2020, 5, 28, 18, 2, 35, 115, DateTimeKind.Unspecified).AddTicks(5804),
-                            Name = "Handcrafted Plastic Mouse",
-                            Price = 56m,
-                            Status = 1,
-                            Stock = 195
-                        },
-                        new
-                        {
-                            ID = 5,
+                            Id = 3,
                             CategoryID = 5,
-                            InsertedDate = new DateTime(2020, 10, 22, 14, 34, 23, 86, DateTimeKind.Unspecified).AddTicks(1126),
-                            Name = "Practical Granite Chips",
-                            Price = 57m,
-                            Status = 1,
-                            Stock = 181
-                        },
-                        new
-                        {
-                            ID = 6,
-                            CategoryID = 10,
-                            InsertedDate = new DateTime(2021, 1, 27, 8, 37, 2, 839, DateTimeKind.Unspecified).AddTicks(7135),
-                            Name = "Small Wooden Tuna",
+                            InsertedDate = new DateTime(2021, 3, 23, 18, 12, 56, 61, DateTimeKind.Unspecified).AddTicks(9657),
+                            Name = "Tasty Concrete Chips",
                             Price = 52m,
                             Status = 1,
-                            Stock = 110
+                            Stock = 76
                         },
                         new
                         {
-                            ID = 7,
-                            CategoryID = 9,
-                            InsertedDate = new DateTime(2022, 12, 20, 23, 32, 42, 513, DateTimeKind.Unspecified).AddTicks(3060),
-                            Name = "Refined Soft Keyboard",
-                            Price = 50m,
-                            Status = 1,
-                            Stock = 137
-                        },
-                        new
-                        {
-                            ID = 8,
-                            CategoryID = 2,
-                            InsertedDate = new DateTime(2020, 3, 28, 14, 40, 11, 871, DateTimeKind.Unspecified).AddTicks(5669),
-                            Name = "Handcrafted Cotton Towels",
-                            Price = 49m,
-                            Status = 1,
-                            Stock = 52
-                        },
-                        new
-                        {
-                            ID = 9,
-                            CategoryID = 10,
-                            InsertedDate = new DateTime(2020, 9, 7, 15, 51, 0, 943, DateTimeKind.Unspecified).AddTicks(2031),
-                            Name = "Refined Rubber Soap",
-                            Price = 54m,
-                            Status = 1,
-                            Stock = 35
-                        },
-                        new
-                        {
-                            ID = 10,
+                            Id = 4,
                             CategoryID = 4,
-                            InsertedDate = new DateTime(2022, 12, 1, 20, 20, 2, 171, DateTimeKind.Unspecified).AddTicks(549),
-                            Name = "Practical Frozen Chicken",
-                            Price = 57m,
+                            InsertedDate = new DateTime(2022, 4, 25, 3, 43, 45, 289, DateTimeKind.Unspecified).AddTicks(5709),
+                            Name = "Handmade Soft Tuna",
+                            Price = 51m,
                             Status = 1,
-                            Stock = 36
+                            Stock = 184
                         },
                         new
                         {
-                            ID = 11,
-                            CategoryID = 9,
-                            InsertedDate = new DateTime(2022, 2, 20, 14, 52, 52, 207, DateTimeKind.Unspecified).AddTicks(3955),
-                            Name = "Practical Steel Chair",
-                            Price = 54m,
-                            Status = 1,
-                            Stock = 34
-                        },
-                        new
-                        {
-                            ID = 12,
-                            CategoryID = 3,
-                            InsertedDate = new DateTime(2020, 10, 5, 13, 35, 5, 32, DateTimeKind.Unspecified).AddTicks(823),
-                            Name = "Ergonomic Cotton Pants",
-                            Price = 52m,
-                            Status = 1,
-                            Stock = 110
-                        },
-                        new
-                        {
-                            ID = 13,
+                            Id = 5,
                             CategoryID = 2,
-                            InsertedDate = new DateTime(2021, 9, 29, 18, 54, 49, 307, DateTimeKind.Unspecified).AddTicks(4449),
-                            Name = "Sleek Granite Computer",
-                            Price = 54m,
-                            Status = 1,
-                            Stock = 37
-                        },
-                        new
-                        {
-                            ID = 14,
-                            CategoryID = 6,
-                            InsertedDate = new DateTime(2021, 10, 19, 7, 40, 19, 69, DateTimeKind.Unspecified).AddTicks(1744),
-                            Name = "Unbranded Granite Shirt",
-                            Price = 55m,
-                            Status = 1,
-                            Stock = 78
-                        },
-                        new
-                        {
-                            ID = 15,
-                            CategoryID = 10,
-                            InsertedDate = new DateTime(2020, 9, 4, 23, 29, 42, 28, DateTimeKind.Unspecified).AddTicks(330),
-                            Name = "Sleek Metal Gloves",
-                            Price = 53m,
-                            Status = 1,
-                            Stock = 110
-                        },
-                        new
-                        {
-                            ID = 16,
-                            CategoryID = 6,
-                            InsertedDate = new DateTime(2022, 3, 8, 12, 15, 56, 600, DateTimeKind.Unspecified).AddTicks(1643),
-                            Name = "Small Plastic Cheese",
+                            InsertedDate = new DateTime(2021, 5, 5, 18, 53, 55, 275, DateTimeKind.Unspecified).AddTicks(2004),
+                            Name = "Unbranded Concrete Computer",
                             Price = 52m,
                             Status = 1,
-                            Stock = 170
+                            Stock = 165
                         },
                         new
                         {
-                            ID = 17,
-                            CategoryID = 7,
-                            InsertedDate = new DateTime(2022, 12, 26, 21, 36, 54, 610, DateTimeKind.Unspecified).AddTicks(8655),
-                            Name = "Refined Fresh Bacon",
-                            Price = 57m,
-                            Status = 1,
-                            Stock = 15
-                        },
-                        new
-                        {
-                            ID = 18,
-                            CategoryID = 3,
-                            InsertedDate = new DateTime(2021, 5, 8, 17, 51, 47, 630, DateTimeKind.Unspecified).AddTicks(1711),
-                            Name = "Unbranded Soft Sausages",
-                            Price = 52m,
-                            Status = 1,
-                            Stock = 16
-                        },
-                        new
-                        {
-                            ID = 19,
-                            CategoryID = 9,
-                            InsertedDate = new DateTime(2022, 12, 6, 20, 56, 19, 26, DateTimeKind.Unspecified).AddTicks(8456),
-                            Name = "Gorgeous Cotton Mouse",
-                            Price = 49m,
-                            Status = 1,
-                            Stock = 115
-                        },
-                        new
-                        {
-                            ID = 20,
-                            CategoryID = 9,
-                            InsertedDate = new DateTime(2022, 11, 4, 14, 11, 11, 662, DateTimeKind.Unspecified).AddTicks(5713),
-                            Name = "Awesome Frozen Gloves",
-                            Price = 50m,
-                            Status = 1,
-                            Stock = 154
-                        },
-                        new
-                        {
-                            ID = 21,
+                            Id = 6,
                             CategoryID = 6,
-                            InsertedDate = new DateTime(2021, 6, 18, 20, 56, 11, 925, DateTimeKind.Unspecified).AddTicks(2705),
-                            Name = "Sleek Concrete Cheese",
-                            Price = 50m,
-                            Status = 1,
-                            Stock = 96
-                        },
-                        new
-                        {
-                            ID = 22,
-                            CategoryID = 3,
-                            InsertedDate = new DateTime(2022, 3, 12, 9, 34, 11, 386, DateTimeKind.Unspecified).AddTicks(7246),
-                            Name = "Ergonomic Rubber Computer",
-                            Price = 57m,
-                            Status = 1,
-                            Stock = 22
-                        },
-                        new
-                        {
-                            ID = 23,
-                            CategoryID = 3,
-                            InsertedDate = new DateTime(2020, 6, 3, 5, 49, 51, 456, DateTimeKind.Unspecified).AddTicks(8126),
-                            Name = "Intelligent Soft Table",
-                            Price = 53m,
+                            InsertedDate = new DateTime(2021, 4, 9, 19, 59, 50, 972, DateTimeKind.Unspecified).AddTicks(3158),
+                            Name = "Licensed Granite Salad",
+                            Price = 52m,
                             Status = 1,
                             Stock = 175
                         },
                         new
                         {
-                            ID = 24,
+                            Id = 7,
                             CategoryID = 2,
-                            InsertedDate = new DateTime(2020, 6, 23, 8, 22, 48, 135, DateTimeKind.Unspecified).AddTicks(5762),
-                            Name = "Incredible Frozen Table",
-                            Price = 53m,
-                            Status = 1,
-                            Stock = 195
-                        },
-                        new
-                        {
-                            ID = 25,
-                            CategoryID = 10,
-                            InsertedDate = new DateTime(2020, 9, 4, 7, 31, 20, 210, DateTimeKind.Unspecified).AddTicks(3674),
-                            Name = "Tasty Wooden Keyboard",
-                            Price = 55m,
-                            Status = 1,
-                            Stock = 6
-                        },
-                        new
-                        {
-                            ID = 26,
-                            CategoryID = 5,
-                            InsertedDate = new DateTime(2022, 9, 21, 1, 19, 30, 50, DateTimeKind.Unspecified).AddTicks(8704),
-                            Name = "Generic Metal Bacon",
+                            InsertedDate = new DateTime(2021, 9, 8, 4, 36, 13, 638, DateTimeKind.Unspecified).AddTicks(3840),
+                            Name = "Small Granite Towels",
                             Price = 54m,
                             Status = 1,
-                            Stock = 191
+                            Stock = 92
                         },
                         new
                         {
-                            ID = 27,
-                            CategoryID = 8,
-                            InsertedDate = new DateTime(2022, 3, 24, 21, 53, 23, 696, DateTimeKind.Unspecified).AddTicks(5676),
-                            Name = "Sleek Frozen Tuna",
+                            Id = 8,
+                            CategoryID = 4,
+                            InsertedDate = new DateTime(2020, 12, 14, 22, 55, 36, 148, DateTimeKind.Unspecified).AddTicks(8825),
+                            Name = "Intelligent Metal Table",
+                            Price = 54m,
+                            Status = 1,
+                            Stock = 151
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CategoryID = 6,
+                            InsertedDate = new DateTime(2020, 6, 29, 18, 6, 55, 345, DateTimeKind.Unspecified).AddTicks(7842),
+                            Name = "Awesome Metal Table",
+                            Price = 56m,
+                            Status = 1,
+                            Stock = 144
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CategoryID = 3,
+                            InsertedDate = new DateTime(2021, 2, 23, 20, 38, 4, 46, DateTimeKind.Unspecified).AddTicks(692),
+                            Name = "Awesome Plastic Salad",
+                            Price = 50m,
+                            Status = 1,
+                            Stock = 165
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CategoryID = 2,
+                            InsertedDate = new DateTime(2021, 7, 30, 11, 1, 46, 235, DateTimeKind.Unspecified).AddTicks(7416),
+                            Name = "Small Wooden Salad",
+                            Price = 56m,
+                            Status = 1,
+                            Stock = 136
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CategoryID = 2,
+                            InsertedDate = new DateTime(2020, 10, 13, 7, 23, 2, 80, DateTimeKind.Unspecified).AddTicks(7806),
+                            Name = "Tasty Wooden Sausages",
                             Price = 52m,
                             Status = 1,
-                            Stock = 26
+                            Stock = 63
                         },
                         new
                         {
-                            ID = 28,
+                            Id = 13,
+                            CategoryID = 2,
+                            InsertedDate = new DateTime(2022, 12, 16, 0, 6, 10, 127, DateTimeKind.Unspecified).AddTicks(7452),
+                            Name = "Generic Soft Bike",
+                            Price = 55m,
+                            Status = 1,
+                            Stock = 63
+                        },
+                        new
+                        {
+                            Id = 14,
                             CategoryID = 5,
-                            InsertedDate = new DateTime(2022, 8, 28, 11, 15, 49, 262, DateTimeKind.Unspecified).AddTicks(9488),
-                            Name = "Awesome Concrete Computer",
-                            Price = 56m,
+                            InsertedDate = new DateTime(2021, 11, 6, 12, 21, 41, 474, DateTimeKind.Unspecified).AddTicks(5943),
+                            Name = "Tasty Soft Chicken",
+                            Price = 49m,
                             Status = 1,
-                            Stock = 36
+                            Stock = 65
                         },
                         new
                         {
-                            ID = 29,
-                            CategoryID = 9,
-                            InsertedDate = new DateTime(2020, 7, 18, 16, 18, 55, 945, DateTimeKind.Unspecified).AddTicks(7642),
-                            Name = "Licensed Rubber Pizza",
-                            Price = 56m,
+                            Id = 15,
+                            CategoryID = 1,
+                            InsertedDate = new DateTime(2022, 5, 20, 12, 38, 35, 573, DateTimeKind.Unspecified).AddTicks(5312),
+                            Name = "Incredible Steel Gloves",
+                            Price = 52m,
                             Status = 1,
-                            Stock = 106
+                            Stock = 109
                         },
                         new
                         {
-                            ID = 30,
+                            Id = 16,
+                            CategoryID = 6,
+                            InsertedDate = new DateTime(2020, 10, 18, 16, 51, 36, 897, DateTimeKind.Unspecified).AddTicks(1466),
+                            Name = "Tasty Plastic Sausages",
+                            Price = 52m,
+                            Status = 1,
+                            Stock = 148
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CategoryID = 6,
+                            InsertedDate = new DateTime(2021, 10, 26, 10, 10, 46, 441, DateTimeKind.Unspecified).AddTicks(9793),
+                            Name = "Handmade Rubber Mouse",
+                            Price = 57m,
+                            Status = 1,
+                            Stock = 143
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CategoryID = 1,
+                            InsertedDate = new DateTime(2020, 12, 3, 14, 10, 39, 713, DateTimeKind.Unspecified).AddTicks(2174),
+                            Name = "Small Fresh Tuna",
+                            Price = 50m,
+                            Status = 1,
+                            Stock = 87
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CategoryID = 1,
+                            InsertedDate = new DateTime(2020, 6, 18, 16, 33, 35, 248, DateTimeKind.Unspecified).AddTicks(7372),
+                            Name = "Rustic Plastic Sausages",
+                            Price = 54m,
+                            Status = 1,
+                            Stock = 190
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CategoryID = 3,
+                            InsertedDate = new DateTime(2021, 7, 7, 15, 44, 38, 403, DateTimeKind.Unspecified).AddTicks(6760),
+                            Name = "Generic Fresh Chair",
+                            Price = 50m,
+                            Status = 1,
+                            Stock = 43
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CategoryID = 1,
+                            InsertedDate = new DateTime(2021, 6, 27, 3, 4, 24, 374, DateTimeKind.Unspecified).AddTicks(9275),
+                            Name = "Refined Metal Hat",
+                            Price = 51m,
+                            Status = 1,
+                            Stock = 15
+                        },
+                        new
+                        {
+                            Id = 22,
                             CategoryID = 7,
-                            InsertedDate = new DateTime(2021, 6, 3, 0, 59, 18, 85, DateTimeKind.Unspecified).AddTicks(652),
-                            Name = "Generic Plastic Mouse",
+                            InsertedDate = new DateTime(2020, 5, 13, 9, 39, 51, 147, DateTimeKind.Unspecified).AddTicks(4539),
+                            Name = "Refined Plastic Mouse",
                             Price = 53m,
                             Status = 1,
-                            Stock = 105
+                            Stock = 62
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CategoryID = 7,
+                            InsertedDate = new DateTime(2021, 2, 25, 7, 54, 18, 162, DateTimeKind.Unspecified).AddTicks(4471),
+                            Name = "Unbranded Fresh Hat",
+                            Price = 56m,
+                            Status = 1,
+                            Stock = 44
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CategoryID = 4,
+                            InsertedDate = new DateTime(2021, 4, 21, 7, 12, 13, 76, DateTimeKind.Unspecified).AddTicks(1437),
+                            Name = "Tasty Soft Gloves",
+                            Price = 54m,
+                            Status = 1,
+                            Stock = 48
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CategoryID = 4,
+                            InsertedDate = new DateTime(2020, 12, 6, 3, 39, 4, 547, DateTimeKind.Unspecified).AddTicks(8750),
+                            Name = "Practical Frozen Tuna",
+                            Price = 50m,
+                            Status = 1,
+                            Stock = 39
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CategoryID = 5,
+                            InsertedDate = new DateTime(2020, 8, 25, 16, 23, 42, 935, DateTimeKind.Unspecified).AddTicks(654),
+                            Name = "Fantastic Rubber Car",
+                            Price = 53m,
+                            Status = 1,
+                            Stock = 172
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CategoryID = 8,
+                            InsertedDate = new DateTime(2020, 3, 19, 23, 50, 47, 881, DateTimeKind.Unspecified).AddTicks(9660),
+                            Name = "Generic Soft Pants",
+                            Price = 52m,
+                            Status = 1,
+                            Stock = 164
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CategoryID = 7,
+                            InsertedDate = new DateTime(2020, 7, 11, 20, 3, 43, 204, DateTimeKind.Unspecified).AddTicks(2645),
+                            Name = "Practical Frozen Bike",
+                            Price = 53m,
+                            Status = 1,
+                            Stock = 162
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CategoryID = 1,
+                            InsertedDate = new DateTime(2021, 3, 22, 1, 34, 19, 541, DateTimeKind.Unspecified).AddTicks(901),
+                            Name = "Licensed Soft Computer",
+                            Price = 57m,
+                            Status = 1,
+                            Stock = 171
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CategoryID = 2,
+                            InsertedDate = new DateTime(2020, 7, 20, 20, 12, 23, 439, DateTimeKind.Unspecified).AddTicks(8781),
+                            Name = "Generic Frozen Tuna",
+                            Price = 50m,
+                            Status = 1,
+                            Stock = 47
                         });
                 });
 
             modelBuilder.Entity("TrueOnion.DOMAIN.Entities.Concrates.ProductFeature", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("InsertedDate")
@@ -494,249 +931,249 @@ namespace TrueOnion.PERSISTINCE.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("ProductFeatures");
 
                     b.HasData(
                         new
                         {
-                            ID = 1,
-                            InsertedDate = new DateTime(2020, 5, 20, 10, 12, 50, 373, DateTimeKind.Unspecified).AddTicks(93),
-                            MadeIn = "Burkina Faso",
-                            RelaseDate = new DateTime(2022, 11, 10, 3, 54, 36, 724, DateTimeKind.Unspecified).AddTicks(65),
+                            Id = 1,
+                            InsertedDate = new DateTime(2021, 10, 21, 6, 54, 7, 616, DateTimeKind.Unspecified).AddTicks(7205),
+                            MadeIn = "Bolivia",
+                            RelaseDate = new DateTime(2022, 11, 11, 4, 55, 39, 467, DateTimeKind.Unspecified).AddTicks(3340),
                             Status = 1
                         },
                         new
                         {
-                            ID = 2,
-                            InsertedDate = new DateTime(2022, 9, 12, 6, 42, 36, 945, DateTimeKind.Unspecified).AddTicks(6885),
-                            MadeIn = "Solomon Islands",
-                            RelaseDate = new DateTime(2020, 10, 29, 0, 42, 3, 980, DateTimeKind.Unspecified).AddTicks(6948),
+                            Id = 2,
+                            InsertedDate = new DateTime(2021, 8, 27, 23, 10, 49, 365, DateTimeKind.Unspecified).AddTicks(4647),
+                            MadeIn = "Brunei Darussalam",
+                            RelaseDate = new DateTime(2021, 8, 20, 15, 1, 44, 49, DateTimeKind.Unspecified).AddTicks(9383),
                             Status = 1
                         },
                         new
                         {
-                            ID = 3,
-                            InsertedDate = new DateTime(2020, 12, 14, 7, 2, 1, 597, DateTimeKind.Unspecified).AddTicks(4534),
-                            MadeIn = "Mauritania",
-                            RelaseDate = new DateTime(2022, 9, 7, 0, 26, 12, 543, DateTimeKind.Unspecified).AddTicks(7959),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 4,
-                            InsertedDate = new DateTime(2020, 7, 11, 16, 40, 45, 423, DateTimeKind.Unspecified).AddTicks(5384),
-                            MadeIn = "Holy See (Vatican City State)",
-                            RelaseDate = new DateTime(2021, 4, 6, 14, 27, 36, 508, DateTimeKind.Unspecified).AddTicks(7076),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 5,
-                            InsertedDate = new DateTime(2021, 1, 9, 23, 46, 0, 166, DateTimeKind.Unspecified).AddTicks(3874),
-                            MadeIn = "Macedonia",
-                            RelaseDate = new DateTime(2020, 3, 24, 9, 11, 38, 588, DateTimeKind.Unspecified).AddTicks(2776),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 6,
-                            InsertedDate = new DateTime(2021, 10, 2, 6, 21, 40, 277, DateTimeKind.Unspecified).AddTicks(454),
-                            MadeIn = "Australia",
-                            RelaseDate = new DateTime(2022, 11, 22, 18, 52, 42, 357, DateTimeKind.Unspecified).AddTicks(2041),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 7,
-                            InsertedDate = new DateTime(2021, 5, 11, 10, 46, 39, 130, DateTimeKind.Unspecified).AddTicks(5410),
-                            MadeIn = "British Indian Ocean Territory (Chagos Archipelago)",
-                            RelaseDate = new DateTime(2022, 12, 16, 15, 48, 0, 316, DateTimeKind.Unspecified).AddTicks(4771),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 8,
-                            InsertedDate = new DateTime(2021, 3, 11, 16, 17, 32, 884, DateTimeKind.Unspecified).AddTicks(9378),
-                            MadeIn = "Guam",
-                            RelaseDate = new DateTime(2021, 3, 27, 19, 26, 52, 16, DateTimeKind.Unspecified).AddTicks(4845),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 9,
-                            InsertedDate = new DateTime(2020, 7, 20, 10, 8, 1, 330, DateTimeKind.Unspecified).AddTicks(8179),
-                            MadeIn = "Cameroon",
-                            RelaseDate = new DateTime(2020, 11, 14, 9, 43, 58, 9, DateTimeKind.Unspecified).AddTicks(1569),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 10,
-                            InsertedDate = new DateTime(2020, 9, 30, 13, 38, 45, 961, DateTimeKind.Unspecified).AddTicks(8165),
-                            MadeIn = "Cyprus",
-                            RelaseDate = new DateTime(2021, 12, 14, 18, 55, 44, 690, DateTimeKind.Unspecified).AddTicks(9374),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 11,
-                            InsertedDate = new DateTime(2022, 8, 1, 23, 50, 54, 413, DateTimeKind.Unspecified).AddTicks(7051),
-                            MadeIn = "Solomon Islands",
-                            RelaseDate = new DateTime(2021, 1, 12, 6, 37, 50, 101, DateTimeKind.Unspecified).AddTicks(8146),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 12,
-                            InsertedDate = new DateTime(2021, 8, 4, 8, 55, 19, 862, DateTimeKind.Unspecified).AddTicks(4538),
-                            MadeIn = "Montserrat",
-                            RelaseDate = new DateTime(2022, 8, 20, 0, 3, 13, 269, DateTimeKind.Unspecified).AddTicks(1434),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 13,
-                            InsertedDate = new DateTime(2022, 8, 15, 9, 47, 53, 245, DateTimeKind.Unspecified).AddTicks(3263),
-                            MadeIn = "Hungary",
-                            RelaseDate = new DateTime(2021, 1, 8, 20, 4, 59, 734, DateTimeKind.Unspecified).AddTicks(5440),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 14,
-                            InsertedDate = new DateTime(2022, 12, 16, 20, 16, 26, 646, DateTimeKind.Unspecified).AddTicks(5763),
-                            MadeIn = "French Polynesia",
-                            RelaseDate = new DateTime(2020, 3, 30, 9, 28, 4, 686, DateTimeKind.Unspecified).AddTicks(6589),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 15,
-                            InsertedDate = new DateTime(2021, 10, 18, 22, 37, 13, 494, DateTimeKind.Unspecified).AddTicks(1024),
-                            MadeIn = "Norway",
-                            RelaseDate = new DateTime(2020, 8, 24, 2, 57, 4, 784, DateTimeKind.Unspecified).AddTicks(152),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 16,
-                            InsertedDate = new DateTime(2021, 8, 4, 19, 16, 47, 864, DateTimeKind.Unspecified).AddTicks(7786),
-                            MadeIn = "Haiti",
-                            RelaseDate = new DateTime(2022, 3, 12, 14, 18, 2, 147, DateTimeKind.Unspecified).AddTicks(4255),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 17,
-                            InsertedDate = new DateTime(2022, 1, 14, 6, 2, 52, 620, DateTimeKind.Unspecified).AddTicks(7072),
-                            MadeIn = "Holy See (Vatican City State)",
-                            RelaseDate = new DateTime(2022, 1, 22, 17, 44, 44, 527, DateTimeKind.Unspecified).AddTicks(9616),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 18,
-                            InsertedDate = new DateTime(2020, 3, 19, 22, 0, 0, 906, DateTimeKind.Unspecified).AddTicks(2309),
-                            MadeIn = "Bangladesh",
-                            RelaseDate = new DateTime(2022, 5, 27, 19, 16, 30, 652, DateTimeKind.Unspecified).AddTicks(2579),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 19,
-                            InsertedDate = new DateTime(2022, 5, 2, 11, 28, 27, 752, DateTimeKind.Unspecified).AddTicks(6427),
-                            MadeIn = "Svalbard & Jan Mayen Islands",
-                            RelaseDate = new DateTime(2022, 10, 29, 5, 25, 28, 928, DateTimeKind.Unspecified).AddTicks(6092),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 20,
-                            InsertedDate = new DateTime(2021, 9, 28, 0, 1, 14, 651, DateTimeKind.Unspecified).AddTicks(73),
-                            MadeIn = "Belgium",
-                            RelaseDate = new DateTime(2020, 3, 24, 16, 46, 19, 821, DateTimeKind.Unspecified).AddTicks(8504),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 21,
-                            InsertedDate = new DateTime(2021, 7, 4, 17, 27, 16, 34, DateTimeKind.Unspecified).AddTicks(6707),
-                            MadeIn = "Malawi",
-                            RelaseDate = new DateTime(2021, 3, 6, 17, 59, 55, 582, DateTimeKind.Unspecified).AddTicks(6675),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 22,
-                            InsertedDate = new DateTime(2022, 9, 27, 7, 33, 45, 622, DateTimeKind.Unspecified).AddTicks(9857),
-                            MadeIn = "Guam",
-                            RelaseDate = new DateTime(2021, 5, 7, 2, 35, 42, 515, DateTimeKind.Unspecified).AddTicks(1869),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 23,
-                            InsertedDate = new DateTime(2021, 1, 1, 22, 9, 42, 28, DateTimeKind.Unspecified).AddTicks(3879),
-                            MadeIn = "Solomon Islands",
-                            RelaseDate = new DateTime(2021, 5, 9, 10, 41, 38, 216, DateTimeKind.Unspecified).AddTicks(6471),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 24,
-                            InsertedDate = new DateTime(2020, 12, 17, 17, 56, 14, 120, DateTimeKind.Unspecified).AddTicks(2080),
-                            MadeIn = "Aruba",
-                            RelaseDate = new DateTime(2022, 10, 23, 11, 10, 25, 867, DateTimeKind.Unspecified).AddTicks(1286),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 25,
-                            InsertedDate = new DateTime(2022, 1, 17, 22, 6, 4, 199, DateTimeKind.Unspecified).AddTicks(8755),
-                            MadeIn = "Jamaica",
-                            RelaseDate = new DateTime(2021, 10, 1, 16, 45, 32, 455, DateTimeKind.Unspecified).AddTicks(253),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 26,
-                            InsertedDate = new DateTime(2021, 11, 24, 0, 45, 39, 85, DateTimeKind.Unspecified).AddTicks(2340),
-                            MadeIn = "Malawi",
-                            RelaseDate = new DateTime(2021, 7, 25, 3, 45, 9, 993, DateTimeKind.Unspecified).AddTicks(4288),
-                            Status = 1
-                        },
-                        new
-                        {
-                            ID = 27,
-                            InsertedDate = new DateTime(2020, 11, 24, 13, 57, 24, 137, DateTimeKind.Unspecified).AddTicks(8993),
+                            Id = 3,
+                            InsertedDate = new DateTime(2020, 8, 15, 12, 24, 50, 938, DateTimeKind.Unspecified).AddTicks(611),
                             MadeIn = "Burundi",
-                            RelaseDate = new DateTime(2020, 7, 15, 15, 24, 49, 984, DateTimeKind.Unspecified).AddTicks(9804),
+                            RelaseDate = new DateTime(2022, 9, 28, 14, 12, 33, 717, DateTimeKind.Unspecified).AddTicks(7002),
                             Status = 1
                         },
                         new
                         {
-                            ID = 28,
-                            InsertedDate = new DateTime(2022, 10, 27, 3, 55, 4, 511, DateTimeKind.Unspecified).AddTicks(4009),
+                            Id = 4,
+                            InsertedDate = new DateTime(2021, 2, 8, 3, 28, 57, 467, DateTimeKind.Unspecified).AddTicks(7147),
+                            MadeIn = "Palestinian Territory",
+                            RelaseDate = new DateTime(2021, 11, 14, 2, 32, 14, 330, DateTimeKind.Unspecified).AddTicks(9351),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            InsertedDate = new DateTime(2022, 7, 6, 1, 43, 37, 365, DateTimeKind.Unspecified).AddTicks(6333),
+                            MadeIn = "Bermuda",
+                            RelaseDate = new DateTime(2022, 5, 28, 18, 14, 22, 952, DateTimeKind.Unspecified).AddTicks(4725),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            InsertedDate = new DateTime(2021, 7, 20, 2, 19, 21, 927, DateTimeKind.Unspecified).AddTicks(6517),
+                            MadeIn = "Macao",
+                            RelaseDate = new DateTime(2021, 7, 7, 13, 9, 10, 454, DateTimeKind.Unspecified).AddTicks(7673),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            InsertedDate = new DateTime(2020, 6, 27, 3, 24, 9, 656, DateTimeKind.Unspecified).AddTicks(4162),
+                            MadeIn = "Cote d'Ivoire",
+                            RelaseDate = new DateTime(2021, 3, 15, 12, 49, 28, 952, DateTimeKind.Unspecified).AddTicks(1138),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            InsertedDate = new DateTime(2022, 10, 30, 22, 11, 9, 143, DateTimeKind.Unspecified).AddTicks(1729),
+                            MadeIn = "Uganda",
+                            RelaseDate = new DateTime(2021, 9, 24, 14, 2, 21, 35, DateTimeKind.Unspecified).AddTicks(1372),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            InsertedDate = new DateTime(2020, 3, 23, 1, 6, 22, 523, DateTimeKind.Unspecified).AddTicks(1899),
+                            MadeIn = "Panama",
+                            RelaseDate = new DateTime(2021, 7, 18, 17, 12, 36, 146, DateTimeKind.Unspecified).AddTicks(5982),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            InsertedDate = new DateTime(2020, 11, 30, 9, 31, 48, 503, DateTimeKind.Unspecified).AddTicks(6458),
+                            MadeIn = "South Georgia and the South Sandwich Islands",
+                            RelaseDate = new DateTime(2022, 11, 25, 18, 3, 57, 642, DateTimeKind.Unspecified).AddTicks(9254),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            InsertedDate = new DateTime(2022, 1, 1, 9, 1, 41, 81, DateTimeKind.Unspecified).AddTicks(2113),
+                            MadeIn = "Comoros",
+                            RelaseDate = new DateTime(2022, 6, 10, 2, 43, 26, 798, DateTimeKind.Unspecified).AddTicks(9967),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 12,
+                            InsertedDate = new DateTime(2022, 9, 16, 10, 21, 18, 725, DateTimeKind.Unspecified).AddTicks(8648),
+                            MadeIn = "Holy See (Vatican City State)",
+                            RelaseDate = new DateTime(2022, 2, 3, 21, 2, 44, 763, DateTimeKind.Unspecified).AddTicks(3986),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 13,
+                            InsertedDate = new DateTime(2022, 9, 13, 22, 12, 42, 845, DateTimeKind.Unspecified).AddTicks(3643),
+                            MadeIn = "French Polynesia",
+                            RelaseDate = new DateTime(2020, 5, 9, 10, 35, 27, 842, DateTimeKind.Unspecified).AddTicks(1919),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 14,
+                            InsertedDate = new DateTime(2021, 10, 22, 16, 29, 48, 923, DateTimeKind.Unspecified).AddTicks(2259),
+                            MadeIn = "Hong Kong",
+                            RelaseDate = new DateTime(2022, 3, 12, 9, 13, 6, 875, DateTimeKind.Unspecified).AddTicks(7235),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 15,
+                            InsertedDate = new DateTime(2021, 7, 27, 1, 31, 36, 984, DateTimeKind.Unspecified).AddTicks(3177),
+                            MadeIn = "Namibia",
+                            RelaseDate = new DateTime(2021, 2, 9, 22, 16, 55, 859, DateTimeKind.Unspecified).AddTicks(2855),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 16,
+                            InsertedDate = new DateTime(2021, 6, 29, 7, 58, 15, 750, DateTimeKind.Unspecified).AddTicks(3978),
+                            MadeIn = "Albania",
+                            RelaseDate = new DateTime(2022, 4, 1, 0, 20, 38, 682, DateTimeKind.Unspecified).AddTicks(2132),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 17,
+                            InsertedDate = new DateTime(2022, 1, 24, 16, 56, 38, 371, DateTimeKind.Unspecified).AddTicks(505),
+                            MadeIn = "Guernsey",
+                            RelaseDate = new DateTime(2021, 1, 13, 6, 5, 49, 141, DateTimeKind.Unspecified).AddTicks(3147),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 18,
+                            InsertedDate = new DateTime(2022, 11, 11, 14, 26, 18, 203, DateTimeKind.Unspecified).AddTicks(8081),
+                            MadeIn = "United States of America",
+                            RelaseDate = new DateTime(2022, 10, 18, 6, 58, 25, 123, DateTimeKind.Unspecified).AddTicks(1092),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 19,
+                            InsertedDate = new DateTime(2020, 6, 27, 23, 49, 11, 662, DateTimeKind.Unspecified).AddTicks(5507),
                             MadeIn = "Indonesia",
-                            RelaseDate = new DateTime(2020, 12, 26, 9, 2, 37, 849, DateTimeKind.Unspecified).AddTicks(3485),
+                            RelaseDate = new DateTime(2021, 7, 31, 11, 54, 37, 351, DateTimeKind.Unspecified).AddTicks(2210),
                             Status = 1
                         },
                         new
                         {
-                            ID = 29,
-                            InsertedDate = new DateTime(2021, 4, 15, 16, 35, 54, 688, DateTimeKind.Unspecified).AddTicks(9342),
-                            MadeIn = "Spain",
-                            RelaseDate = new DateTime(2021, 4, 6, 19, 59, 25, 964, DateTimeKind.Unspecified).AddTicks(983),
+                            Id = 20,
+                            InsertedDate = new DateTime(2020, 3, 30, 12, 46, 13, 341, DateTimeKind.Unspecified).AddTicks(8502),
+                            MadeIn = "Pakistan",
+                            RelaseDate = new DateTime(2021, 11, 19, 4, 16, 25, 849, DateTimeKind.Unspecified).AddTicks(3471),
                             Status = 1
                         },
                         new
                         {
-                            ID = 30,
-                            InsertedDate = new DateTime(2021, 2, 9, 15, 41, 23, 9, DateTimeKind.Unspecified).AddTicks(3667),
-                            MadeIn = "Western Sahara",
-                            RelaseDate = new DateTime(2022, 9, 17, 19, 5, 36, 803, DateTimeKind.Unspecified).AddTicks(2682),
+                            Id = 21,
+                            InsertedDate = new DateTime(2022, 8, 23, 22, 24, 12, 594, DateTimeKind.Unspecified).AddTicks(4566),
+                            MadeIn = "Lao People's Democratic Republic",
+                            RelaseDate = new DateTime(2020, 8, 3, 20, 48, 8, 340, DateTimeKind.Unspecified).AddTicks(5126),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 22,
+                            InsertedDate = new DateTime(2022, 12, 20, 23, 23, 23, 977, DateTimeKind.Unspecified).AddTicks(5284),
+                            MadeIn = "Papua New Guinea",
+                            RelaseDate = new DateTime(2021, 2, 7, 9, 14, 39, 115, DateTimeKind.Unspecified).AddTicks(8533),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 23,
+                            InsertedDate = new DateTime(2020, 3, 30, 23, 15, 10, 145, DateTimeKind.Unspecified).AddTicks(9696),
+                            MadeIn = "Ethiopia",
+                            RelaseDate = new DateTime(2021, 6, 30, 1, 26, 42, 593, DateTimeKind.Unspecified).AddTicks(6045),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 24,
+                            InsertedDate = new DateTime(2021, 3, 15, 10, 49, 52, 255, DateTimeKind.Unspecified).AddTicks(3151),
+                            MadeIn = "Nepal",
+                            RelaseDate = new DateTime(2022, 5, 10, 4, 54, 57, 54, DateTimeKind.Unspecified).AddTicks(1101),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 25,
+                            InsertedDate = new DateTime(2020, 9, 18, 3, 18, 49, 492, DateTimeKind.Unspecified).AddTicks(7712),
+                            MadeIn = "Romania",
+                            RelaseDate = new DateTime(2021, 11, 21, 11, 32, 41, 262, DateTimeKind.Unspecified).AddTicks(7394),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 26,
+                            InsertedDate = new DateTime(2022, 2, 19, 21, 38, 19, 543, DateTimeKind.Unspecified).AddTicks(4404),
+                            MadeIn = "Namibia",
+                            RelaseDate = new DateTime(2020, 8, 20, 11, 31, 59, 47, DateTimeKind.Unspecified).AddTicks(6438),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 27,
+                            InsertedDate = new DateTime(2021, 5, 30, 3, 29, 3, 551, DateTimeKind.Unspecified).AddTicks(4986),
+                            MadeIn = "Hungary",
+                            RelaseDate = new DateTime(2021, 10, 18, 23, 7, 4, 741, DateTimeKind.Unspecified).AddTicks(5680),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 28,
+                            InsertedDate = new DateTime(2022, 4, 20, 19, 4, 27, 939, DateTimeKind.Unspecified).AddTicks(3004),
+                            MadeIn = "Haiti",
+                            RelaseDate = new DateTime(2020, 12, 11, 10, 28, 35, 407, DateTimeKind.Unspecified).AddTicks(6090),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 29,
+                            InsertedDate = new DateTime(2022, 6, 10, 9, 16, 43, 33, DateTimeKind.Unspecified).AddTicks(9932),
+                            MadeIn = "Uruguay",
+                            RelaseDate = new DateTime(2022, 11, 15, 0, 19, 29, 397, DateTimeKind.Unspecified).AddTicks(634),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 30,
+                            InsertedDate = new DateTime(2021, 4, 7, 15, 3, 55, 369, DateTimeKind.Unspecified).AddTicks(4180),
+                            MadeIn = "Japan",
+                            RelaseDate = new DateTime(2023, 1, 1, 16, 16, 40, 522, DateTimeKind.Unspecified).AddTicks(5593),
                             Status = 1
                         });
                 });
@@ -770,693 +1207,697 @@ namespace TrueOnion.PERSISTINCE.Migrations
                     b.HasData(
                         new
                         {
-                            ProductID = 1,
-                            SupplierID = 4,
-                            InsertedDate = new DateTime(2021, 6, 27, 5, 38, 56, 321, DateTimeKind.Unspecified).AddTicks(5170),
-                            MaxCountPerShipping = 145,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 11,
-                            SupplierID = 7,
-                            InsertedDate = new DateTime(2020, 12, 9, 16, 40, 14, 714, DateTimeKind.Unspecified).AddTicks(7716),
-                            MaxCountPerShipping = 17,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 13,
-                            SupplierID = 3,
-                            InsertedDate = new DateTime(2021, 1, 1, 15, 29, 49, 62, DateTimeKind.Unspecified).AddTicks(5260),
-                            MaxCountPerShipping = 114,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 12,
-                            SupplierID = 2,
-                            InsertedDate = new DateTime(2021, 11, 24, 5, 54, 53, 769, DateTimeKind.Unspecified).AddTicks(3231),
-                            MaxCountPerShipping = 151,
-                            Status = 1
-                        },
-                        new
-                        {
                             ProductID = 26,
-                            SupplierID = 6,
-                            InsertedDate = new DateTime(2022, 1, 17, 2, 48, 31, 437, DateTimeKind.Unspecified).AddTicks(3347),
-                            MaxCountPerShipping = 198,
+                            SupplierID = 4,
+                            InsertedDate = new DateTime(2020, 6, 4, 22, 38, 51, 511, DateTimeKind.Unspecified).AddTicks(2645),
+                            MaxCountPerShipping = 57,
                             Status = 1
                         },
                         new
                         {
-                            ProductID = 18,
-                            SupplierID = 8,
-                            InsertedDate = new DateTime(2020, 4, 11, 19, 43, 15, 336, DateTimeKind.Unspecified).AddTicks(5378),
+                            ProductID = 8,
+                            SupplierID = 1,
+                            InsertedDate = new DateTime(2022, 5, 27, 5, 2, 52, 155, DateTimeKind.Unspecified).AddTicks(6589),
                             MaxCountPerShipping = 103,
                             Status = 1
                         },
                         new
                         {
-                            ProductID = 26,
-                            SupplierID = 10,
-                            InsertedDate = new DateTime(2020, 11, 26, 23, 44, 42, 79, DateTimeKind.Unspecified).AddTicks(1691),
-                            MaxCountPerShipping = 104,
+                            ProductID = 3,
+                            SupplierID = 4,
+                            InsertedDate = new DateTime(2021, 6, 28, 13, 43, 52, 666, DateTimeKind.Unspecified).AddTicks(7135),
+                            MaxCountPerShipping = 130,
                             Status = 1
                         },
                         new
                         {
-                            ProductID = 3,
+                            ProductID = 15,
+                            SupplierID = 2,
+                            InsertedDate = new DateTime(2022, 8, 11, 16, 23, 1, 735, DateTimeKind.Unspecified).AddTicks(1411),
+                            MaxCountPerShipping = 54,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 20,
                             SupplierID = 8,
-                            InsertedDate = new DateTime(2021, 11, 28, 10, 27, 24, 65, DateTimeKind.Unspecified).AddTicks(1541),
-                            MaxCountPerShipping = 11,
+                            InsertedDate = new DateTime(2022, 11, 26, 16, 13, 54, 501, DateTimeKind.Unspecified).AddTicks(3264),
+                            MaxCountPerShipping = 155,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 23,
+                            SupplierID = 5,
+                            InsertedDate = new DateTime(2022, 10, 3, 10, 7, 2, 394, DateTimeKind.Unspecified).AddTicks(2712),
+                            MaxCountPerShipping = 28,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 27,
+                            SupplierID = 3,
+                            InsertedDate = new DateTime(2022, 4, 13, 13, 30, 41, 698, DateTimeKind.Unspecified).AddTicks(1978),
+                            MaxCountPerShipping = 200,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 5,
+                            SupplierID = 10,
+                            InsertedDate = new DateTime(2022, 2, 7, 11, 48, 2, 756, DateTimeKind.Unspecified).AddTicks(1421),
+                            MaxCountPerShipping = 197,
                             Status = 1
                         },
                         new
                         {
                             ProductID = 7,
                             SupplierID = 6,
-                            InsertedDate = new DateTime(2021, 6, 2, 8, 59, 53, 586, DateTimeKind.Unspecified).AddTicks(8745),
-                            MaxCountPerShipping = 50,
+                            InsertedDate = new DateTime(2023, 1, 1, 23, 41, 38, 70, DateTimeKind.Unspecified).AddTicks(7009),
+                            MaxCountPerShipping = 24,
                             Status = 1
                         },
                         new
                         {
-                            ProductID = 14,
-                            SupplierID = 2,
-                            InsertedDate = new DateTime(2022, 10, 1, 23, 37, 18, 733, DateTimeKind.Unspecified).AddTicks(1532),
-                            MaxCountPerShipping = 109,
+                            ProductID = 5,
+                            SupplierID = 7,
+                            InsertedDate = new DateTime(2021, 5, 13, 0, 51, 45, 167, DateTimeKind.Unspecified).AddTicks(5046),
+                            MaxCountPerShipping = 111,
                             Status = 1
                         },
                         new
                         {
-                            ProductID = 17,
+                            ProductID = 25,
+                            SupplierID = 5,
+                            InsertedDate = new DateTime(2021, 6, 23, 10, 22, 4, 29, DateTimeKind.Unspecified).AddTicks(7664),
+                            MaxCountPerShipping = 176,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 25,
+                            SupplierID = 1,
+                            InsertedDate = new DateTime(2021, 8, 22, 7, 50, 49, 419, DateTimeKind.Unspecified).AddTicks(1894),
+                            MaxCountPerShipping = 16,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 8,
+                            SupplierID = 5,
+                            InsertedDate = new DateTime(2021, 7, 28, 0, 15, 12, 692, DateTimeKind.Unspecified).AddTicks(5560),
+                            MaxCountPerShipping = 59,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 22,
                             SupplierID = 3,
-                            InsertedDate = new DateTime(2022, 5, 31, 16, 51, 36, 101, DateTimeKind.Unspecified).AddTicks(8809),
-                            MaxCountPerShipping = 105,
+                            InsertedDate = new DateTime(2020, 5, 18, 18, 42, 46, 151, DateTimeKind.Unspecified).AddTicks(4895),
+                            MaxCountPerShipping = 151,
                             Status = 1
                         },
                         new
                         {
-                            ProductID = 13,
+                            ProductID = 9,
                             SupplierID = 10,
-                            InsertedDate = new DateTime(2020, 10, 10, 19, 26, 26, 341, DateTimeKind.Unspecified).AddTicks(9761),
-                            MaxCountPerShipping = 84,
+                            InsertedDate = new DateTime(2021, 4, 29, 3, 27, 38, 851, DateTimeKind.Unspecified).AddTicks(7356),
+                            MaxCountPerShipping = 32,
                             Status = 1
                         },
                         new
                         {
-                            ProductID = 13,
-                            SupplierID = 6,
-                            InsertedDate = new DateTime(2021, 9, 18, 14, 15, 45, 775, DateTimeKind.Unspecified).AddTicks(3993),
-                            MaxCountPerShipping = 12,
+                            ProductID = 25,
+                            SupplierID = 7,
+                            InsertedDate = new DateTime(2022, 12, 10, 22, 6, 16, 361, DateTimeKind.Unspecified).AddTicks(2285),
+                            MaxCountPerShipping = 139,
                             Status = 1
                         },
                         new
                         {
-                            ProductID = 15,
+                            ProductID = 24,
+                            SupplierID = 4,
+                            InsertedDate = new DateTime(2020, 11, 19, 21, 14, 18, 520, DateTimeKind.Unspecified).AddTicks(823),
+                            MaxCountPerShipping = 77,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 25,
                             SupplierID = 6,
-                            InsertedDate = new DateTime(2021, 12, 20, 20, 23, 41, 597, DateTimeKind.Unspecified).AddTicks(678),
-                            MaxCountPerShipping = 33,
+                            InsertedDate = new DateTime(2021, 8, 5, 0, 1, 49, 818, DateTimeKind.Unspecified).AddTicks(2616),
+                            MaxCountPerShipping = 21,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 25,
+                            SupplierID = 8,
+                            InsertedDate = new DateTime(2021, 12, 11, 4, 23, 16, 310, DateTimeKind.Unspecified).AddTicks(7576),
+                            MaxCountPerShipping = 96,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 2,
+                            SupplierID = 8,
+                            InsertedDate = new DateTime(2021, 8, 6, 15, 48, 0, 28, DateTimeKind.Unspecified).AddTicks(692),
+                            MaxCountPerShipping = 185,
                             Status = 1
                         },
                         new
                         {
                             ProductID = 10,
-                            SupplierID = 4,
-                            InsertedDate = new DateTime(2020, 10, 22, 21, 12, 49, 376, DateTimeKind.Unspecified).AddTicks(2148),
-                            MaxCountPerShipping = 47,
+                            SupplierID = 9,
+                            InsertedDate = new DateTime(2021, 9, 5, 22, 45, 51, 199, DateTimeKind.Unspecified).AddTicks(7865),
+                            MaxCountPerShipping = 115,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 6,
+                            SupplierID = 3,
+                            InsertedDate = new DateTime(2021, 2, 9, 19, 52, 51, 560, DateTimeKind.Unspecified).AddTicks(6353),
+                            MaxCountPerShipping = 6,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 17,
+                            SupplierID = 1,
+                            InsertedDate = new DateTime(2022, 6, 9, 10, 6, 19, 201, DateTimeKind.Unspecified).AddTicks(1757),
+                            MaxCountPerShipping = 49,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 21,
+                            SupplierID = 8,
+                            InsertedDate = new DateTime(2021, 8, 29, 7, 22, 27, 325, DateTimeKind.Unspecified).AddTicks(4376),
+                            MaxCountPerShipping = 181,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 24,
+                            SupplierID = 2,
+                            InsertedDate = new DateTime(2020, 6, 26, 21, 34, 46, 932, DateTimeKind.Unspecified).AddTicks(192),
+                            MaxCountPerShipping = 98,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 13,
+                            SupplierID = 5,
+                            InsertedDate = new DateTime(2020, 4, 5, 20, 39, 17, 496, DateTimeKind.Unspecified).AddTicks(9867),
+                            MaxCountPerShipping = 10,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 28,
+                            SupplierID = 2,
+                            InsertedDate = new DateTime(2021, 3, 5, 0, 10, 28, 322, DateTimeKind.Unspecified).AddTicks(476),
+                            MaxCountPerShipping = 39,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 28,
+                            SupplierID = 3,
+                            InsertedDate = new DateTime(2022, 2, 12, 1, 55, 10, 72, DateTimeKind.Unspecified).AddTicks(1990),
+                            MaxCountPerShipping = 182,
                             Status = 1
                         },
                         new
                         {
                             ProductID = 25,
                             SupplierID = 10,
-                            InsertedDate = new DateTime(2021, 7, 16, 9, 19, 35, 667, DateTimeKind.Unspecified).AddTicks(7619),
-                            MaxCountPerShipping = 67,
+                            InsertedDate = new DateTime(2021, 5, 13, 12, 12, 52, 581, DateTimeKind.Unspecified).AddTicks(6771),
+                            MaxCountPerShipping = 22,
                             Status = 1
                         },
                         new
                         {
-                            ProductID = 5,
-                            SupplierID = 3,
-                            InsertedDate = new DateTime(2022, 9, 7, 16, 22, 25, 487, DateTimeKind.Unspecified).AddTicks(7456),
-                            MaxCountPerShipping = 135,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 11,
-                            SupplierID = 1,
-                            InsertedDate = new DateTime(2021, 9, 1, 15, 58, 1, 67, DateTimeKind.Unspecified).AddTicks(1731),
-                            MaxCountPerShipping = 176,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 5,
-                            SupplierID = 1,
-                            InsertedDate = new DateTime(2020, 7, 25, 0, 22, 33, 841, DateTimeKind.Unspecified).AddTicks(9960),
-                            MaxCountPerShipping = 116,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 2,
-                            SupplierID = 5,
-                            InsertedDate = new DateTime(2021, 7, 27, 14, 14, 55, 86, DateTimeKind.Unspecified).AddTicks(8356),
-                            MaxCountPerShipping = 120,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 6,
-                            SupplierID = 2,
-                            InsertedDate = new DateTime(2020, 9, 26, 3, 4, 22, 520, DateTimeKind.Unspecified).AddTicks(2758),
-                            MaxCountPerShipping = 30,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 7,
-                            SupplierID = 1,
-                            InsertedDate = new DateTime(2020, 9, 29, 9, 31, 17, 265, DateTimeKind.Unspecified).AddTicks(2114),
-                            MaxCountPerShipping = 103,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 2,
-                            SupplierID = 6,
-                            InsertedDate = new DateTime(2022, 11, 19, 10, 21, 42, 684, DateTimeKind.Unspecified).AddTicks(7822),
-                            MaxCountPerShipping = 30,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 2,
-                            SupplierID = 9,
-                            InsertedDate = new DateTime(2022, 4, 7, 6, 36, 5, 83, DateTimeKind.Unspecified).AddTicks(4983),
-                            MaxCountPerShipping = 194,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 17,
-                            SupplierID = 9,
-                            InsertedDate = new DateTime(2022, 3, 8, 19, 28, 7, 707, DateTimeKind.Unspecified).AddTicks(622),
-                            MaxCountPerShipping = 46,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 28,
-                            SupplierID = 5,
-                            InsertedDate = new DateTime(2020, 8, 22, 2, 49, 36, 211, DateTimeKind.Unspecified).AddTicks(7624),
-                            MaxCountPerShipping = 62,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 27,
-                            SupplierID = 5,
-                            InsertedDate = new DateTime(2022, 11, 15, 19, 52, 27, 701, DateTimeKind.Unspecified).AddTicks(1653),
-                            MaxCountPerShipping = 94,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 17,
+                            ProductID = 14,
                             SupplierID = 10,
-                            InsertedDate = new DateTime(2022, 7, 23, 2, 27, 8, 440, DateTimeKind.Unspecified).AddTicks(823),
-                            MaxCountPerShipping = 152,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 11,
-                            SupplierID = 9,
-                            InsertedDate = new DateTime(2021, 6, 8, 0, 57, 48, 49, DateTimeKind.Unspecified).AddTicks(1863),
-                            MaxCountPerShipping = 122,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 7,
-                            SupplierID = 2,
-                            InsertedDate = new DateTime(2021, 2, 9, 5, 41, 5, 692, DateTimeKind.Unspecified).AddTicks(7682),
-                            MaxCountPerShipping = 12,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 16,
-                            SupplierID = 2,
-                            InsertedDate = new DateTime(2020, 12, 25, 14, 20, 12, 909, DateTimeKind.Unspecified).AddTicks(38),
-                            MaxCountPerShipping = 105,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 19,
-                            SupplierID = 9,
-                            InsertedDate = new DateTime(2022, 5, 16, 0, 56, 33, 764, DateTimeKind.Unspecified).AddTicks(6586),
-                            MaxCountPerShipping = 64,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 5,
-                            SupplierID = 6,
-                            InsertedDate = new DateTime(2020, 11, 13, 12, 44, 33, 293, DateTimeKind.Unspecified).AddTicks(1012),
-                            MaxCountPerShipping = 103,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 5,
-                            SupplierID = 7,
-                            InsertedDate = new DateTime(2022, 1, 8, 23, 23, 46, 710, DateTimeKind.Unspecified).AddTicks(7561),
-                            MaxCountPerShipping = 166,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 17,
-                            SupplierID = 1,
-                            InsertedDate = new DateTime(2020, 4, 16, 14, 59, 46, 822, DateTimeKind.Unspecified).AddTicks(5392),
-                            MaxCountPerShipping = 31,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 15,
-                            SupplierID = 10,
-                            InsertedDate = new DateTime(2020, 9, 16, 15, 1, 58, 231, DateTimeKind.Unspecified).AddTicks(8845),
+                            InsertedDate = new DateTime(2020, 11, 1, 7, 14, 33, 614, DateTimeKind.Unspecified).AddTicks(5222),
                             MaxCountPerShipping = 157,
                             Status = 1
                         },
                         new
                         {
-                            ProductID = 8,
+                            ProductID = 17,
+                            SupplierID = 9,
+                            InsertedDate = new DateTime(2022, 6, 23, 8, 44, 32, 94, DateTimeKind.Unspecified).AddTicks(717),
+                            MaxCountPerShipping = 34,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 23,
+                            SupplierID = 9,
+                            InsertedDate = new DateTime(2022, 1, 30, 4, 24, 30, 810, DateTimeKind.Unspecified).AddTicks(8056),
+                            MaxCountPerShipping = 25,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 20,
+                            SupplierID = 7,
+                            InsertedDate = new DateTime(2022, 5, 27, 15, 29, 33, 630, DateTimeKind.Unspecified).AddTicks(8934),
+                            MaxCountPerShipping = 98,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 7,
                             SupplierID = 8,
-                            InsertedDate = new DateTime(2022, 3, 17, 23, 51, 36, 370, DateTimeKind.Unspecified).AddTicks(7972),
-                            MaxCountPerShipping = 26,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 8,
-                            SupplierID = 1,
-                            InsertedDate = new DateTime(2020, 9, 2, 20, 17, 48, 305, DateTimeKind.Unspecified).AddTicks(6824),
-                            MaxCountPerShipping = 54,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 26,
-                            SupplierID = 4,
-                            InsertedDate = new DateTime(2020, 3, 24, 17, 52, 27, 64, DateTimeKind.Unspecified).AddTicks(1908),
-                            MaxCountPerShipping = 178,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 2,
-                            SupplierID = 4,
-                            InsertedDate = new DateTime(2022, 1, 13, 11, 47, 46, 529, DateTimeKind.Unspecified).AddTicks(370),
-                            MaxCountPerShipping = 75,
+                            InsertedDate = new DateTime(2021, 10, 10, 9, 18, 56, 847, DateTimeKind.Unspecified).AddTicks(738),
+                            MaxCountPerShipping = 138,
                             Status = 1
                         },
                         new
                         {
                             ProductID = 28,
+                            SupplierID = 4,
+                            InsertedDate = new DateTime(2020, 9, 11, 7, 36, 42, 129, DateTimeKind.Unspecified).AddTicks(5903),
+                            MaxCountPerShipping = 170,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 22,
                             SupplierID = 8,
-                            InsertedDate = new DateTime(2022, 8, 16, 2, 40, 23, 446, DateTimeKind.Unspecified).AddTicks(4482),
-                            MaxCountPerShipping = 167,
+                            InsertedDate = new DateTime(2022, 10, 30, 23, 54, 16, 462, DateTimeKind.Unspecified).AddTicks(3757),
+                            MaxCountPerShipping = 144,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 15,
+                            SupplierID = 8,
+                            InsertedDate = new DateTime(2022, 6, 23, 23, 17, 40, 613, DateTimeKind.Unspecified).AddTicks(4930),
+                            MaxCountPerShipping = 157,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 28,
+                            SupplierID = 5,
+                            InsertedDate = new DateTime(2021, 9, 20, 20, 46, 0, 60, DateTimeKind.Unspecified).AddTicks(4099),
+                            MaxCountPerShipping = 75,
                             Status = 1
                         },
                         new
                         {
                             ProductID = 18,
-                            SupplierID = 6,
-                            InsertedDate = new DateTime(2022, 4, 21, 1, 27, 8, 769, DateTimeKind.Unspecified).AddTicks(5777),
-                            MaxCountPerShipping = 33,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 29,
-                            SupplierID = 2,
-                            InsertedDate = new DateTime(2020, 7, 19, 4, 49, 26, 159, DateTimeKind.Unspecified).AddTicks(4789),
-                            MaxCountPerShipping = 118,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 20,
                             SupplierID = 8,
-                            InsertedDate = new DateTime(2020, 3, 31, 15, 13, 20, 916, DateTimeKind.Unspecified).AddTicks(9672),
-                            MaxCountPerShipping = 51,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 8,
-                            SupplierID = 3,
-                            InsertedDate = new DateTime(2022, 3, 9, 12, 16, 17, 164, DateTimeKind.Unspecified).AddTicks(6172),
-                            MaxCountPerShipping = 140,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 6,
-                            SupplierID = 3,
-                            InsertedDate = new DateTime(2022, 9, 29, 21, 41, 1, 611, DateTimeKind.Unspecified).AddTicks(696),
-                            MaxCountPerShipping = 184,
+                            InsertedDate = new DateTime(2022, 4, 21, 22, 49, 33, 48, DateTimeKind.Unspecified).AddTicks(6034),
+                            MaxCountPerShipping = 63,
                             Status = 1
                         },
                         new
                         {
                             ProductID = 12,
+                            SupplierID = 5,
+                            InsertedDate = new DateTime(2022, 10, 2, 21, 2, 1, 307, DateTimeKind.Unspecified).AddTicks(11),
+                            MaxCountPerShipping = 111,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 2,
                             SupplierID = 10,
-                            InsertedDate = new DateTime(2020, 5, 29, 19, 15, 8, 453, DateTimeKind.Unspecified).AddTicks(2862),
-                            MaxCountPerShipping = 37,
+                            InsertedDate = new DateTime(2022, 2, 13, 19, 16, 57, 93, DateTimeKind.Unspecified).AddTicks(7645),
+                            MaxCountPerShipping = 179,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 19,
+                            SupplierID = 4,
+                            InsertedDate = new DateTime(2021, 3, 6, 17, 45, 15, 624, DateTimeKind.Unspecified).AddTicks(4233),
+                            MaxCountPerShipping = 72,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 1,
+                            SupplierID = 1,
+                            InsertedDate = new DateTime(2022, 12, 18, 15, 26, 14, 221, DateTimeKind.Unspecified).AddTicks(5135),
+                            MaxCountPerShipping = 188,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 30,
+                            SupplierID = 7,
+                            InsertedDate = new DateTime(2022, 10, 5, 13, 55, 1, 860, DateTimeKind.Unspecified).AddTicks(6505),
+                            MaxCountPerShipping = 85,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 4,
+                            SupplierID = 5,
+                            InsertedDate = new DateTime(2020, 11, 9, 16, 32, 40, 277, DateTimeKind.Unspecified).AddTicks(1718),
+                            MaxCountPerShipping = 47,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 7,
+                            SupplierID = 7,
+                            InsertedDate = new DateTime(2021, 8, 2, 21, 26, 50, 286, DateTimeKind.Unspecified).AddTicks(2178),
+                            MaxCountPerShipping = 50,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 11,
+                            SupplierID = 2,
+                            InsertedDate = new DateTime(2022, 3, 2, 7, 45, 42, 98, DateTimeKind.Unspecified).AddTicks(132),
+                            MaxCountPerShipping = 164,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 14,
+                            SupplierID = 5,
+                            InsertedDate = new DateTime(2022, 9, 26, 17, 49, 14, 923, DateTimeKind.Unspecified).AddTicks(385),
+                            MaxCountPerShipping = 144,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 19,
+                            SupplierID = 10,
+                            InsertedDate = new DateTime(2023, 1, 1, 17, 15, 31, 576, DateTimeKind.Unspecified).AddTicks(9556),
+                            MaxCountPerShipping = 31,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 20,
+                            SupplierID = 10,
+                            InsertedDate = new DateTime(2022, 3, 17, 18, 38, 40, 722, DateTimeKind.Unspecified).AddTicks(1743),
+                            MaxCountPerShipping = 76,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 26,
+                            SupplierID = 2,
+                            InsertedDate = new DateTime(2020, 9, 19, 10, 5, 25, 106, DateTimeKind.Unspecified).AddTicks(2393),
+                            MaxCountPerShipping = 91,
                             Status = 1
                         },
                         new
                         {
                             ProductID = 20,
                             SupplierID = 6,
-                            InsertedDate = new DateTime(2021, 7, 16, 15, 52, 0, 50, DateTimeKind.Unspecified).AddTicks(9952),
-                            MaxCountPerShipping = 149,
+                            InsertedDate = new DateTime(2021, 2, 24, 1, 44, 8, 54, DateTimeKind.Unspecified).AddTicks(4128),
+                            MaxCountPerShipping = 172,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 3,
+                            SupplierID = 10,
+                            InsertedDate = new DateTime(2020, 4, 20, 15, 16, 24, 80, DateTimeKind.Unspecified).AddTicks(7024),
+                            MaxCountPerShipping = 24,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 10,
+                            SupplierID = 2,
+                            InsertedDate = new DateTime(2022, 8, 23, 0, 33, 57, 72, DateTimeKind.Unspecified).AddTicks(446),
+                            MaxCountPerShipping = 83,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 3,
+                            SupplierID = 6,
+                            InsertedDate = new DateTime(2022, 2, 10, 16, 36, 24, 763, DateTimeKind.Unspecified).AddTicks(5536),
+                            MaxCountPerShipping = 106,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 29,
+                            SupplierID = 10,
+                            InsertedDate = new DateTime(2022, 10, 27, 11, 39, 11, 55, DateTimeKind.Unspecified).AddTicks(8954),
+                            MaxCountPerShipping = 65,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 16,
+                            SupplierID = 10,
+                            InsertedDate = new DateTime(2022, 8, 18, 9, 28, 20, 739, DateTimeKind.Unspecified).AddTicks(5848),
+                            MaxCountPerShipping = 13,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 8,
+                            SupplierID = 4,
+                            InsertedDate = new DateTime(2020, 10, 3, 14, 21, 3, 592, DateTimeKind.Unspecified).AddTicks(4255),
+                            MaxCountPerShipping = 115,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 14,
+                            SupplierID = 1,
+                            InsertedDate = new DateTime(2020, 12, 14, 19, 25, 32, 830, DateTimeKind.Unspecified).AddTicks(4902),
+                            MaxCountPerShipping = 134,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 30,
+                            SupplierID = 2,
+                            InsertedDate = new DateTime(2021, 10, 13, 4, 10, 4, 973, DateTimeKind.Unspecified).AddTicks(2908),
+                            MaxCountPerShipping = 91,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 18,
+                            SupplierID = 1,
+                            InsertedDate = new DateTime(2020, 10, 14, 3, 32, 54, 504, DateTimeKind.Unspecified).AddTicks(8960),
+                            MaxCountPerShipping = 18,
                             Status = 1
                         },
                         new
                         {
                             ProductID = 22,
                             SupplierID = 9,
-                            InsertedDate = new DateTime(2021, 11, 19, 20, 21, 2, 803, DateTimeKind.Unspecified).AddTicks(488),
-                            MaxCountPerShipping = 116,
+                            InsertedDate = new DateTime(2021, 3, 21, 15, 28, 52, 892, DateTimeKind.Unspecified).AddTicks(57),
+                            MaxCountPerShipping = 187,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 19,
+                            SupplierID = 8,
+                            InsertedDate = new DateTime(2022, 11, 3, 3, 25, 1, 712, DateTimeKind.Unspecified).AddTicks(5536),
+                            MaxCountPerShipping = 7,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 28,
+                            SupplierID = 9,
+                            InsertedDate = new DateTime(2021, 6, 7, 0, 40, 37, 246, DateTimeKind.Unspecified).AddTicks(5157),
+                            MaxCountPerShipping = 5,
                             Status = 1
                         },
                         new
                         {
                             ProductID = 15,
-                            SupplierID = 8,
-                            InsertedDate = new DateTime(2022, 10, 7, 1, 45, 16, 268, DateTimeKind.Unspecified).AddTicks(5210),
-                            MaxCountPerShipping = 148,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 25,
-                            SupplierID = 7,
-                            InsertedDate = new DateTime(2020, 5, 15, 12, 55, 18, 811, DateTimeKind.Unspecified).AddTicks(5531),
-                            MaxCountPerShipping = 25,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 24,
-                            SupplierID = 7,
-                            InsertedDate = new DateTime(2020, 3, 21, 2, 55, 49, 653, DateTimeKind.Unspecified).AddTicks(1565),
-                            MaxCountPerShipping = 195,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 20,
-                            SupplierID = 3,
-                            InsertedDate = new DateTime(2022, 9, 13, 14, 47, 56, 570, DateTimeKind.Unspecified).AddTicks(7510),
-                            MaxCountPerShipping = 21,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 4,
-                            SupplierID = 5,
-                            InsertedDate = new DateTime(2022, 2, 4, 10, 55, 17, 792, DateTimeKind.Unspecified).AddTicks(1178),
-                            MaxCountPerShipping = 84,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 21,
-                            SupplierID = 7,
-                            InsertedDate = new DateTime(2020, 8, 20, 3, 20, 15, 730, DateTimeKind.Unspecified).AddTicks(4605),
-                            MaxCountPerShipping = 173,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 24,
-                            SupplierID = 10,
-                            InsertedDate = new DateTime(2021, 1, 29, 14, 41, 0, 452, DateTimeKind.Unspecified).AddTicks(4099),
-                            MaxCountPerShipping = 69,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 16,
-                            SupplierID = 7,
-                            InsertedDate = new DateTime(2020, 6, 20, 3, 57, 56, 400, DateTimeKind.Unspecified).AddTicks(6988),
-                            MaxCountPerShipping = 180,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 25,
-                            SupplierID = 3,
-                            InsertedDate = new DateTime(2021, 10, 24, 13, 42, 6, 188, DateTimeKind.Unspecified).AddTicks(888),
-                            MaxCountPerShipping = 1,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 3,
-                            SupplierID = 1,
-                            InsertedDate = new DateTime(2022, 2, 15, 18, 56, 48, 598, DateTimeKind.Unspecified).AddTicks(4994),
-                            MaxCountPerShipping = 3,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 12,
                             SupplierID = 6,
-                            InsertedDate = new DateTime(2022, 4, 21, 23, 24, 41, 430, DateTimeKind.Unspecified).AddTicks(5161),
-                            MaxCountPerShipping = 157,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 27,
-                            SupplierID = 3,
-                            InsertedDate = new DateTime(2020, 9, 9, 0, 23, 56, 356, DateTimeKind.Unspecified).AddTicks(3105),
-                            MaxCountPerShipping = 168,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 21,
-                            SupplierID = 9,
-                            InsertedDate = new DateTime(2020, 10, 26, 1, 51, 45, 297, DateTimeKind.Unspecified).AddTicks(209),
-                            MaxCountPerShipping = 166,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 16,
-                            SupplierID = 6,
-                            InsertedDate = new DateTime(2021, 6, 2, 12, 3, 33, 18, DateTimeKind.Unspecified).AddTicks(3546),
-                            MaxCountPerShipping = 64,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 2,
-                            SupplierID = 2,
-                            InsertedDate = new DateTime(2021, 6, 9, 13, 30, 7, 727, DateTimeKind.Unspecified).AddTicks(7186),
-                            MaxCountPerShipping = 170,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 14,
-                            SupplierID = 4,
-                            InsertedDate = new DateTime(2020, 5, 19, 17, 22, 36, 867, DateTimeKind.Unspecified).AddTicks(7388),
-                            MaxCountPerShipping = 172,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 17,
-                            SupplierID = 2,
-                            InsertedDate = new DateTime(2021, 3, 14, 0, 44, 46, 652, DateTimeKind.Unspecified).AddTicks(5919),
-                            MaxCountPerShipping = 196,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 19,
-                            SupplierID = 7,
-                            InsertedDate = new DateTime(2021, 1, 16, 0, 31, 16, 226, DateTimeKind.Unspecified).AddTicks(6020),
-                            MaxCountPerShipping = 192,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 19,
-                            SupplierID = 6,
-                            InsertedDate = new DateTime(2022, 8, 19, 13, 56, 35, 875, DateTimeKind.Unspecified).AddTicks(113),
-                            MaxCountPerShipping = 181,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 29,
-                            SupplierID = 8,
-                            InsertedDate = new DateTime(2020, 7, 18, 3, 40, 23, 285, DateTimeKind.Unspecified).AddTicks(2808),
-                            MaxCountPerShipping = 159,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 5,
-                            SupplierID = 10,
-                            InsertedDate = new DateTime(2022, 5, 15, 18, 44, 57, 481, DateTimeKind.Unspecified).AddTicks(1384),
-                            MaxCountPerShipping = 148,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 30,
-                            SupplierID = 5,
-                            InsertedDate = new DateTime(2021, 3, 14, 1, 46, 59, 662, DateTimeKind.Unspecified).AddTicks(6179),
-                            MaxCountPerShipping = 8,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 14,
-                            SupplierID = 6,
-                            InsertedDate = new DateTime(2020, 10, 24, 21, 10, 52, 873, DateTimeKind.Unspecified).AddTicks(3196),
-                            MaxCountPerShipping = 34,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 6,
-                            SupplierID = 1,
-                            InsertedDate = new DateTime(2020, 5, 26, 16, 49, 21, 728, DateTimeKind.Unspecified).AddTicks(8818),
+                            InsertedDate = new DateTime(2022, 1, 13, 8, 7, 2, 22, DateTimeKind.Unspecified).AddTicks(8613),
                             MaxCountPerShipping = 18,
                             Status = 1
                         },
                         new
                         {
-                            ProductID = 24,
-                            SupplierID = 1,
-                            InsertedDate = new DateTime(2021, 11, 28, 14, 7, 27, 655, DateTimeKind.Unspecified).AddTicks(4386),
-                            MaxCountPerShipping = 159,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 4,
-                            SupplierID = 2,
-                            InsertedDate = new DateTime(2022, 6, 17, 11, 59, 40, 630, DateTimeKind.Unspecified).AddTicks(3978),
-                            MaxCountPerShipping = 85,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 21,
-                            SupplierID = 4,
-                            InsertedDate = new DateTime(2022, 11, 27, 3, 11, 47, 525, DateTimeKind.Unspecified).AddTicks(2768),
-                            MaxCountPerShipping = 161,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 15,
-                            SupplierID = 3,
-                            InsertedDate = new DateTime(2020, 10, 7, 18, 58, 15, 25, DateTimeKind.Unspecified).AddTicks(2619),
-                            MaxCountPerShipping = 73,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 8,
-                            SupplierID = 2,
-                            InsertedDate = new DateTime(2021, 3, 16, 3, 54, 41, 490, DateTimeKind.Unspecified).AddTicks(8270),
-                            MaxCountPerShipping = 63,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 23,
-                            SupplierID = 3,
-                            InsertedDate = new DateTime(2022, 8, 13, 21, 48, 27, 789, DateTimeKind.Unspecified).AddTicks(8679),
-                            MaxCountPerShipping = 39,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 26,
-                            SupplierID = 8,
-                            InsertedDate = new DateTime(2021, 5, 6, 10, 35, 57, 888, DateTimeKind.Unspecified).AddTicks(7544),
-                            MaxCountPerShipping = 30,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 16,
-                            SupplierID = 8,
-                            InsertedDate = new DateTime(2020, 10, 25, 9, 31, 36, 820, DateTimeKind.Unspecified).AddTicks(2902),
-                            MaxCountPerShipping = 43,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 29,
-                            SupplierID = 4,
-                            InsertedDate = new DateTime(2021, 5, 31, 8, 17, 54, 546, DateTimeKind.Unspecified).AddTicks(6459),
-                            MaxCountPerShipping = 70,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 26,
-                            SupplierID = 7,
-                            InsertedDate = new DateTime(2021, 8, 21, 14, 4, 29, 905, DateTimeKind.Unspecified).AddTicks(4544),
-                            MaxCountPerShipping = 96,
-                            Status = 1
-                        },
-                        new
-                        {
-                            ProductID = 17,
-                            SupplierID = 4,
-                            InsertedDate = new DateTime(2021, 12, 30, 16, 33, 50, 359, DateTimeKind.Unspecified).AddTicks(469),
-                            MaxCountPerShipping = 71,
+                            ProductID = 3,
+                            SupplierID = 9,
+                            InsertedDate = new DateTime(2020, 12, 31, 5, 50, 25, 946, DateTimeKind.Unspecified).AddTicks(803),
+                            MaxCountPerShipping = 128,
                             Status = 1
                         },
                         new
                         {
                             ProductID = 11,
                             SupplierID = 5,
-                            InsertedDate = new DateTime(2022, 8, 13, 13, 43, 39, 482, DateTimeKind.Unspecified).AddTicks(7184),
-                            MaxCountPerShipping = 181,
+                            InsertedDate = new DateTime(2021, 12, 13, 7, 24, 29, 242, DateTimeKind.Unspecified).AddTicks(3368),
+                            MaxCountPerShipping = 196,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 3,
+                            SupplierID = 5,
+                            InsertedDate = new DateTime(2022, 12, 5, 17, 38, 2, 503, DateTimeKind.Unspecified).AddTicks(826),
+                            MaxCountPerShipping = 40,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 23,
+                            SupplierID = 4,
+                            InsertedDate = new DateTime(2022, 11, 12, 11, 52, 21, 892, DateTimeKind.Unspecified).AddTicks(7099),
+                            MaxCountPerShipping = 24,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 15,
+                            SupplierID = 10,
+                            InsertedDate = new DateTime(2020, 5, 25, 0, 38, 8, 923, DateTimeKind.Unspecified).AddTicks(2967),
+                            MaxCountPerShipping = 194,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 28,
+                            SupplierID = 8,
+                            InsertedDate = new DateTime(2020, 6, 13, 4, 35, 18, 402, DateTimeKind.Unspecified).AddTicks(1139),
+                            MaxCountPerShipping = 81,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 5,
+                            SupplierID = 8,
+                            InsertedDate = new DateTime(2020, 3, 14, 6, 38, 4, 42, DateTimeKind.Unspecified).AddTicks(7739),
+                            MaxCountPerShipping = 112,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 13,
+                            SupplierID = 9,
+                            InsertedDate = new DateTime(2020, 9, 7, 15, 30, 11, 208, DateTimeKind.Unspecified).AddTicks(3581),
+                            MaxCountPerShipping = 171,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 8,
+                            SupplierID = 10,
+                            InsertedDate = new DateTime(2022, 9, 5, 8, 16, 23, 128, DateTimeKind.Unspecified).AddTicks(1539),
+                            MaxCountPerShipping = 96,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 3,
+                            SupplierID = 7,
+                            InsertedDate = new DateTime(2022, 11, 26, 16, 37, 40, 267, DateTimeKind.Unspecified).AddTicks(9747),
+                            MaxCountPerShipping = 49,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 29,
+                            SupplierID = 1,
+                            InsertedDate = new DateTime(2021, 12, 23, 21, 0, 10, 762, DateTimeKind.Unspecified).AddTicks(6555),
+                            MaxCountPerShipping = 79,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 22,
+                            SupplierID = 2,
+                            InsertedDate = new DateTime(2020, 11, 29, 8, 15, 12, 602, DateTimeKind.Unspecified).AddTicks(5696),
+                            MaxCountPerShipping = 141,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 16,
+                            SupplierID = 5,
+                            InsertedDate = new DateTime(2020, 8, 19, 1, 36, 58, 278, DateTimeKind.Unspecified).AddTicks(1062),
+                            MaxCountPerShipping = 148,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 24,
+                            SupplierID = 9,
+                            InsertedDate = new DateTime(2020, 6, 18, 22, 15, 2, 953, DateTimeKind.Unspecified).AddTicks(4382),
+                            MaxCountPerShipping = 75,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 1,
+                            SupplierID = 4,
+                            InsertedDate = new DateTime(2020, 12, 16, 11, 11, 0, 69, DateTimeKind.Unspecified).AddTicks(9744),
+                            MaxCountPerShipping = 15,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 7,
+                            SupplierID = 5,
+                            InsertedDate = new DateTime(2022, 5, 24, 6, 3, 17, 208, DateTimeKind.Unspecified).AddTicks(7950),
+                            MaxCountPerShipping = 124,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 11,
+                            SupplierID = 6,
+                            InsertedDate = new DateTime(2021, 11, 14, 22, 27, 40, 650, DateTimeKind.Unspecified).AddTicks(973),
+                            MaxCountPerShipping = 94,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 20,
+                            SupplierID = 2,
+                            InsertedDate = new DateTime(2022, 10, 1, 17, 57, 31, 66, DateTimeKind.Unspecified).AddTicks(3259),
+                            MaxCountPerShipping = 42,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 10,
+                            SupplierID = 6,
+                            InsertedDate = new DateTime(2021, 11, 29, 16, 30, 16, 582, DateTimeKind.Unspecified).AddTicks(252),
+                            MaxCountPerShipping = 141,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ProductID = 9,
+                            SupplierID = 1,
+                            InsertedDate = new DateTime(2020, 5, 20, 21, 42, 51, 65, DateTimeKind.Unspecified).AddTicks(9412),
+                            MaxCountPerShipping = 60,
                             Status = 1
                         });
                 });
 
             modelBuilder.Entity("TrueOnion.DOMAIN.Entities.Concrates.Supplier", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
@@ -1471,81 +1912,142 @@ namespace TrueOnion.PERSISTINCE.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Suppliers");
 
                     b.HasData(
                         new
                         {
-                            ID = 1,
-                            CompanyName = "Spinka LLC",
-                            InsertedDate = new DateTime(2020, 7, 14, 20, 40, 34, 554, DateTimeKind.Unspecified).AddTicks(2891),
+                            Id = 1,
+                            Address = "58918 Micheal Junctions, Port Carloside, France",
+                            CompanyName = "Mayert, Volkman and Jast",
+                            InsertedDate = new DateTime(2021, 10, 5, 21, 39, 20, 723, DateTimeKind.Unspecified).AddTicks(4561),
                             Status = 1
                         },
                         new
                         {
-                            ID = 2,
-                            CompanyName = "Doyle Inc",
-                            InsertedDate = new DateTime(2021, 9, 10, 21, 36, 2, 141, DateTimeKind.Unspecified).AddTicks(3060),
+                            Id = 2,
+                            Address = "05352 Huel Bridge, McKenziehaven, Tuvalu",
+                            CompanyName = "Lesch and Sons",
+                            InsertedDate = new DateTime(2022, 6, 23, 13, 23, 51, 255, DateTimeKind.Unspecified).AddTicks(2440),
                             Status = 1
                         },
                         new
                         {
-                            ID = 3,
-                            CompanyName = "Morissette Group",
-                            InsertedDate = new DateTime(2020, 7, 11, 23, 9, 20, 295, DateTimeKind.Unspecified).AddTicks(7210),
+                            Id = 3,
+                            Address = "3252 Sonny Grove, Sauermouth, Sierra Leone",
+                            CompanyName = "Ward LLC",
+                            InsertedDate = new DateTime(2021, 4, 8, 23, 49, 14, 378, DateTimeKind.Unspecified).AddTicks(1426),
                             Status = 1
                         },
                         new
                         {
-                            ID = 4,
-                            CompanyName = "Rutherford - Hintz",
-                            InsertedDate = new DateTime(2020, 12, 20, 11, 48, 16, 7, DateTimeKind.Unspecified).AddTicks(6612),
+                            Id = 4,
+                            Address = "49046 Nicholas Cape, Laneshire, Oman",
+                            CompanyName = "Keeling Group",
+                            InsertedDate = new DateTime(2021, 10, 13, 8, 20, 49, 493, DateTimeKind.Unspecified).AddTicks(7565),
                             Status = 1
                         },
                         new
                         {
-                            ID = 5,
-                            CompanyName = "Hagenes, Hodkiewicz and Gislason",
-                            InsertedDate = new DateTime(2022, 11, 14, 16, 25, 31, 617, DateTimeKind.Unspecified).AddTicks(3253),
+                            Id = 5,
+                            Address = "07074 Keeling Rest, Gissellefort, Solomon Islands",
+                            CompanyName = "Wiza - Bartoletti",
+                            InsertedDate = new DateTime(2022, 12, 17, 2, 49, 1, 47, DateTimeKind.Unspecified).AddTicks(3407),
                             Status = 1
                         },
                         new
                         {
-                            ID = 6,
-                            CompanyName = "Schmeler - Rice",
-                            InsertedDate = new DateTime(2020, 12, 21, 12, 59, 46, 734, DateTimeKind.Unspecified).AddTicks(7482),
+                            Id = 6,
+                            Address = "59662 Lorenza Orchard, Adonisside, Kazakhstan",
+                            CompanyName = "Dicki, Wolff and Fadel",
+                            InsertedDate = new DateTime(2022, 5, 28, 0, 11, 30, 619, DateTimeKind.Unspecified).AddTicks(8577),
                             Status = 1
                         },
                         new
                         {
-                            ID = 7,
-                            CompanyName = "Mante, Leannon and Hilll",
-                            InsertedDate = new DateTime(2021, 8, 9, 16, 56, 1, 986, DateTimeKind.Unspecified).AddTicks(9081),
+                            Id = 7,
+                            Address = "3105 Gregoria Rapids, South Bianka, Jordan",
+                            CompanyName = "Mueller and Sons",
+                            InsertedDate = new DateTime(2022, 7, 22, 17, 16, 0, 883, DateTimeKind.Unspecified).AddTicks(5654),
                             Status = 1
                         },
                         new
                         {
-                            ID = 8,
-                            CompanyName = "Balistreri, Collier and Grant",
-                            InsertedDate = new DateTime(2022, 11, 10, 15, 32, 31, 595, DateTimeKind.Unspecified).AddTicks(241),
+                            Id = 8,
+                            Address = "39380 Hills Passage, North Elmira, Cocos (Keeling) Islands",
+                            CompanyName = "Marvin LLC",
+                            InsertedDate = new DateTime(2021, 7, 23, 7, 55, 54, 16, DateTimeKind.Unspecified).AddTicks(6026),
                             Status = 1
                         },
                         new
                         {
-                            ID = 9,
-                            CompanyName = "Batz and Sons",
-                            InsertedDate = new DateTime(2020, 8, 30, 11, 12, 56, 18, DateTimeKind.Unspecified).AddTicks(9736),
+                            Id = 9,
+                            Address = "1698 Reagan Field, Goodwinton, Pitcairn Islands",
+                            CompanyName = "Weimann - Wuckert",
+                            InsertedDate = new DateTime(2020, 5, 10, 15, 1, 8, 433, DateTimeKind.Unspecified).AddTicks(9986),
                             Status = 1
                         },
                         new
                         {
-                            ID = 10,
-                            CompanyName = "Jacobson - Parisian",
-                            InsertedDate = new DateTime(2020, 5, 6, 0, 21, 40, 405, DateTimeKind.Unspecified).AddTicks(7667),
+                            Id = 10,
+                            Address = "2108 Ernser Hollow, Finnport, Albania",
+                            CompanyName = "Green, Pouros and Lesch",
+                            InsertedDate = new DateTime(2020, 12, 28, 2, 25, 56, 431, DateTimeKind.Unspecified).AddTicks(9187),
                             Status = 1
                         });
+                });
+
+            modelBuilder.Entity("TrueOnion.DOMAIN.Entities.Concrates.AppRoleClaim", b =>
+                {
+                    b.HasOne("TrueOnion.DOMAIN.Entities.Concrates.AppRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TrueOnion.DOMAIN.Entities.Concrates.AppUserClaim", b =>
+                {
+                    b.HasOne("TrueOnion.DOMAIN.Entities.Concrates.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TrueOnion.DOMAIN.Entities.Concrates.AppUserLogin", b =>
+                {
+                    b.HasOne("TrueOnion.DOMAIN.Entities.Concrates.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TrueOnion.DOMAIN.Entities.Concrates.AppUserRole", b =>
+                {
+                    b.HasOne("TrueOnion.DOMAIN.Entities.Concrates.AppRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TrueOnion.DOMAIN.Entities.Concrates.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TrueOnion.DOMAIN.Entities.Concrates.AppUserToken", b =>
+                {
+                    b.HasOne("TrueOnion.DOMAIN.Entities.Concrates.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TrueOnion.DOMAIN.Entities.Concrates.Category", b =>
@@ -1573,7 +2075,7 @@ namespace TrueOnion.PERSISTINCE.Migrations
                 {
                     b.HasOne("TrueOnion.DOMAIN.Entities.Concrates.Product", "Product")
                         .WithOne("ProductFeature")
-                        .HasForeignKey("TrueOnion.DOMAIN.Entities.Concrates.ProductFeature", "ID")
+                        .HasForeignKey("TrueOnion.DOMAIN.Entities.Concrates.ProductFeature", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

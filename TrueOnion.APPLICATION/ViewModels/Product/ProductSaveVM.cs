@@ -17,7 +17,7 @@ namespace TrueOnion.APPLICATION.ViewModels.Product
         public int Stock { get; set; }
         public decimal Price { get; set; }
         [DisplayName("Category")]
-        public int CategoryID { get; set; }
+        public int CategoryId { get; set; }
         public List<int> SupplierIDs { get; set; }
         public List<CategoryVM>? CategoryVMs { get; set; }
         public List<SupplierVM>? SupplierVMs { get; set; }

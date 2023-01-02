@@ -8,7 +8,7 @@ namespace TrueOnion.APPLICATION.ViewModels.Abstracts
 {
     public abstract class SaveVM
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public DateTime InsertedDate { get; set; }
     }
 }

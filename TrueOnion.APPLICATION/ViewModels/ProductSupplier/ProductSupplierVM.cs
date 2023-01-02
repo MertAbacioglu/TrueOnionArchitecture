@@ -11,8 +11,8 @@ namespace TrueOnion.APPLICATION.ViewModels.ProductSupplier
 {
     public class ProductSupplierVM : IBaseVM
     {
-        public int ProductID { get; set; }
-        public int SupplierID { get; set; }
+        public int ProductId { get; set; }
+        public int SupplierId { get; set; }
         public int MaxCountPerShipping { get; set; }
 
         public ProductVM ProductVM { get; set; }

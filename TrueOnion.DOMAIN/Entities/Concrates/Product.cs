@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrueOnion.DOMAIN.Entities.Abstarct;
 using TrueOnion.DOMAIN.Entities.Common;
 
 namespace TrueOnion.DOMAIN.Entities.Concrates
 {
-    public class Product : BaseEntity
+    public class Product : BaseEntity, IEntity
     {
         public Product()
         {
