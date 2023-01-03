@@ -38,8 +38,8 @@ namespace TrueOnion.WEB.Areas.Admin.Controllers
             await _categoryService.AddAsync(viewModel);
             return RedirectToAction(nameof(Index));
         }
-        
-        [ServiceFilter(typeof(NotFoundFilter<ProductSaveVM, ProductVM, Product>))]
+
+        [ServiceFilter(typeof(NotFoundFilter<CategorySaveVM, CategoryVM, Category>))]
         public async Task<IActionResult> Update(int id)
         {
             return View((await _categoryService.FindAsync(id)).Data);
@@ -51,8 +51,8 @@ namespace TrueOnion.WEB.Areas.Admin.Controllers
             await _categoryService.UpdateAsync(viewModel);
             return RedirectToAction(nameof(Index));
         }
-        
-        [ServiceFilter(typeof(NotFoundFilter<ProductSaveVM, ProductVM, Product>))]
+
+        [ServiceFilter(typeof(NotFoundFilter<CategorySaveVM, CategoryVM, Category>))]
         public async Task<IActionResult> Remove(int id)
         {
             await _categoryService.DeleteAsync(id);

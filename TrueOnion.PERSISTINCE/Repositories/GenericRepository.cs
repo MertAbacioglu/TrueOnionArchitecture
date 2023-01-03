@@ -80,11 +80,12 @@ namespace TrueOnion.PERSISTINCE.Repositories
 
         public async Task UpdateAsync(T entity)
         {
+            //T toBeUpdated = await FindAsync(entity.Id);
             entity.LastModifiedDate = DateTime.Now;
             entity.Status = DataStatus.Modified;
-            //T toBeUpdated = await FindAsync(entity.ID);
             //_appDbContext.Entry(toBeUpdated).CurrentValues.SetValues(entity);
             _appDbContext.Update(entity);
+
             await _appDbContext.SaveChangesAsync();
         }
 

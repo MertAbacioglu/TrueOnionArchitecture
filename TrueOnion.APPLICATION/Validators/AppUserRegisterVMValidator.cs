@@ -19,7 +19,6 @@ namespace TrueOnion.APPLICATION.Validators
                 .EmailAddress().WithMessage("{PropertyName} is not valid");
             RuleFor(x => x.ConfirmPassword).Equal(x => x.Password).WithMessage("{PropertyName} is not equal to {ComparisonValue}");
 
-
         }
 
     }

@@ -63,10 +63,11 @@ namespace TrueOnion.PERSISTINCE.Services
         
         public override async Task UpdateAsync(ProductSaveVM viewModel)
         {
-            Product toBeUpdated = _productRepository.FindAsync(viewModel.Id).Result; //güncellenecek product
+            Product pro = _mapper.Map<Product>(viewModel); //güncellenecek product
             viewModel.ProductFeatureSaveVM.Id = viewModel.Id;
             await _productFeatureService.UpdateAsync(viewModel.ProductFeatureSaveVM); //product feature güncellendi
-            await _productRepository.UpdateAsync(toBeUpdated);
+
+            await _productRepository.UpdateAsync(pro);
             List<ProductSupplierVM>? toBeDeleted = (await _productSupplierService.Where(x=>x.ProductID==viewModel.Id)).Data.ToList();//silinecek cross table kayitlari
             if(toBeDeleted!=null)
                 await _productSupplierService.DestroyRangeAsync(toBeDeleted);//cross table kayitlari silindi

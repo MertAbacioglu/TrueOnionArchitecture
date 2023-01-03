@@ -1,43 +1,59 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
 @model CategoryListVM
 
-<div class="text-center">
-    <h1 class="display-4">Category List</h1>
 
-</div>
-<div>
+<div class="card mb-4 mt-2">
+    <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        Category List
+
     <a class="btn btn-primary" asp-controller="Categories" asp-action="Add">Add Category</a>
 
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="productsTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Category Name</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Category Name</th>
+                        <th>Options</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (CategoryVM item in Model.Result.Data)
+                    {
+
+                        <tr>
+                            <td>@item.CategoryName</td>
+
+                            <td>
+                                <a class="btn btn-warning" asp-controller="Categories" asp-action="Update" asp-route-id="@item.Id">Update</a>
+                                <a class="btn btn-danger" asp-controller="Categories" asp-action="Remove" asp-route-id="@item.Id">Delete</a>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
-<table class="table table-responsive tabletable-hover" id="productsTable">
-    <thead style="font-weight:bold;font-size:larger">
-        <tr>
-            <td>Category Name</td>
-            <td>Options</td>
 
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (CategoryVM item in Model.Result.Data)
-        {
-
-            <tr>
-                <td>@item.CategoryName</td>
-
-                <td>
-                    <a class="btn btn-warning" asp-controller="Categories" asp-action="Update" asp-route-id="@item.Id">Update</a>
-                    <a class="btn btn-danger" asp-controller="Categories" asp-action="Remove" asp-route-id="@item.Id">Delete</a>                    
-
-                </td>
-
-            </tr>
-        }
-        
-    </tbody>
-
-</table>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#productsTable').DataTable();
+        })
+    </script>
+}

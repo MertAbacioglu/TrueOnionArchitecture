@@ -4,7 +4,7 @@
 
 
     <form asp-action="Update" method="post" asp-controller="Suppliers">
-
+        <input type="hidden" asp-for="@Model.Id" value="@Model.Id" />
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">

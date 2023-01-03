@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TrueOnion.APPLICATION.Services;
 
-namespace TrueOnion.WEB.ViewComponents
+namespace TrueOnion.WEB.Areas.Admin.ViewComponents
 
 {
     public class LastProduct : ViewComponent

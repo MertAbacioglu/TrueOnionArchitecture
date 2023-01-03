@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
@@ -19,15 +20,17 @@ namespace TrueOnion.PERSISTINCE.Services
         protected readonly UserManager<AppUser> _userManager;
         protected readonly SignInManager<AppUser> _signInManager;
         protected readonly RoleManager<AppRole> _roleManager;
+        protected readonly IHttpContextAccessor _httpContextAccessor;
 
 
-        public AppUserService(IGenericRepository<AppUser> repository, IMapper mapper, UserManager<AppUser> userManager, IEMailService eMailService, SignInManager<AppUser> signInManager, RoleManager<AppRole> roleManager) : base(repository, mapper)
+        public AppUserService(IGenericRepository<AppUser> repository, IMapper mapper, UserManager<AppUser> userManager, IEMailService eMailService, SignInManager<AppUser> signInManager, RoleManager<AppRole> roleManager, IHttpContextAccessor httpContextAccessor) : base(repository, mapper)
         {
             _userManager = userManager;
             _eMailService = eMailService;
             _userManager.RegisterTokenProvider(TokenOptions.DefaultProvider, new EmailTokenProvider<AppUser>());
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<Result<AppUserSaveVM>> RegisterBasicUserAsync(AppUserSaveVM viewModel, string origin)
@@ -65,7 +68,7 @@ namespace TrueOnion.PERSISTINCE.Services
         //Method private to form the url for the emailVerificationUser page
         private async Task<string> GenerateVerificationEmailUri(AppUser user, string origin)
         {
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
             string route = "Home/ConfirmEmail";
@@ -78,13 +81,13 @@ namespace TrueOnion.PERSISTINCE.Services
 
         public async Task<string> ConfirmEmailAsync(string userId, string token)
         {
-            var user = await _userManager.FindByIdAsync(userId);
+            AppUser? user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
                 return "No Accounts registered with this user";
             }
             token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token));
-            var result = await _userManager.ConfirmEmailAsync(user, token);
+            IdentityResult result = await _userManager.ConfirmEmailAsync(user, token);
             if (!result.Succeeded)
             {
                 return $"An error occurred while confirming {user.Email}.";
@@ -96,8 +99,23 @@ namespace TrueOnion.PERSISTINCE.Services
         public async Task<bool> LoginAsync(LoginVM vm)
         {
             AppUser? user = await _userManager.FindByEmailAsync(vm.Email);
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, vm.Password, false, lockoutOnFailure: false);
+            SignInResult result = await _signInManager.PasswordSignInAsync(user.UserName, vm.Password, false, lockoutOnFailure: false);
+
             return true;
+        }
+
+        //create sign out method
+        public async Task SignOutAsync()
+        {
+            await _signInManager.SignOutAsync();
+        }
+
+        public async Task<Result<AppUserVM>> GetUserAsync()
+        {
+            AppUser? curUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            AppUserVM appUserVM = _mapper.Map<AppUserVM>(curUser);
+            return Result<AppUserVM>.Success(appUserVM);
+
         }
     }
 }

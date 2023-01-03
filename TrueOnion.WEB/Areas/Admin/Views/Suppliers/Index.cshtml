@@ -1,51 +1,67 @@
 ﻿@model SupplierListVM
 
-<div class="text-center">
-    <h1 class="display-4">Supplier List</h1>
+<div class="card mb-4 mt-2">
+    <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        Supplier List
 
+        <a class="btn btn-primary" asp-controller="Suppliers" asp-action="Add">Add Supplier</a>
+
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="productsTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Adress</th>
+                        <th>Products</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Adress</th>
+                        <th>Products</th>
+                        <th>Options</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (SupplierVM svm in Model.Result.Data)
+                    {
+
+                        <tr>
+                            <td>@svm.CompanyName</td>
+                            <td>@svm.Address</td>
+                            <td>
+                                <ul>
+                                    @foreach (ProductSupplierVM psvm in svm.ProductSupplierVMs)
+                                    {
+                                        <li>@psvm.ProductVM.Name</li>
+                                    }
+                                </ul>
+                            </td>
+
+                            <td>
+                                <a class="btn btn-warning" asp-controller="Suppliers" asp-action="Update" asp-route-id="@svm.Id">Update</a>
+                                <a class="btn btn-danger" asp-controller="Suppliers" asp-action="Remove" asp-route-id="@svm.Id">Delete</a>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-<div>
-    <a class="btn btn-primary" asp-controller="Suppliers" asp-action="Add">Add Supplier</a>
-
-</div>
-
-<table class="table table-responsive tabletable-hover" id="productsTable">
-    <thead style="font-weight:bold;font-size:larger">
-        <tr>
-            <td>Company Name</td>
-            <td>Adress</td>
-            <td>Products</td>
-            <td>Options</td>
-
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (SupplierVM svm in Model.Result.Data)
-        {
-
-            <tr>
-                <td>@svm.CompanyName</td>
-                <td>@svm.Address</td>
-                <td>
-                    <ul>
-                        @foreach (ProductSupplierVM psvm in svm.ProductSupplierVMs)
-                        {
-                            <li>@psvm.ProductVM.Name</li>
-                        }
-                    </ul>
-                </td>
-
-                <td>
-                    <a class="btn btn-warning" asp-controller="Suppliers" asp-action="Update" asp-route-id="@svm.Id">Update</a>
-                    <a class="btn btn-danger" asp-controller="Suppliers" asp-action="Remove" asp-route-id="@svm.Id">Delete</a>
-
-                </td>
-
-            </tr>
-        }
-
-    </tbody>
-
-</table>
 
 
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#productsTable').DataTable();
+        })
+    </script>
+}

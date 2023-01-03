@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TrueOnion.APPLICATION.Repositories;
 using TrueOnion.APPLICATION.Services;
 using TrueOnion.APPLICATION.ViewModels.Category;
@@ -8,6 +9,7 @@ using TrueOnion.APPLICATION.ViewModels.ResultTypeViewModels;
 using TrueOnion.APPLICATION.ViewModels.Supplier;
 using TrueOnion.APPLICATION.Wrappers;
 using TrueOnion.DOMAIN.Entities.Concrates;
+using TrueOnion.DOMAIN.Enums;
 using TrueOnion.PERSISTINCE.Repositories;
 using TrueOnion.WEB.Filters;
 
@@ -39,12 +41,11 @@ namespace TrueOnion.WEB.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            await _categoryService.GetCategoryWithChildren(3);
+            //await _categoryService.GetCategoryWithChildren(3);
             //await _categoryService.GetCategoriesWithChildren();
             return View(await _productService.GetProducts());
         }
-
-
+        
         public async Task<IActionResult> Add()
         {
 
@@ -54,6 +55,7 @@ namespace TrueOnion.WEB.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]//todo : look
         public async Task<IActionResult> Add(ProductSaveVM viewModel)
         {
             await _productService.AddAsync(viewModel);
@@ -93,9 +95,6 @@ namespace TrueOnion.WEB.Areas.Admin.Controllers
             await _productService.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
-        public async Task<IActionResult> SayHi(int id)
-        {
-            return View();
-        }
+
     }
 }

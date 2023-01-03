@@ -104,7 +104,10 @@ namespace TrueOnion.PERSISTINCE.Seeds
                 .RuleFor(x => x.Email, x => x.Internet.Email())
                 .RuleFor(x => x.NormalizedEmail, (f, usr) => usr.Email.ToUpper())
                 .RuleFor(x => x.PasswordHash, x => x.Internet.Password())
+                .RuleFor(x => x.SecurityStamp, x => x.Internet.Password())
+                .RuleFor(x => x.EmailConfirmed, x => true)
                 .RuleFor(x => x.PhoneNumber, x => x.Phone.PhoneNumber());
+            
             AppUsers = appUserFaker.Generate(10);
             #endregion
 
@@ -122,11 +125,26 @@ namespace TrueOnion.PERSISTINCE.Seeds
 
             #endregion
 
+            #region Fake AppUserRole Datas
+            Faker<AppUserRole> appUserRoleFaker = new();
+            appUserRoleFaker.StrictMode(false)
+                .RuleFor(x => x.UserId, x => x.PickRandom(AppUsers).Id)
+                .RuleFor(x => x.RoleId, x => x.PickRandom(AppRoles).Id)
+                .RuleFor(x => x.InsertedDate, x => x.Date.Between(new DateTime(2020, 3, 14), DateTime.Now))
+                .RuleFor(x => x.LastModifiedDate, x => null)
+                .RuleFor(x => x.Status, x => DataStatus.Inserted);
+            //remove duplicate datas
+            AppUserRoles = appUserRoleFaker.Generate(10)
+                .GroupBy(x => new { x.UserId, x.RoleId })
+                .Select(x => x.First())
+                .ToList();
+            #endregion
         }
 
 
         public static List<AppUser> AppUsers { get; set; }
         public static List<AppRole> AppRoles { get; set; } = new List<AppRole>();
+        public static List<AppUserRole> AppUserRoles { get; set; }
 
         public static List<Product> Products { get; set; }
         public static List<Category> Categories { get; set; }

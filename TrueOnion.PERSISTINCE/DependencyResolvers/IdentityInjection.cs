@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Autofac.Core;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using TrueOnion.DOMAIN.Entities.Concrates;
@@ -21,6 +23,25 @@ namespace TrueOnion.PERSISTINCE.DependencyResolvers
                     x.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 })
                 .AddEntityFrameworkStores<AppDbContext>();
+            
+            services.ConfigureApplicationCookie(x =>
+            {
+                x.LoginPath = new PathString("/Account/Login");
+                //x.LogoutPath = "/Account/LogOut";
+                x.AccessDeniedPath = new PathString("/Account/AccessDenied");
+                x.SlidingExpiration = true;
+                x.ExpireTimeSpan = System.TimeSpan.FromMinutes(30);
+                x.Cookie = new CookieBuilder
+                {
+                    HttpOnly = true,
+                    Name = "TrueOnionCookie",
+                    SameSite = SameSiteMode.Strict,
+                    SecurePolicy = CookieSecurePolicy.SameAsRequest // Always
+                };
+            });
+            services.AddAuthentication();
+            //services.AddAuthorization();
+
         }
     }
 }

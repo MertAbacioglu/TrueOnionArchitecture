@@ -14,6 +14,7 @@ namespace TrueOnion.PERSISTINCE.Seeds
             modelBuilder.Entity<ProductFeature>().HasData(FakeDataGenerator.ProductFeatures);
             modelBuilder.Entity<Supplier>().HasData(FakeDataGenerator.Suppliers);
             modelBuilder.Entity<ProductSupplier>().HasData(FakeDataGenerator.ProductSuppliers);
+            modelBuilder.Entity<AppUserRole>().HasData(FakeDataGenerator.AppUserRoles);
         }
     }
 }
