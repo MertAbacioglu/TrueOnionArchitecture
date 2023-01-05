@@ -4,18 +4,15 @@ using TrueOnion.APPLICATION.Repositories;
 using TrueOnion.APPLICATION.Services;
 using TrueOnion.APPLICATION.ViewModels.Category;
 using TrueOnion.APPLICATION.ViewModels.Product;
-using TrueOnion.APPLICATION.ViewModels.ProductSupplier;
 using TrueOnion.APPLICATION.ViewModels.ResultTypeViewModels;
 using TrueOnion.APPLICATION.ViewModels.Supplier;
-using TrueOnion.APPLICATION.Wrappers;
 using TrueOnion.DOMAIN.Entities.Concrates;
-using TrueOnion.DOMAIN.Enums;
-using TrueOnion.PERSISTINCE.Repositories;
 using TrueOnion.WEB.Filters;
 
 namespace TrueOnion.WEB.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class ProductsController : Controller
     {
         private readonly IProductService _productService;
@@ -62,7 +59,6 @@ namespace TrueOnion.WEB.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error(ErrorVM errorVM)
         {
             return View(errorVM);

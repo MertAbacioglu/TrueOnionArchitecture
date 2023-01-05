@@ -1,9 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TrueOnion.APPLICATION.ViewModels.Supplier;
 
 namespace TrueOnion.APPLICATION.Validators
@@ -14,10 +9,12 @@ namespace TrueOnion.APPLICATION.Validators
         {
             RuleFor(x => x.CompanyName)
                 .NotNull()
+                .WithMessage("{PropertyName} is required")
                 .NotEmpty()
                 .WithMessage("{PropertyName} is required");
             RuleFor(x=>x.Address)
                 .NotNull()
+                .WithMessage("{PropertyName} is required")
                 .NotEmpty()
                 .WithMessage("{PropertyName} is required");
         }

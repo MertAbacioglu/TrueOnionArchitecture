@@ -67,7 +67,7 @@ namespace TrueOnion.APPLICATION.Mapping
                 .ReverseMap();
             CreateMap<AppUser, AppUserSaveVM>()
                 .ReverseMap();
-            CreateMap<AppUser,LoginVM>()
+            CreateMap<AppUser,AppUserLoginVM>()
                 .ReverseMap();
             #endregion
 

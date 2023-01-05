@@ -23,13 +23,11 @@ namespace TrueOnion.WEB.Areas.Admin.Controllers
             var a = await _categoryService.GetCategoriesWithChildren();
             return View(await _categoryService.GetCategories());           
         }
-        public async Task<IActionResult> TreeView()
-        {
-            return View(await _categoryService.GetCategoriesWithChildren());
-        }
+
         public async Task<IActionResult> Add()
         {
-            return View();
+            Result<List<CategoryVM>> categories = await _categoryService.GetActives();
+            return View(new CategorySaveVM { CategoryVMs= categories.Data });
         }
 
         [HttpPost]
@@ -42,7 +40,11 @@ namespace TrueOnion.WEB.Areas.Admin.Controllers
         [ServiceFilter(typeof(NotFoundFilter<CategorySaveVM, CategoryVM, Category>))]
         public async Task<IActionResult> Update(int id)
         {
-            return View((await _categoryService.FindAsync(id)).Data);
+            Result<List<CategoryVM>> categories = await _categoryService.GetActives();
+            CategorySaveVM category = (await _categoryService.FindAsync(id)).Data;
+            category.CategoryVMs = categories.Data;
+            return View(category);
+
         }
 
         [HttpPost]

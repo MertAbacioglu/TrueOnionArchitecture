@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TrueOnion.APPLICATION.ViewModels.ResultTypeViewModels;
 
 namespace TrueOnion.WEB.Areas.Admin.Controllers
 {
@@ -9,6 +10,11 @@ namespace TrueOnion.WEB.Areas.Admin.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult Error(ErrorVM errorViewModel)
+        {
+            return View(errorViewModel);
         }
     }
 }

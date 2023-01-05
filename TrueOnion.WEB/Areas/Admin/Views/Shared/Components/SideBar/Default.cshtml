@@ -1,4 +1,5 @@
-﻿<div id="layoutSidenav_nav">
+﻿@model AppUserVM
+<div id="layoutSidenav_nav">
     <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
             <div class="nav">
@@ -79,7 +80,7 @@
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>
-            Logged User
+            @Model.Email
         </div>
     </nav>
 </div>

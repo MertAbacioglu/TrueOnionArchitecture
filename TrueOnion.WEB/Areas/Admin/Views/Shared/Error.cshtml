@@ -5,10 +5,10 @@
 <h1 class="text-danger">Error.</h1>
 
 <img src="~/images/lemmykilmistererror.jpg" />
- <br />
- <br />
+<br />
+<br />
 
-@if(Model.Errors.Any())
+@if (Model.Errors.Any())
 {
     <div class="alert alert-danger">
         @foreach (string error in Model.Errors)

@@ -3,7 +3,7 @@ using TrueOnion.APPLICATION.ViewModels.Category;
 
 namespace TrueOnion.APPLICATION.Validators
 {
-    public sealed class CategorySaveVMValidator : AbstractValidator<CategorySaveVM>
+    public  class CategorySaveVMValidator : AbstractValidator<CategorySaveVM>
     {
         public CategorySaveVMValidator()
         {

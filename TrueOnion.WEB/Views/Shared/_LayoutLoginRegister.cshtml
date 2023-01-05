@@ -6,27 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Dashboard - True Onion</title>
-    @await Html.PartialAsync("_LayoutCssPartial");
+    <title>Page Title - TrueOnion</title>
+@*    <link href="~/css/styles.css" rel="stylesheet" />
+*@    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+    @await Html.PartialAsync("_LayoutCssPartial")
 
 </head>
-<body class="sb-nav-fixed">
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        @await Component.InvokeAsync("UserMenu")
-
-    </nav>
-    <div id="layoutSidenav">
-        @await Component.InvokeAsync("SideBar")
-        <div id="layoutSidenav_content">
+<body class="bg-primary">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
             <main>
-                <div class="container-fluid">
-                    @RenderBody()
-                </div>
+                @RenderBody()
             </main>
+        </div>
+        <div id="layoutAuthentication_footer">
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2020</div>
+                        <div class="text-muted">Copyright &copy; TrueOnion 2022</div>
                         <div>
                             <a href="#">Privacy Policy</a>
                             &middot;
@@ -38,8 +35,7 @@
         </div>
     </div>
 
-    @await Html.PartialAsync("_LayoutJsPartial");
-    @await Html.PartialAsync("_ValidationScriptsPartial");
-    @await RenderSectionAsync("Scripts", required: false);
+    @await Html.PartialAsync("_LayoutJsPartial")
+
 </body>
 </html>

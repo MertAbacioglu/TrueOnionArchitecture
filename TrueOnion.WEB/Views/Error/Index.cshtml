@@ -1,0 +1,22 @@
+﻿@model ErrorVM
+
+<h1 class="text-danger">@Model.StatusCode</h1>
+
+<img src="~/images/lemmykilmistererror.jpg" />
+<br />
+<br />
+
+@if (Model != null && Model.Errors.Any())
+{
+    <div class="alert alert-danger">
+        @foreach (string error in Model.Errors)
+        {
+            <h1>@error</h1>
+        }
+
+
+    </div>
+}
+<div class="alert alert-info mt-3">
+    <a class="alert-link" asp-area="" asp-controller="Home" asp-action="Index">Click Here</a> to back to home page
+</div>

@@ -1,13 +1,18 @@
-﻿
-<div class="row mt-5">
-    <div>
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <div class="alert alert-primary alert-dimissible fade show alert-danger" role="alert">
-                    <h2>access denied</h2>
-                    <h2> <a asp-controller="Account" asp-action="Login" class="btn btn-primary">Sign In</a></h2>
-                </div>
-            </div>
+﻿@{
+    Layout = "_LayoutLoginRegister";
+}
+
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 mt-5">
+
+
+            <h1>access denied </h1>
+            <h1><a asp-controller="Account" asp-action="Login" class="btn btn-warning">Go back and Sign In</a> </h1>
+
+
         </div>
     </div>
 </div>

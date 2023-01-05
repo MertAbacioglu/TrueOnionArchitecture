@@ -13,7 +13,7 @@ namespace TrueOnion.PERSISTINCE.Configurations
         public override void Configure(EntityTypeBuilder<AppUser> builder)
         {
             base.Configure(builder);
-            //builder.Ignore(x => x.Id);
+            builder.Ignore(x => x.Id);
 
         }
     }

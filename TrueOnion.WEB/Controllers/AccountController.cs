@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using TrueOnion.APPLICATION.Services;
 using TrueOnion.APPLICATION.ViewModels.Account;
 using TrueOnion.APPLICATION.ViewModels.AppUser;
+using TrueOnion.APPLICATION.Wrappers;
 
 namespace TrueOnion.WEB.Controllers
 {
@@ -17,32 +19,47 @@ namespace TrueOnion.WEB.Controllers
 
         public IActionResult Login()
         {
+            if (TempData["shortMessage"] != null)
+                ViewBag.Message = TempData["shortMessage"].ToString();
+
+            if (HttpContext.User?.Identity?.IsAuthenticated == true)
+            {
+                return RedirectToAction("Index", "Home", new { area = "Admin" });
+            }
+
             return View();
         }
         //create index post action
         [HttpPost]
-        public async Task<IActionResult> Login(LoginVM viewModel)
+        public async Task<IActionResult> Login(AppUserLoginVM viewModel)
         {
-            var result = await _appUserService.LoginAsync(viewModel);
+            Result<AppUserSaveVM> result = await _appUserService.LoginAsync(viewModel);
+            if (result.Data == null)
+            {
+                ViewBag.Message = result.Message;
+                return View();
+            }
             return RedirectToAction("Index", "Home", new { area = "Admin" });
+
         }
         public IActionResult Register()
         {
             return View(nameof(Register));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(AppUserSaveVM viewModel)
+        {
+            StringValues origin = Request.Headers["origin"];
+
+            TempData["shortMessage"] = (await _appUserService.RegisterBasicUserAsync(viewModel, origin)).Message;
+            return RedirectToAction(nameof(Login));
         }
         public IActionResult AccessDenied()
         {
             return View(nameof(AccessDenied));
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Register(AppUserSaveVM viewModel)
-        {
-            var origin = Request.Headers["origin"];
-
-            await _appUserService.RegisterBasicUserAsync(viewModel, origin);
-            return RedirectToAction(nameof(ConfirmEmail));
-        }
 
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
@@ -56,7 +73,7 @@ namespace TrueOnion.WEB.Controllers
             await _appUserService.SignOutAsync();
             return RedirectToAction(nameof(Login));
         }
-
+        
 
     }
 }

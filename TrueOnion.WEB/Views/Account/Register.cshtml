@@ -1,66 +1,58 @@
 ﻿@model AppUserSaveVM
+@{
+    Layout = "_LayoutLoginRegister";
+}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header"><h3 class="text-center font-weight-light my-4"><span class="fas fa-house-user"></span> Register</h3></div>
+                <div class="card-body">
+                    <form asp-action="Register" method="post" asp-controller="Account">
 
-<h1>Register</h1>
+                                <div class="form-group">
+                                    <label asp-for="@Model.UserName"></label>
+                                    <input asp-for="@Model.UserName" class="form-control" />
+                                    <span asp-validation-for="@Model.UserName" class="text-danger"></span>
 
-<div class="row">
+
+                        </div>
+
+                                <div class="form-group">
+                                    <label asp-for="@Model.Email"></label>
+                                    <input asp-for="@Model.Email" class="form-control" />
+                                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
 
 
-    <form asp-action="Register" method="post" asp-controller="Account">
+                        </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label asp-for="@Model.UserName"></label>
-                    <input asp-for="@Model.UserName" class="form-control" />
-                    <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+                                <div class="form-group">
+                                    <label asp-for="@Model.Password"></label>
+                                    <input asp-for="@Model.Password" class="form-control" />
+                                    <span asp-validation-for="@Model.Password" class="text-danger"></span>
+
+
+                        </div>
+
+                                <div class="form-group">
+                                    <label asp-for="@Model.ConfirmPassword"></label>
+                                    <input asp-for="@Model.ConfirmPassword" class="form-control" />
+                                    <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
+
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <input type="submit" value="Register" class="btn btn-primary" />
+
+                        </div>
+                    </form>
                 </div>
-                <br />
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label asp-for="@Model.Email"></label>
-                    <input asp-for="@Model.Email" class="form-control" />
-                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                <div class="card-footer text-center">
+                    <a class="btn btn-success btn-block text-white" asp-action="Login"><span class="fas fa-user-edit"></span> Back to Login Screen</a>
                 </div>
-                <br />
             </div>
-
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label asp-for="@Model.Password"></label>
-                    <input asp-for="@Model.Password" class="form-control" />
-                    <span asp-validation-for="@Model.Password" class="text-danger"></span>
-                </div>
-                <br />
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label asp-for="@Model.ConfirmPassword"></label>
-                    <input asp-for="@Model.ConfirmPassword" class="form-control" />
-                    <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
-                </div>
-                <br />
-            </div>
-
-        </div>
-
-        <div class="form-group">
-
-            <input type="submit" value="Register" class="btn-primary" />
-
-        </div>
-    </form>
-
-
-
-
-
+    </div>
 </div>

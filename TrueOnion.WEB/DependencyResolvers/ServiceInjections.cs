@@ -1,4 +1,5 @@
-﻿using FluentValidation.AspNetCore;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
 using TrueOnion.APPLICATION.Validators;
 using TrueOnion.WEB.Filters;
 
@@ -9,8 +10,10 @@ namespace TrueOnion.WEB.DependencyResolvers
         public static void AddWebLayerInjections(this IServiceCollection services)
         {
             services.AddControllersWithViews()
-                    .AddRazorRuntimeCompilation()
-                    .AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<ProductSaveVMValidator>());
+                    .AddRazorRuntimeCompilation();
+
+            services.AddValidatorsFromAssemblyContaining<ProductSaveVMValidator>();
+
 
             services.AddScoped(typeof(NotFoundFilter<,,>));
 

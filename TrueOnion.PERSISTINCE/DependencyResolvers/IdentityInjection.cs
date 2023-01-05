@@ -21,8 +21,11 @@ namespace TrueOnion.PERSISTINCE.DependencyResolvers
                     x.Password.RequireNonAlphanumeric = false;
                     x.Password.RequiredLength = 3;
                     x.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                    x.User.RequireUniqueEmail = true;
+                    x.SignIn.RequireConfirmedEmail = true;
                 })
-                .AddEntityFrameworkStores<AppDbContext>();
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
             
             services.ConfigureApplicationCookie(x =>
             {
@@ -40,7 +43,6 @@ namespace TrueOnion.PERSISTINCE.DependencyResolvers
                 };
             });
             services.AddAuthentication();
-            //services.AddAuthorization();
 
         }
     }

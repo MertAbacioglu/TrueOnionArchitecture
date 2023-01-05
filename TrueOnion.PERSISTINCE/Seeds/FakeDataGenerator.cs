@@ -145,7 +145,6 @@ namespace TrueOnion.PERSISTINCE.Seeds
         public static List<AppUser> AppUsers { get; set; }
         public static List<AppRole> AppRoles { get; set; } = new List<AppRole>();
         public static List<AppUserRole> AppUserRoles { get; set; }
-
         public static List<Product> Products { get; set; }
         public static List<Category> Categories { get; set; }
         public static List<ProductFeature> ProductFeatures { get; set; }

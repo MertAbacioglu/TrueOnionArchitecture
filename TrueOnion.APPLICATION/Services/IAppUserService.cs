@@ -15,7 +15,7 @@ namespace TrueOnion.APPLICATION.Services
     {
         public Task<Result<AppUserSaveVM>> RegisterBasicUserAsync(AppUserSaveVM viewModel, string origin);
         public Task<string> ConfirmEmailAsync(string userId, string token);
-        public Task<bool> LoginAsync(LoginVM vm);
+        public Task<Result<AppUserSaveVM>> LoginAsync(AppUserLoginVM vm);
         public Task SignOutAsync();
         public Task<Result<AppUserVM>> GetUserAsync();
     }

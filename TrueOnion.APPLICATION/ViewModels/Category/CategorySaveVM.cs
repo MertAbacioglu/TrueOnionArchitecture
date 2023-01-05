@@ -8,6 +8,9 @@ namespace TrueOnion.APPLICATION.ViewModels.Category
     {
         [DisplayName("Category Name")]
         public string CategoryName { get; set; }
+        [DisplayName("Parent Category")]
+        public int ParentID { get; set; }
+        public List<CategoryVM> CategoryVMs { get; set; }
 
     }
 }

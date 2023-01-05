@@ -5,8 +5,9 @@ using TrueOnion.APPLICATION.DependencyResolvers;
 using TrueOnion.WEB.DependencyResolvers;
 using TrueOnion.PERSISTINCE.DependencyResolvers;
 using TrueOnion.INFRASTRUCTURE.DependencyResolvers;
+using System.Runtime.Intrinsics.Arm;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -20,7 +21,8 @@ builder.Host.ConfigureServices(x => x.AddAutofac()).UseServiceProviderFactory(ne
 {
     builder.RegisterModule(new AutofacPersistanceModule());
 });
-var app = builder.Build();
+
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -30,40 +32,29 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.Use(async (context, next) =>
-{
-    await next();
-    if (context.Response.StatusCode == 404)
-    {
-        context.Request.Path = "/Products/Error";
-        await next();
-    }
-});
+//app.Use(async (context, next) =>
+//{
+//    await next();
+//    if (context.Response.StatusCode == 404)
+//    {
+//        context.Request.Path = "/Products/Error";
+//        await next();
+//    }
+//});
+
+app.UseStatusCodePagesWithRedirects("~/Error?httpStatusCode={0}")
+        .UseExceptionHandler("/Error");
 
 app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 
+app.UseAuthentication();//TODO
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Account}/{action=Login}/{id?}");
+app.MapControllerRoute(name: "Area", pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
-app.MapControllerRoute(
-      name: "area",
-      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
-
-
-app.MapAreaControllerRoute(
-      name: "default",
-      areaName: "Admin",
-      pattern: "{controller=Products}/{action=Index}/{id?}");
-
-
-
+app.MapDefaultControllerRoute();
 
 app.Run();

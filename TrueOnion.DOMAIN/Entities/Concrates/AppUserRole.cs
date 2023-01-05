@@ -19,7 +19,7 @@ namespace TrueOnion.DOMAIN.Entities.Concrates
         public DateTime? InsertedDate { get; set; }
         public DateTime? LastModifiedDate { get; set; }
         public DataStatus Status { get; set; }
-        public int Id { get; set; }
+        //public int Id { get; set; }
     }
 }
 
