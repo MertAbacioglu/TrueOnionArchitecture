@@ -74,7 +74,6 @@ namespace TrueOnion.PERSISTINCE.Services
             string verificationUri = QueryHelpers.AddQueryString(uri.ToString(), "userId", user.Id.ToString());
             verificationUri = QueryHelpers.AddQueryString(verificationUri, "token", token);
 
-            //return verificationUri;
             return $"<a href={verificationUri}>Verification Link</a>";
         }
 
@@ -89,7 +88,7 @@ namespace TrueOnion.PERSISTINCE.Services
             IdentityResult result = await _userManager.ConfirmEmailAsync(user, token);
 
             if (!result.Succeeded)
-                return $"An error occurred while confirming {user.Email}.";
+                return $"An error occurred while confirming account related {user.Email}.";
 
 
             return $"Account confirmed for {user.Email} - ({user.UserName}). You can now use the app as a Member";
@@ -132,4 +131,3 @@ namespace TrueOnion.PERSISTINCE.Services
         }
     }
 }
-

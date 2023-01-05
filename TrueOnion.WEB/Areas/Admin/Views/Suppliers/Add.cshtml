@@ -1,38 +1,42 @@
 ﻿@model SupplierSaveVM
 
 <div class="row">
+    <div class="col-lg-12">
+        <div class="card shadow-lg border-0 rounded-lg mt-5">
+            <div class="card-header"><h3 class="text-center font-weight-light my-4"><span class=""></span> Add Supplier</h3></div>
+            <div class="card-body">
+                <form asp-action="Update" method="post" asp-controller="Suppliers">
 
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label asp-for="@Model.CompanyName"></label>
+                                    <input asp-for="@Model.CompanyName" class="form-control" />
+                                    <span asp-validation-for="@Model.CompanyName" class="text-danger"></span>
 
-    <form asp-action="Add" method="post" asp-controller="Suppliers">
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Address"></label>
+                                    <input asp-for="@Model.Address" class="form-control" />
+                                    <span asp-validation-for="@Model.Address" class="text-danger"></span>
+                                </div>
+                                <br />
+                            </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label asp-for="@Model.CompanyName"></label>
-                    <input asp-for="@Model.CompanyName" class="form-control" />
-                    <span asp-validation-for="@Model.CompanyName" class="text-danger"></span>
-                </div>
-                <br />
-                <div class="form-group">
-                    <label asp-for="@Model.Address"></label>
-                    <input asp-for="@Model.Address" class="form-control" />
-                    <span asp-validation-for="@Model.Address" class="text-danger"></span>
-                </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Add Supplier" class="btn-primary" />
+                        </div>
+
+                    </div>
+                </form>
             </div>
-
         </div>
-
-
-
-        <div class="form-group">
-
-            <input type="submit" value="Add Supplier" class="btn-primary" />
-
-        </div>
-    </form>
-
-
-
-
-
+    </div>
 </div>
