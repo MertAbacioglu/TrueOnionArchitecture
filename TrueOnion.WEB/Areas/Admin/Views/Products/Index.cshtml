@@ -20,7 +20,7 @@
                 <thead>
                     <tr>
                         <th>Product Name</th>
-                        <th>Feature Details</th>
+                        <th>Product Details</th>
                         <th>Suppliers</th>
                         <th>Category</th>
                         <th>Options</th>
@@ -29,7 +29,7 @@
                 <tfoot>
                     <tr>
                         <th>Product Name</th>
-                        <th>Feature Details</th>
+                        <th>Product Details</th>
                         <th>Suppliers</th>
                         <th>Category</th>
                         <th>Options</th>
@@ -59,7 +59,7 @@
                                     {
                                         @foreach (ProductSupplierVM productSupplier in item.ProductSupplierVMs)
                                         {
-                                            <li>@productSupplier.SupplierVM.CompanyName</li>
+                                            <li>@productSupplier.SupplierVM.CompanyName,@productSupplier.Stock,@productSupplier.Price </li>
                                         }
                                     }
                                     else

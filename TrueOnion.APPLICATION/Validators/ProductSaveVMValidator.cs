@@ -12,13 +12,6 @@ namespace TrueOnion.APPLICATION.Validators
                 .NotEmpty()
                 .WithMessage("{PropertyName} is required");
 
-            RuleFor(x => x.Price)
-                .InclusiveBetween(1, int.MaxValue)
-                .WithMessage("{PropertyName} must be at least {From}");
-            
-            RuleFor(x => x.Stock)
-                .InclusiveBetween(1, int.MaxValue)
-                .WithMessage("{PropertyName} must be at least {From}");
         }
     }
 }

@@ -1,78 +1,110 @@
 ﻿@model ProductSaveVM
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card shadow-lg border-0 rounded-lg mt-5">
-                <div class="card-header"><h3 class="text-center font-weight-light my-4"><span class=""></span> Add Product</h3></div>
-                <div class="card-body">
-                    <form asp-action="Add" method="post" asp-controller="Products">
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card shadow-lg border-0 rounded-lg mt-5">
+            <div class="card-header"><h3 class="text-center font-weight-light my-4"><span class=""></span> Add Product</h3></div>
+            <div class="card-body">
+                <form asp-action="Add" method="post" asp-controller="Products">
 
-                        <div class="row">
-                            <div class="col-md-7">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="@Model.Name"></label>
+                                <input asp-for="@Model.Name" class="form-control" />
+                                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+
                                 <div class="form-group">
-                                    <label asp-for="@Model.Name"></label>
-                                    <input asp-for="@Model.Name" class="form-control" />
-                                    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                                    <label asp-for="@Model.CategoryId"></label>
 
-                                    <label asp-for="@Model.Stock"></label>
-                                    <input asp-for="@Model.Stock" class="form-control" />
-                                    <span asp-validation-for="@Model.Stock" class="text-danger"></span>
-
-
-                                    <div class="form-group">
-                                        <label asp-for="@Model.Price"></label>
-                                        <input asp-for="@Model.Price" class="form-control" />
-                                        <span asp-validation-for="@Model.Price" class="text-danger"></span>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label asp-for="@Model.CategoryId"></label>
-
-                                        <select asp-for="@Model.CategoryId" asp-items="@(new SelectList(Model.CategoryVMs, nameof(CategoryVM.Id), nameof(CategoryVM.CategoryName)))" class="form-control"></select>
-
-                                    </div>
-
-                                    <h4>Product Features</h4>
-
-                                    <div class="form-group">
-                                        <label asp-for="@Model.ProductFeatureSaveVM.MadeIn"></label>
-                                        <input asp-for="@Model.ProductFeatureSaveVM.MadeIn" class="form-control" />
-                                        <span asp-validation-for="@Model.ProductFeatureSaveVM.MadeIn" class="text-danger"></span>
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label asp-for="@Model.ProductFeatureSaveVM.RealeseDate"></label>
-                                        <input type="date" asp-for="@Model.ProductFeatureSaveVM.RealeseDate" />
-                                        <span asp-validation-for="@Model.ProductFeatureSaveVM.RealeseDate" class="text-danger"></span>
-                                    </div>
+                                    <select asp-for="@Model.CategoryId" asp-items="@(new SelectList(Model.CategoryVMs, nameof(CategoryVM.Id), nameof(CategoryVM.CategoryName)))" class="form-control"></select>
 
                                 </div>
-                            </div>
-                            <div class="col-md-5">
+
+                                <h4 style="color:red">Product Features</h4>
+
                                 <div class="form-group">
-                                    <h4>Supplier(s) For This Product</h4>
-                                    @for (int i = 0; i < Model.SupplierVMs.Count(); i++)
-                                    {
-                                        <input type="checkbox" asp-for="@Model.SupplierVMs[i].isSelected" />
-                                        <label asp-for="@Model.SupplierVMs[i].isSelected">@Model.SupplierVMs[i].CompanyName</label>
-                                        <input type="hidden" asp-for="@Model.SupplierVMs[i].Id" />
-                                        <br />
-                                    }
-
+                                    <label asp-for="@Model.ProductFeatureSaveVM.MadeIn"></label>
+                                    <input asp-for="@Model.ProductFeatureSaveVM.MadeIn" class="form-control" />
+                                    <span asp-validation-for="@Model.ProductFeatureSaveVM.MadeIn" class="text-danger"></span>
                                 </div>
+
+
+                                <div class="form-group">
+                                    <label asp-for="@Model.ProductFeatureSaveVM.RealeseDate"></label>
+                                    <input type="date" asp-for="@Model.ProductFeatureSaveVM.RealeseDate" />
+                                    <span asp-validation-for="@Model.ProductFeatureSaveVM.RealeseDate" class="text-danger"></span>
+                                </div>
+
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <h4 style="color:red">Supplier(s) For This Product</h4>
+
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Supplier Name</th>
+                                            <th>Stock</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < Model.ProductSupplierVMs.Count(); i++)
+                                        {
+                                            <tr>
+                                                <input type="hidden" asp-for="@Model.ProductSupplierVMs[i].SupplierId" value="@Model.ProductSupplierVMs[i].SupplierId"/>
+                                                <td>                                                    
+                                                    <input onchange="CheckIt()" type="checkbox" asp-for="@Model.ProductSupplierVMs[i].isSelected" />
+                                                    <label asp-for="@Model.ProductSupplierVMs[i].isSelected">@Model.ProductSupplierVMs[i].SupplierVM.CompanyName</label>
+                                                </td>
+                                                <td>
+                                                    <input type="number" asp-for="@Model.ProductSupplierVMs[i].Stock" class="form-control" disabled />
+                                                    <span asp-validation-for="@Model.ProductSupplierVMs[i].Stock" class="text-danger"></span>
+                                                </td>
+                                                <td>
+                                                    <input type="number" asp-for="@Model.ProductSupplierVMs[i].Price" class="form-control" disabled />
+                                                    <span asp-validation-for="@Model.ProductSupplierVMs[i].Price" class="text-danger"></span>
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
 
 
 
-                        <div class="form-group justify-content-end">
-                        <input class="btn btn-success  text-white" type="submit" value="Add Product" s/>
-
+                            </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+
+                    <div class="form-group justify-content-end">
+                        <input class="btn btn-success  text-white" type="submit" value="Add Product" />
+
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
+@section scripts{
+    <script>
+        $(function CheckIt() {
+            //if checkbox is checked disable inputs in row except checkbox
+            //else enable inputs in row
+            $('input[type="checkbox"]').on('change', function () {
+                if (!$(this).is(':checked')) {
+                    $(this).closest('tr').find('input[type=number]').prop('disabled', true).val('0');
+                } else {
+                    $(this).closest('tr').find('input[type=number]').prop('disabled', false).val('0');
+                }
+            });
+            
+
+        })
+
+        
+    </script>
+}                                              

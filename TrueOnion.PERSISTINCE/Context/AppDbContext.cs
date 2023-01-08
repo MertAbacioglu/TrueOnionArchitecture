@@ -26,9 +26,10 @@ namespace TrueOnion.PERSISTINCE.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);//We've to call this first in order to avoid creating extra columns comes from Identity
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelBuilder.Seed();
-            base.OnModelCreating(modelBuilder);
+            
         }
 
     }

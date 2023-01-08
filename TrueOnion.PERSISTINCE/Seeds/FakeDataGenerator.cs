@@ -35,10 +35,8 @@ namespace TrueOnion.PERSISTINCE.Seeds
             .RuleFor(x => x.Id, x => productId++)
             .RuleFor(x => x.InsertedDate, x => x.Date.Between(new DateTime(2020, 3, 14), DateTime.Now))
             .RuleFor(x => x.Name, x => x.Commerce.ProductName())
-            .RuleFor(x => x.Price, x => x.Commerce.Price(1).First())
             .RuleFor(x => x.LastModifiedDate, x => null)
             .RuleFor(x => x.Status, x => DataStatus.Inserted)
-            .RuleFor(x => x.Stock, x => x.Random.Int(1, 200))
             .RuleFor(x => x.CategoryID, x => x.PickRandom(Categories).Id);
 
             Products = productFaker.Generate(30);
@@ -78,21 +76,23 @@ namespace TrueOnion.PERSISTINCE.Seeds
             #region Fake ProductSupplier Datas
             Faker<ProductSupplier> productSupplierFaker = new();
             productSupplierFaker.StrictMode(false)
-            .RuleFor(x => x.ProductID, x => x.PickRandom(Products).Id)
-            .RuleFor(x => x.SupplierID, x => x.PickRandom(Suppliers).Id)
+            .RuleFor(x => x.ProductId, x => x.PickRandom(Products).Id)
+            .RuleFor(x => x.SupplierId, x => x.PickRandom(Suppliers).Id)
             .RuleFor(x => x.InsertedDate, x => x.Date.Between(new DateTime(2020, 3, 14), DateTime.Now))
             .RuleFor(x => x.LastModifiedDate, x => null)
             .RuleFor(x => x.Status, x => DataStatus.Inserted)
-            .RuleFor(x => x.MaxCountPerShipping, x => x.Random.Int(1, 200));
+            .RuleFor(x => x.Price, x => x.Commerce.Price(1).First())
+            .RuleFor(x => x.Stock, x => x.Random.Int(1, 200));
             //remove duplicate datas
             ProductSuppliers = productSupplierFaker.Generate(100)
-                .GroupBy(x => new { x.ProductID, x.SupplierID })
+                .GroupBy(x => new { x.ProductId, x.SupplierId })
                 .Select(x => x.First())
                 .ToList();
             #endregion
 
             #region Fake User Datas
             int userId = 1;
+            int userCount = 10;
             Faker<AppUser> appUserFaker = new();
             appUserFaker.StrictMode(false)
                 .RuleFor(x => x.Id, x => userId++)
@@ -107,8 +107,8 @@ namespace TrueOnion.PERSISTINCE.Seeds
                 .RuleFor(x => x.SecurityStamp, x => x.Internet.Password())
                 .RuleFor(x => x.EmailConfirmed, x => true)
                 .RuleFor(x => x.PhoneNumber, x => x.Phone.PhoneNumber());
-            
-            AppUsers = appUserFaker.Generate(10);
+
+            AppUsers = appUserFaker.Generate(userCount);
             #endregion
 
             #region Fake Role Datas
@@ -128,13 +128,13 @@ namespace TrueOnion.PERSISTINCE.Seeds
             #region Fake AppUserRole Datas
             Faker<AppUserRole> appUserRoleFaker = new();
             appUserRoleFaker.StrictMode(false)
-                .RuleFor(x => x.UserId, x => x.PickRandom(AppUsers).Id)
+                .RuleFor(x => x.UserId, x => userCount--)
                 .RuleFor(x => x.RoleId, x => x.PickRandom(AppRoles).Id)
                 .RuleFor(x => x.InsertedDate, x => x.Date.Between(new DateTime(2020, 3, 14), DateTime.Now))
                 .RuleFor(x => x.LastModifiedDate, x => null)
                 .RuleFor(x => x.Status, x => DataStatus.Inserted);
             //remove duplicate datas
-            AppUserRoles = appUserRoleFaker.Generate(10)
+            AppUserRoles = appUserRoleFaker.Generate(userCount)
                 .GroupBy(x => new { x.UserId, x.RoleId })
                 .Select(x => x.First())
                 .ToList();

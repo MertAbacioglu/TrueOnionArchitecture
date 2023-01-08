@@ -11,8 +11,8 @@ namespace TrueOnion.PERSISTINCE.Configurations
             builder.Ignore(x => x.Id);
             builder.HasKey(x =>new
             {
-                x.ProductID,
-                x.SupplierID
+                x.ProductId,
+                x.SupplierId
             });
         }
     }

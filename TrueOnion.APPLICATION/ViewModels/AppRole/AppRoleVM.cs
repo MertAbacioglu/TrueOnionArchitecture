@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrueOnion.APPLICATION.ViewModels.Abstracts
+namespace TrueOnion.APPLICATION.ViewModels.AppRole
 {
-    public abstract class SaveVM
+    public class AppRoleVM
     {
         public int Id { get; set; }
-        public DateTime InsertedDate { get; set; }
+        public string Name { get; set; }
+        public bool isAssigned { get; set; } 
     }
 }

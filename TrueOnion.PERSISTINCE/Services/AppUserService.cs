@@ -3,12 +3,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
 using TrueOnion.APPLICATION.DTOs;
 using TrueOnion.APPLICATION.Repositories;
 using TrueOnion.APPLICATION.Services;
 using TrueOnion.APPLICATION.ViewModels.Account;
+using TrueOnion.APPLICATION.ViewModels.AppRole;
 using TrueOnion.APPLICATION.ViewModels.AppUser;
+using TrueOnion.APPLICATION.ViewModels.AppUserRole;
 using TrueOnion.APPLICATION.Wrappers;
 using TrueOnion.DOMAIN.Entities.Concrates;
 using TrueOnion.DOMAIN.Enums;
@@ -22,8 +25,9 @@ namespace TrueOnion.PERSISTINCE.Services
         protected readonly RoleManager<AppRole> _roleManager;
         protected readonly IHttpContextAccessor _httpContextAccessor;
         protected readonly IEMailService _eMailService;
+        protected readonly IAppUserRepository _appUserRepository;
 
-        public AppUserService(IGenericRepository<AppUser> repository, IMapper mapper, UserManager<AppUser> userManager, IEMailService eMailService, SignInManager<AppUser> signInManager, RoleManager<AppRole> roleManager, IHttpContextAccessor httpContextAccessor) : base(repository, mapper)
+        public AppUserService(IGenericRepository<AppUser> repository, IMapper mapper, UserManager<AppUser> userManager, IEMailService eMailService, SignInManager<AppUser> signInManager, RoleManager<AppRole> roleManager, IHttpContextAccessor httpContextAccessor, IAppUserRepository appUserRepository) : base(repository, mapper)
         {
             _userManager = userManager;
             _eMailService = eMailService;
@@ -31,6 +35,7 @@ namespace TrueOnion.PERSISTINCE.Services
             _signInManager = signInManager;
             _roleManager = roleManager;
             _httpContextAccessor = httpContextAccessor;
+            _appUserRepository = appUserRepository;
         }
 
         public async Task<Result<AppUserSaveVM>> RegisterBasicUserAsync(AppUserSaveVM viewModel, string origin)
@@ -128,6 +133,51 @@ namespace TrueOnion.PERSISTINCE.Services
                 return Result<AppUserVM>.Success(appUserVM);
             }
             return Result<AppUserVM>.Fail("user not found");
+        }
+
+        //get app users with its roles
+        public async Task<Result<List<AppUserVM>>> GetAllAppUsersWithRoles()
+        {
+            List<AppUser> appUsers = await _appUserRepository.GetAllAppUsersWithRoles();
+            List<AppUserVM> appUserVMs = _mapper.Map<List<AppUserVM>>(appUsers);
+            return Result<List<AppUserVM>>.Success(appUserVMs);
+        }
+
+        //get app user with role and set isAssigned as true 
+        public async Task<Result<AppUserVM>> GetAppUserWithRoles(int id)
+        {
+            AppUser appUser = await _appUserRepository.GetAppUserWithRoles(id);
+            AppUserVM appUserVM = _mapper.Map<AppUserVM>(appUser);
+            List<AppRoleVM>? roles = (await GetAllRoles()).Data;
+            foreach (int item in appUserVM.AppUserRoleVMs.Select(x => x.RoleId))
+                if (roles.Select(x => x.Id).Contains(item))
+                    roles.FirstOrDefault(x => x.Id == item).isAssigned = true;
+            appUserVM.AppRoleVMs = roles;
+            return Result<AppUserVM>.Success(appUserVM);
+        }
+
+        //get all roles 
+        public async Task<Result<List<AppRoleVM>>> GetAllRoles()
+        {
+            List<AppRole> appRoles = await _roleManager.Roles.ToListAsync();
+            List<AppRoleVM> appRoleVMs = _mapper.Map<List<AppRoleVM>>(appRoles);
+            return Result<List<AppRoleVM>>.Success(appRoleVMs);
+        }
+
+        //update app user role
+        public async Task<Result<AppUserVM>> UpdateAppUserRole(AppUserVM viewModel)
+        {
+            List<string> rolesToBeAdded = viewModel.AppRoleVMs.Where(x => x.isAssigned).Select(x => x.Name).ToList(); //m,s
+            AppUser appUser = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == viewModel.Id);
+            IList<string> userRoles = await _userManager.GetRolesAsync(appUser);
+
+            if (userRoles != null)
+                await _userManager.RemoveFromRolesAsync(appUser, userRoles);
+
+            foreach (string item in rolesToBeAdded)
+                await _userManager.AddToRoleAsync(appUser, item);
+
+            return Result<AppUserVM>.Success(_mapper.Map<AppUserVM>(appUser));
         }
     }
 }

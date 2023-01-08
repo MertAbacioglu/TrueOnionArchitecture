@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrueOnion.APPLICATION.ViewModels.Account;
+using TrueOnion.APPLICATION.ViewModels.AppRole;
 using TrueOnion.APPLICATION.ViewModels.AppUser;
 using TrueOnion.APPLICATION.Wrappers;
 using TrueOnion.DOMAIN.Entities.Concrates;
@@ -18,5 +19,11 @@ namespace TrueOnion.APPLICATION.Services
         public Task<Result<AppUserSaveVM>> LoginAsync(AppUserLoginVM vm);
         public Task SignOutAsync();
         public Task<Result<AppUserVM>> GetUserAsync();
+        public Task<Result<List<AppUserVM>>> GetAllAppUsersWithRoles();
+        public Task<Result<AppUserVM>> GetAppUserWithRoles(int id);
+        public Task<Result<List<AppRoleVM>>> GetAllRoles();
+        public Task<Result<AppUserVM>> UpdateAppUserRole(AppUserVM viewModel);
+
+
     }
 }

@@ -1,1 +1,40 @@
-﻿<h1>ADMIN AREA INDEX PAGE </h1>
+﻿    <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+    Authorizations by Roles
+    </div>
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="productsTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Admin</th>
+                    <th>Member</th>
+                    <th>Supplier</th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+                <tr>
+                    <td>
+                        <ul>
+                            <li>Crud operations on all pages</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>Products Page (just reading)</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>Suppliers Page (crud)</li>
+                        </ul>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <p>All roles can access <a asp-action="Index" asp-area="Admin" asp-controller="Roles">Role Management Page</a> to test application </p>
+</div>

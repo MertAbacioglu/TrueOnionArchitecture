@@ -1,0 +1,63 @@
+﻿@model AppUserListVM
+
+
+<div class="card mb-4 mt-2">
+    <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        App Users and Roles
+
+
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="appUsersTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>User Name</th>
+                        <th>Roles</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>User Name</th>
+                        <th>Roles</th>
+                        <th>Options</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (AppUserVM user in Model.Result.Data)
+                    {
+
+                        <tr>
+                            <td>@user.UserName</td>
+                            <td>
+                                <ul>
+                                    @foreach (AppUserRoleVM role in user.AppUserRoleVMs)
+                                    {
+                                        <li>@role.AppRoleVM.Name</li>
+
+                                    }
+                                </ul>
+                            </td>
+
+                            <td>
+                                <a class="btn btn-warning" asp-controller="Roles" asp-action="Update" asp-route-id="@user.Id">Update Role</a>
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#appUsersTable').DataTable();
+        })
+    </script>
+}

@@ -11,5 +11,8 @@ namespace TrueOnion.APPLICATION.Repositories
 {
     public interface IAppUserRepository : IGenericRepository<AppUser>
     {
+        public Task<List<AppUser>> GetAllAppUsersWithRoles();
+        public  Task<AppUser> GetAppUserWithRoles(int id);
+
     }
 }

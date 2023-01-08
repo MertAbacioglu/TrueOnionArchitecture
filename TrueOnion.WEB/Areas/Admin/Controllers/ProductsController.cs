@@ -1,18 +1,20 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Packaging;
 using TrueOnion.APPLICATION.Repositories;
 using TrueOnion.APPLICATION.Services;
 using TrueOnion.APPLICATION.ViewModels.Category;
 using TrueOnion.APPLICATION.ViewModels.Product;
+using TrueOnion.APPLICATION.ViewModels.ProductSupplier;
 using TrueOnion.APPLICATION.ViewModels.ResultTypeViewModels;
 using TrueOnion.APPLICATION.ViewModels.Supplier;
 using TrueOnion.DOMAIN.Entities.Concrates;
 using TrueOnion.WEB.Filters;
+using TrueOnion.WEB.Helpers;
 
 namespace TrueOnion.WEB.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
     public class ProductsController : Controller
     {
         private readonly IProductService _productService;
@@ -35,6 +37,7 @@ namespace TrueOnion.WEB.Areas.Admin.Controllers
             _supplierRepository = supplierRepository;
             _productSupplierRepository = productSupplierRepository;
         }
+        [Authorize(Roles = "Admin,Member")]
 
         public async Task<IActionResult> Index()
         {
@@ -48,11 +51,13 @@ namespace TrueOnion.WEB.Areas.Admin.Controllers
 
             List<CategoryVM>? categoryVMs = (await _categoryService.GetActives()).Data;
             List<SupplierVM>? supplierVMs = (await _supplierService.GetActives()).Data;
-            return View(new ProductSaveVM() { CategoryVMs = categoryVMs, SupplierVMs = supplierVMs });
+            List<ProductSupplierVM> productSupplierVMs = new();
+            productSupplierVMs.AddRange(supplierVMs.Select(x => new ProductSupplierVM { SupplierId = x.Id, SupplierVM = new SupplierVM { Id = x.Id, CompanyName = x.CompanyName } }));
+            return View(new ProductSaveVM() { CategoryVMs = categoryVMs, ProductSupplierVMs = productSupplierVMs });
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]//todo : look
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(ProductSaveVM viewModel)
         {
             await _productService.AddAsync(viewModel);
@@ -64,21 +69,22 @@ namespace TrueOnion.WEB.Areas.Admin.Controllers
             return View(errorVM);
         }
 
+        [Authorize(Roles = "Admin")]
 
         [ServiceFilter(typeof(NotFoundFilter<ProductSaveVM, ProductVM, Product>))]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> Update(int id)
         {
-
             ProductSaveVM productSaveVM = (await _productService.GetProduct(id)).Data;
-            List<CategoryVM>? categoryVMs = (await _categoryService.GetActives()).Data;
-            List<SupplierVM>? supplierVMs = (await _supplierService.GetActives()).Data;
-            productSaveVM.CategoryVMs = categoryVMs;
-            productSaveVM.SupplierVMs = supplierVMs;
-
+            productSaveVM.CategoryVMs = (await _categoryService.GetActives()).Data;
+            List<SupplierVM>? supplierVMs = (await _supplierService.GetActives()).Data;           
+            productSaveVM.AllProductSupplierVMs = JunctionTableHelper.ReplaceWithExist(supplierVMs, productSaveVM);
             return View(productSaveVM);
         }
 
         [HttpPost]
+
         public async Task<IActionResult> Update(ProductSaveVM viewModel)
         {
             await _productService.UpdateAsync(viewModel);

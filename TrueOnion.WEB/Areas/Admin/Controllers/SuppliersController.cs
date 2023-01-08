@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TrueOnion.APPLICATION.Services;
 using TrueOnion.APPLICATION.ViewModels.Category;
 using TrueOnion.APPLICATION.ViewModels.Product;
@@ -10,6 +11,7 @@ using TrueOnion.WEB.Filters;
 namespace TrueOnion.WEB.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin,Supplier")]
 
     public class SuppliersController : Controller
     {
