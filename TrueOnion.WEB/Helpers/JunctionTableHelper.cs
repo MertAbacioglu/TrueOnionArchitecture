@@ -21,7 +21,7 @@ namespace TrueOnion.WEB.Helpers
                     }
                 }));
             List<ProductSupplierVM> toBeRemoved = allProductSupplierVMs.Where(x => productSaveVM.ProductSupplierVMs
-            .Any(y => y.SupplierId == x.SupplierId))
+                                                                       .Any(y => y.SupplierId == x.SupplierId))
                                                                        .ToList();
             toBeRemoved.ForEach(x => allProductSupplierVMs.Remove(x));
             productSaveVM.ProductSupplierVMs.ForEach(x => x.isSelected = true);

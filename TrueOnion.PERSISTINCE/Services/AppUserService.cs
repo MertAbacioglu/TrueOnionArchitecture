@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using System.Text;
 using TrueOnion.APPLICATION.DTOs;
 using TrueOnion.APPLICATION.Repositories;
@@ -176,7 +177,9 @@ namespace TrueOnion.PERSISTINCE.Services
 
             foreach (string item in rolesToBeAdded)
                 await _userManager.AddToRoleAsync(appUser, item);
-
+            AppUser user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            if(user.Id == viewModel.Id)
+                await _signInManager.RefreshSignInAsync(user);
             return Result<AppUserVM>.Success(_mapper.Map<AppUserVM>(appUser));
         }
     }

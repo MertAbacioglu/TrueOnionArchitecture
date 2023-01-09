@@ -23,5 +23,6 @@ namespace TrueOnion.APPLICATION.ViewModels.AppUser
         public string ConfirmPassword { get; set; }
         public List<AppUserRoleVM> AppUserRoleVMs { get; set; }//roles of user
         public List<AppRoleVM> AppRoleVMs { get; set; } //all roles in database
+        public bool isCurrentUser { get; set; }//has user updated  his own role
     }
 }

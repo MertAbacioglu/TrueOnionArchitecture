@@ -78,9 +78,13 @@
                 </a>
             </div>
         </div>
-        <div class="sb-sidenav-footer">
-            <div class="small">Logged in as:</div>
-            @Model.Email
-        </div>
+        @if (Model != null)
+        {
+            <div class="sb-sidenav-footer">
+                <div class="small">Logged in as:</div>
+                @Model.Email
+            </div>
+        }
+
     </nav>
 </div>

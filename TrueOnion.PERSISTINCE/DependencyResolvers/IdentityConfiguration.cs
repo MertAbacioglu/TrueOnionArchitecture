@@ -8,7 +8,7 @@ using TrueOnion.PERSISTINCE.Context;
 
 namespace TrueOnion.PERSISTINCE.DependencyResolvers
 {
-    public static class IdentityInjection
+    public static class IdentityConfiguration
     {
         public static void AddIdentityService(this IServiceCollection services)
         {
@@ -30,7 +30,7 @@ namespace TrueOnion.PERSISTINCE.DependencyResolvers
             services.ConfigureApplicationCookie(x =>
             {
                 x.LoginPath = new PathString("/Account/Login");
-                //x.LogoutPath = "/Account/LogOut";
+                x.LogoutPath = "/Account/LogOut";
                 x.AccessDeniedPath = new PathString("/Account/AccessDenied");
                 x.SlidingExpiration = true;
                 x.ExpireTimeSpan = System.TimeSpan.FromMinutes(30);
