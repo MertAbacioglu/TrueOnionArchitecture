@@ -10,7 +10,7 @@ using TrueOnion.APPLICATION.ViewModels.ProductSupplier;
 using TrueOnion.APPLICATION.Wrappers;
 using TrueOnion.DOMAIN.Entities.Concrates;
 
-namespace TrueOnion.PERSISTINCE.Services
+namespace TrueOnion.INFRASTRUCTURE.INNER
 {
     public class ProductSupplierService : GenericService<ProductSupplierSaveVM, ProductSupplierVM, ProductSupplier>, IProductSupplierService
     { private readonly IProductSupplierRepository _productSupplierRepository;

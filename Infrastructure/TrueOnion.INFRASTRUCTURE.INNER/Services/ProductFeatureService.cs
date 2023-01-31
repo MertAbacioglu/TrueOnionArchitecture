@@ -10,7 +10,7 @@ using TrueOnion.APPLICATION.ViewModels.ProductFeature;
 using TrueOnion.APPLICATION.ViewModels.Supplier;
 using TrueOnion.DOMAIN.Entities.Concrates;
 
-namespace TrueOnion.PERSISTINCE.Services
+namespace TrueOnion.INFRASTRUCTURE.INNER
 {
     public class ProductFeatureService : GenericService<ProductFeatureSaveVM, ProductFeatureVM, ProductFeature>, IProductFeatureService
     {

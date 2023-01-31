@@ -11,7 +11,7 @@ using TrueOnion.DOMAIN.Entities.Abstarct;
 using TrueOnion.DOMAIN.Entities.Common;
 using TrueOnion.DOMAIN.Enums;
 
-namespace TrueOnion.PERSISTINCE.Services
+namespace TrueOnion.INFRASTRUCTURE.INNER
 {
     public  class GenericService<SaveViewModel, ViewModel, Entity> : IGenericService<SaveViewModel, ViewModel, Entity>
         where SaveViewModel : SaveVM

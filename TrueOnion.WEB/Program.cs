@@ -6,6 +6,7 @@ using TrueOnion.WEB.DependencyResolvers;
 using TrueOnion.PERSISTINCE.DependencyResolvers;
 using TrueOnion.INFRASTRUCTURE.DependencyResolvers;
 using System.Runtime.Intrinsics.Arm;
+using TrueOnion.INFRASTRUCTURE.INNER.DependencyResolvers.Autofac;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureServices(x => x.AddAutofac()).UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(builder =>
 {
     builder.RegisterModule(new AutofacPersistanceModule());
+    builder.RegisterModule(new AutofacInnerInfrastructureModule());
 });
 
 WebApplication app = builder.Build();

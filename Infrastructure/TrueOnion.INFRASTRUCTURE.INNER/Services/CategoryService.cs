@@ -10,7 +10,7 @@ using TrueOnion.APPLICATION.ViewModels.Category;
 using TrueOnion.APPLICATION.Wrappers;
 using TrueOnion.DOMAIN.Entities.Concrates;
 
-namespace TrueOnion.PERSISTINCE.Services
+namespace TrueOnion.INFRASTRUCTURE.INNER
 {
     public class CategoryService : GenericService<CategorySaveVM, CategoryVM, Category>, ICategoryService
     {

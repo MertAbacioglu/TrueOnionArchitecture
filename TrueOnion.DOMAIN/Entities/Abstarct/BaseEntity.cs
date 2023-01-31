@@ -3,7 +3,7 @@ using TrueOnion.DOMAIN.Enums;
 
 namespace TrueOnion.DOMAIN.Entities.Common
 {
-    public class BaseEntity
+    public abstract class BaseEntity
     {
         public BaseEntity()
         {

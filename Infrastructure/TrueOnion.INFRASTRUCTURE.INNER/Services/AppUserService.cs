@@ -17,7 +17,7 @@ using TrueOnion.APPLICATION.Wrappers;
 using TrueOnion.DOMAIN.Entities.Concrates;
 using TrueOnion.DOMAIN.Enums;
 
-namespace TrueOnion.PERSISTINCE.Services
+namespace TrueOnion.INFRASTRUCTURE.INNER
 {
     public class AppUserService : GenericService<AppUserSaveVM, AppUserVM, AppUser>, IAppUserService
     {

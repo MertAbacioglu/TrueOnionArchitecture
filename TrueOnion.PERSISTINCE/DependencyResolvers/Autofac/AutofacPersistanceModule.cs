@@ -11,7 +11,6 @@ using TrueOnion.APPLICATION.Repositories;
 using TrueOnion.APPLICATION.Services;
 using TrueOnion.PERSISTINCE.Context;
 using TrueOnion.PERSISTINCE.Repositories;
-using TrueOnion.PERSISTINCE.Services;
 using Module = Autofac.Module;
 namespace TrueOnion.PERSISTINCE.DependencyResolvers.Autofac
 {
@@ -22,8 +21,7 @@ namespace TrueOnion.PERSISTINCE.DependencyResolvers.Autofac
             builder.RegisterGeneric(typeof(GenericRepository<>))
                 .As(typeof(IGenericRepository<>)).InstancePerLifetimeScope();
 
-            builder.RegisterGeneric(typeof(GenericService<,,>))
-                .As(typeof(IGenericService<,,>)).InstancePerLifetimeScope();
+
 
 
             Assembly executingAssembly = Assembly.GetExecutingAssembly();
@@ -36,9 +34,6 @@ namespace TrueOnion.PERSISTINCE.DependencyResolvers.Autofac
                 .InstancePerLifetimeScope();
 
 
-            builder.RegisterAssemblyTypes(executingAssembly, repoServiceAssembly)
-                .Where(x => x.Name.EndsWith("Service"))
-                .AsImplementedInterfaces().InstancePerLifetimeScope();
 
             builder.Register(c =>
             {
