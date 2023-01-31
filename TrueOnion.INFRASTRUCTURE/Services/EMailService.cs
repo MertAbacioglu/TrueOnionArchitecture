@@ -5,7 +5,7 @@ using TrueOnion.APPLICATION.DTOs;
 using TrueOnion.APPLICATION.Services;
 using TrueOnion.APPLICATION.Settings;
 
-namespace TrueOnion.INFRASTRUCTURE.Services
+namespace TrueOnion.INFRASTRUCTURE.OUTER.Services
 {
     public class EMailService : IEMailService
     {

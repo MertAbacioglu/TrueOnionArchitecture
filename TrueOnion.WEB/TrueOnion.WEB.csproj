@@ -65,8 +65,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\TrueOnion.INFRASTRUCTURE.INNER\TrueOnion.INFRASTRUCTURE.INNER.csproj" />
     <ProjectReference Include="..\TrueOnion.APPLICATION\TrueOnion.APPLICATION.csproj" />
+    <ProjectReference Include="..\TrueOnion.INFRASTRUCTURE.INNER\TrueOnion.INFRASTRUCTURE.INNER.csproj" />
     <ProjectReference Include="..\TrueOnion.INFRASTRUCTURE\TrueOnion.INFRASTRUCTURE.OUTER.csproj" />
     <ProjectReference Include="..\TrueOnion.PERSISTINCE\TrueOnion.PERSISTINCE.csproj" />
   </ItemGroup>

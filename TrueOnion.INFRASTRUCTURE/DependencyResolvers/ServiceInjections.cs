@@ -2,9 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using TrueOnion.APPLICATION.Services;
 using TrueOnion.APPLICATION.Settings;
-using TrueOnion.INFRASTRUCTURE.Services;
+using TrueOnion.INFRASTRUCTURE.OUTER.Services;
 
-namespace TrueOnion.INFRASTRUCTURE.DependencyResolvers
+namespace TrueOnion.INFRASTRUCTURE.OUTER.Services
 {
     public static class ServiceInjections
     {

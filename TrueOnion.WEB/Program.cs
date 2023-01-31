@@ -4,8 +4,8 @@ using TrueOnion.PERSISTINCE.DependencyResolvers.Autofac;
 using TrueOnion.APPLICATION.DependencyResolvers;
 using TrueOnion.WEB.DependencyResolvers;
 using TrueOnion.PERSISTINCE.DependencyResolvers;
-using TrueOnion.INFRASTRUCTURE.DependencyResolvers;
 using System.Runtime.Intrinsics.Arm;
+using TrueOnion.INFRASTRUCTURE.OUTER.Services;
 using TrueOnion.INFRASTRUCTURE.INNER.DependencyResolvers.Autofac;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);

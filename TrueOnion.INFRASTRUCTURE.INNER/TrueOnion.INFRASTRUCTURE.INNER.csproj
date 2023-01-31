@@ -6,4 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.5.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TrueOnion.APPLICATION\TrueOnion.APPLICATION.csproj" />
+    <ProjectReference Include="..\TrueOnion.DOMAIN\TrueOnion.DOMAIN.csproj" />
+    <ProjectReference Include="..\TrueOnion.PERSISTINCE\TrueOnion.PERSISTINCE.csproj" />
+  </ItemGroup>
+
 </Project>
